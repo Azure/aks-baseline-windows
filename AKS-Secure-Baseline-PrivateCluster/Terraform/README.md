@@ -12,3 +12,25 @@ In this example, state is stored in an Azure Storage account that was created ou
 
 ## Getting Started 
 This section is organized using folders that match the steps outlined below. Make any necessary adjustments to the variables and settings within that folder to match the needs of your deployment. 
+
+1. Preqs - Clone this repo, install Azure CLI, install Terraform
+
+2. [Creation of Azure Storage Account for State Management](./02-state-storage.md)
+
+3. [Create or Import Azure Active Directory Groups for AKS Cluster Admins and AKS Cluster Users](./03-aad.md)
+
+4. [Creation of Hub Network & its respective Components](./04-network-hub.md)
+ 
+5. [Creation of Spoke Network & its respective Components](./05-network-lz.md)
+
+6. [Creation of Supporting Components for AKS](./06-aks-supporting.md)
+
+7. [Creation of AKS & enabling Addons](./07-aks-cluster.md)
+
+8. [Deploy a Basic Workload](./08-workload.md)
+
+
+## Deploying AKS into Existing Infrastructure
+The steps above assume that you will be creating the Hub and Spoke (Landing Zone) Network and supporting components using the code provided, where each step refers to state file information from the previous steps.
+
+To deploy AKS into an existing network, use the [AKS for Existing Cluster](./07-AKS-cluster-existing-infra) folder.  Update the "existing-infra.variables.tf" file to reference the names and resource IDs of the pre-existing infrastructure.
