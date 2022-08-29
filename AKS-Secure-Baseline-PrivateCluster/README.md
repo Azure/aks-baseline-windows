@@ -1,1 +1,1 @@
-This folder contains Windows AKS secure basline private cluster 
+This folder contains Windows AKS secure basline private cluster creation process 
