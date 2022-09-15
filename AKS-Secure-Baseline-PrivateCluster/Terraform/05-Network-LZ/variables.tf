@@ -24,5 +24,5 @@ variable "container_name" {}
 # Storage Account Access Key
 variable "access_key" {}
 
-variable "network-tf-state-key" {}
+
 

@@ -4,15 +4,11 @@
 ##################
 
 data "azuread_group" "appdevs" {
- #display_name = var.aks_user_group
- security_enabled = true
- object_id = var.aks_admin_group_object_id
+ display_name = var.aks_user_group
 }
 
 data "azuread_group" "aksops" {
- #display_name = var.aks_admin_group
- security_enabled = true
- object_id = var.aks_user_group_object_id
+ display_name = var.aks_admin_group
 }
 
 output "appdev_object_id" {

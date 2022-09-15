@@ -8,10 +8,10 @@ data "terraform_remote_state" "existing-lz" {
   backend = "azurerm"
 
   config = {
-    storage_account_name = "aksashi001tfsa"
-    container_name       = "akscs"
-    key                  = "05-network-lz-tf"
-    access_key = "DZYrBI0UymOYFqyjHs2Wcv8RsJgDv9K02sU/zFzp4e2D8otXuQ6NV56LsmO7sV8ysByJZ1I74LQK+ASt5NQs1Q=="
+    storage_account_name = var.state_sa_name
+    container_name       = var.container_name
+    key                  = "lz-net"
+    access_key = var.access_key
   }
 }
 

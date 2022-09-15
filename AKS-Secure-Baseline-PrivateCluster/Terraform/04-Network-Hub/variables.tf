@@ -2,13 +2,14 @@
 # VARIABLES #
 #############
 
-variable "location" {}
+variable "location" {
+}
 
 variable "tags" {
   type = map(string)
 
   default = {
-    project = "ashis"
+    project = "cs-aks"
   }
 }
 
@@ -22,12 +23,8 @@ variable "sku_tier" {
   default = "Standard"
 }
 
-#variable "active_directory_domain" {}
-
-#variable "active_directory_netbios_name" {}
-
-
 ## Sensitive Variables for the Jumpbox
 ## Sample terraform.tfvars File
 
-
+# admin_password = "ChangeMe"
+# admin_username = "sysadmin"

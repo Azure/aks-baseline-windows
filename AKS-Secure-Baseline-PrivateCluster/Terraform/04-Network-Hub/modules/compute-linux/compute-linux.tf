@@ -52,7 +52,9 @@ variable "admin_username" {
   default = "sysadmin"
 }
 
-variable "admin_password" {}
+variable "admin_password" {
+  default = "changeme"
+}
 
 variable "server_name" {}
 

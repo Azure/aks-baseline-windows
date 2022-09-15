@@ -3,7 +3,6 @@
 resource "azurerm_resource_group" "spoke-rg" {
   name     = "${var.lz_prefix}-SPOKE"
   location = data.terraform_remote_state.existing-hub.outputs.hub_rg_location
-  #location = data.terraform_remote_state.existing-hub.outputs.location
 }
 
 output "lz_rg_location" {
