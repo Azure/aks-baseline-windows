@@ -31,6 +31,40 @@ resource "azurerm_firewall_policy_rule_collection_group" "AKS" {
     }
   }
 
+
+  application_rule1_https {
+    name     = "akswindows_rule_https"
+    priority = 206
+    action   = "Allow"
+    rule {
+      name = "akswindows_rule_https_rule1"
+
+      protocols {
+        type = "Https"
+        port = 443
+      }
+      source_addresses  = ["10.1.0.0/16"]
+      destination_fqdns = ["*.microsoft.com,*.hcp.centralus.azmk8s.io,mcr.microsoft.com,*.data.mcr.microsoft.com,management.azure.com,login.microsoftonline.com,packages.microsoft.com,acs-mirror.azureedge.net,onegetcdn.azureedge.net,go.microsoft.com,*.ods.opinsights.azure.com,*.oms.opinsights.azure.com,vault.azure.net,dc.services.visualstudio.com,*.monitoring.azure.com,data.policy.core.windows.net,store.policy.core.windows.net,centralus.dp.kubernetesconfiguration.azure.com,download.docke.com,docker.io"]
+    }
+  }
+
+  application_rule2_http {
+    name     = "akswindows_rule_http"
+    priority = 206
+    action   = "Allow"
+    rule {
+      name = "akswindows_rule_http_rule1"
+      protocols {
+        type = "Http"
+        port = 80
+      }
+
+      source_addresses  = ["10.1.0.0/16"]
+      destination_fqdns = ["*.ubuntu.com,*.microsoft.com,*.windowsupdate.com"]
+    }
+  }
+
+
   network_rule_collection {
     name     = "aks_network_rules"
     priority = 201
