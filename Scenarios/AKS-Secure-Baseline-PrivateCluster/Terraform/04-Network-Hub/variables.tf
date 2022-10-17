@@ -2,8 +2,8 @@
 # VARIABLES #
 #############
 
-variable "location" {
-}
+variable "location" {}
+#variable "firewallName" {}
 
 variable "tags" {
   type = map(string)
@@ -26,5 +26,35 @@ variable "sku_tier" {
 ## Sensitive Variables for the Jumpbox
 ## Sample terraform.tfvars File
 
-# admin_password = "ChangeMe"
-# admin_username = "sysadmin"
+variable "admin_password" {
+  default = "changeme"
+}
+
+variable "admin_username" {
+  default = "sysadmin"
+}
+
+variable "subscription_id" {
+  description = "Azure subscription Id."
+  default = null
+}
+
+variable "tenant_id" {
+  description = "Azure tenant Id."
+   default = null
+}
+
+variable "client_id" {
+description = "Azure service principal application Id"
+default = null
+}
+
+variable "client_secret" {
+  description = "Azure service principal application Secret"
+  default = null
+}
+
+variable "access_key" {}
+variable "resource_group_name" {}
+variable "storage_account_name" {}
+variable "container_name" {}

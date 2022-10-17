@@ -27,17 +27,7 @@ resource "azurerm_subnet_network_security_group_association" "subnetdc" {
 }
 
 
-#######################
-# SENSITIVE VARIABLES #
-#######################
 
-variable "admin_password" {
-
-}
-
-variable "admin_username" {
-
-}
 
 
 # Domain Controller Server VM

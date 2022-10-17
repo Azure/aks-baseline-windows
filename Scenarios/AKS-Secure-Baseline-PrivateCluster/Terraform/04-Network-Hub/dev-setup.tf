@@ -41,14 +41,3 @@ module "create_linuxsserver" {
 
 }
 
-#######################
-# SENSITIVE VARIABLES #
-#######################
-
-variable "admin_password" {
-  default = "changeme"
-}
-
-variable "admin_username" {
-  default = "sysadmin"
-}
