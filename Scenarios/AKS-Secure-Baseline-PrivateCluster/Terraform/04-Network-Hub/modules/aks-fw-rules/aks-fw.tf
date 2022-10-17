@@ -32,37 +32,95 @@ resource "azurerm_firewall_policy_rule_collection_group" "AKS" {
   }
 
 
-  application_rule1_https {
-    name     = "akswindows_rule_https"
-    priority = 206
-    action   = "Allow"
-    rule {
-      name = "akswindows_rule_https_rule1"
+resource "azurerm_firewall_network_rule_collection" "servicetags" {
+  name                = "servicetags"
+  azure_firewall_name = azurerm_firewall.fw.name
+  resource_group_name = var.resource_group
+  priority            = 206
+  action              = "Allow"
 
-      protocols {
-        type = "Https"
-        port = 443
-      }
-      source_addresses  = ["10.1.0.0/16"]
-      destination_fqdns = ["*.microsoft.com,*.hcp.centralus.azmk8s.io,mcr.microsoft.com,*.data.mcr.microsoft.com,management.azure.com,login.microsoftonline.com,packages.microsoft.com,acs-mirror.azureedge.net,onegetcdn.azureedge.net,go.microsoft.com,*.ods.opinsights.azure.com,*.oms.opinsights.azure.com,vault.azure.net,dc.services.visualstudio.com,*.monitoring.azure.com,data.policy.core.windows.net,store.policy.core.windows.net,centralus.dp.kubernetesconfiguration.azure.com,download.docke.com,docker.io"]
+  rule {
+    description       = "allow service tags"
+    name              = "allow service tags"
+    source_addresses  = ["*"]
+    destination_ports = ["*"]
+    protocols         = ["Any"]
+
+    destination_addresses = [
+      "AzureContainerRegistry",
+      "MicrosoftContainerRegistry",
+      "AzureActiveDirectory"
+    ]
+  }
+}
+
+resource "azurerm_firewall_application_rule_collection" "aksbasics" {
+  name                = "aksbasics"
+  azure_firewall_name = azurerm_firewall.fw.name
+  resource_group_name = var.resource_group
+  priority            = 207
+  action              = "Allow"
+
+  rule {
+    name             = "allow network"
+    source_addresses = ["*"]
+
+    target_fqdns = [
+      "*.cdn.mscr.io",
+      "mcr.microsoft.com",
+      "*.data.mcr.microsoft.com",
+      "management.azure.com",
+      "login.microsoftonline.com",
+      "acs-mirror.azureedge.net",
+      "dc.services.visualstudio.com",
+      "*.opinsights.azure.com",
+      "*.oms.opinsights.azure.com",
+      "*.microsoftonline.com",
+      "*.monitoring.azure.com",
+    ]
+
+    protocol {
+      port = "80"
+      type = "Http"
+    }
+
+    protocol {
+      port = "443"
+      type = "Https"
     }
   }
+}
 
-  application_rule2_http {
-    name     = "akswindows_rule_http"
-    priority = 206
-    action   = "Allow"
-    rule {
-      name = "akswindows_rule_http_rule1"
-      protocols {
-        type = "Http"
-        port = 80
-      }
+resource "azurerm_firewall_application_rule_collection" "osupdates" {
+  name                = "osupdates"
+  azure_firewall_name = azurerm_firewall.fw.name
+  resource_group_name = var.resource_group
+  priority            = 208
+  action              = "Allow"
 
-      source_addresses  = ["10.1.0.0/16"]
-      destination_fqdns = ["*.ubuntu.com,*.microsoft.com,*.windowsupdate.com"]
+  rule {
+    name             = "allow network"
+    source_addresses = ["*"]
+
+    target_fqdns = [
+      "download.opensuse.org",
+      "security.ubuntu.com",
+      "ntp.ubuntu.com",
+      "packages.microsoft.com",
+      "snapcraft.io"
+    ]
+
+    protocol {
+      port = "80"
+      type = "Http"
+    }
+
+    protocol {
+      port = "443"
+      type = "Https"
     }
   }
+}
 
 
   network_rule_collection {
