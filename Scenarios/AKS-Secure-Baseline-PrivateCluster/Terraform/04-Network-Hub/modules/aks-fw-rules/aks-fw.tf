@@ -75,8 +75,8 @@ resource "azurerm_firewall_policy_rule_collection_group" "AKS" {
 
 resource "azurerm_firewall_network_rule_collection" "servicetags" {
   name                = "servicetags"
-  azure_firewall_name = "${azurerm_virtual_network.vnet.name}-firewall"
-  resource_group_name = azurerm_resource_group.rg.name
+  azure_firewall_name = var.firewallName
+  resource_group_name = var.resource_group_name
   priority            = 206
   action              = "Allow"
 
@@ -97,8 +97,8 @@ resource "azurerm_firewall_network_rule_collection" "servicetags" {
 
 resource "azurerm_firewall_application_rule_collection" "aksbasics" {
   name                = "aksbasics"
-  azure_firewall_name = "${azurerm_virtual_network.vnet.name}-firewall"
-  resource_group_name = azurerm_resource_group.rg.name
+  azure_firewall_name = var.firewallName
+  resource_group_name = var.resource_group_name
   priority            = 207
   action              = "Allow"
 
@@ -134,8 +134,8 @@ resource "azurerm_firewall_application_rule_collection" "aksbasics" {
 
 resource "azurerm_firewall_application_rule_collection" "osupdates" {
   name                = "osupdates"
-  azure_firewall_name = "${azurerm_virtual_network.vnet.name}-firewall"
-  resource_group_name = azurerm_resource_group.rg.name
+  azure_firewall_name = var.firewallName
+  resource_group_name = var.resource_group_name
   priority            = 208
   action              = "Allow"
 
@@ -165,8 +165,7 @@ resource "azurerm_firewall_application_rule_collection" "osupdates" {
 
 
 variable "resource_group_name" {}
-
 variable "location" {}
-
+variable "firewallName" {}
 
 
