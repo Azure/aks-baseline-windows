@@ -11,11 +11,12 @@ terraform {
   }
 
   backend "azurerm" {
-    # resource_group_name  = ""   # Partial configuration, provided during "terraform init"
-    # storage_account_name = ""   # Partial configuration, provided during "terraform init"
-    # container_name       = ""   # Partial configuration, provided during "terraform init"
+    resource_group_name  = "tfstate"   # Partial configuration, provided during "terraform init"
+    storage_account_name = "akswinnit005"   # Partial configuration, provided during "terraform init"
+    container_name       = "akscs"   # Partial configuration, provided during "terraform init"
     key                  = "aad"
   }
+
 
 }
 
