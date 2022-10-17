@@ -30,6 +30,94 @@ resource "azurerm_firewall_policy_rule_collection_group" "AKS" {
       destination_fqdn_tags = ["AzureKubnernetesService"]
     }
   }
+
+  application_rule_collection {
+    name     = "app_rule_collection2"
+    priority = 206
+    action   = "Allow"
+    rule {
+      name = "app_rule_collection1_rule2"
+      protocols {
+        type = "Http"
+        port = 80
+      }
+      protocols {
+        type = "Https"
+        port = 443
+      }
+      source_addresses  = ["10.1.0.0/16"]
+      destination_fqdns = [
+      "*.cdn.mscr.io",
+      "mcr.microsoft.com",
+      "*.data.mcr.microsoft.com",
+      "management.azure.com",
+      "login.microsoftonline.com",
+      "acs-mirror.azureedge.net",
+      "dc.services.visualstudio.com",
+      "*.opinsights.azure.com",
+      "*.oms.opinsights.azure.com",
+      "*.microsoftonline.com",
+      "*.monitoring.azure.com",
+      ]
+    }
+  }
+
+
+application_rule_collection {
+    name     = "app_rule_collection3"
+    priority = 207
+    action   = "Allow"
+    rule {
+      name = "app_rule_collection1_rule3"
+      protocols {
+        type = "Http"
+        port = 80
+      }
+      protocols {
+        type = "Https"
+        port = 443
+      }
+      source_addresses  = ["10.1.0.0/16"]
+      destination_fqdns = [
+      "download.opensuse.org",
+      "security.ubuntu.com",
+      "ntp.ubuntu.com",
+      "packages.microsoft.com",
+      "snapcraft.io"
+      ]
+    }
+  }
+
+
+  /*
+  application_rule_collection {
+    name     = "aks-servicetag"
+    priority = 206
+    action   = "Allow"
+    rule {
+      name = "aks_service"
+      protocols {
+        type = "Https"
+        port = 443
+      }
+    source_addresses  = ["10.1.0.0/16"]
+        target_fqdns = [
+      "*.cdn.mscr.io",
+      "mcr.microsoft.com",
+      "*.data.mcr.microsoft.com",
+      "management.azure.com",
+      "login.microsoftonline.com",
+      "acs-mirror.azureedge.net",
+      "dc.services.visualstudio.com",
+      "*.opinsights.azure.com",
+      "*.oms.opinsights.azure.com",
+      "*.microsoftonline.com",
+      "*.monitoring.azure.com",
+    ]
+    }
+  }
+*/
+
   network_rule_collection {
     name     = "aks_network_rules"
     priority = 201
@@ -72,6 +160,8 @@ resource "azurerm_firewall_policy_rule_collection_group" "AKS" {
   }
 
 }
+
+/*
 
 resource "azurerm_firewall_network_rule_collection" "servicetags" {
   name                = "servicetags"
@@ -163,6 +253,7 @@ resource "azurerm_firewall_application_rule_collection" "osupdates" {
   }
 }
 
+*/
 
 variable "resource_group_name" {}
 variable "location" {}
