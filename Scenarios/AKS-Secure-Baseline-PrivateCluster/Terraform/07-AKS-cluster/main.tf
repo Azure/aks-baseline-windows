@@ -10,7 +10,7 @@ data "terraform_remote_state" "existing-lz" {
   config = {
     storage_account_name = var.state_sa_name
     container_name       = var.container_name
-    key                  = "05-network-lz-tf"
+    key                  = "lz-net"
     access_key = var.access_key
   }
 }
@@ -21,7 +21,7 @@ data "terraform_remote_state" "aks-support" {
   config = {
     storage_account_name = var.state_sa_name
     container_name       = var.container_name
-    key                  = "aks-support"
+    key                  = "aks-sup"
     access_key           = var.access_key
   }
 }
@@ -43,7 +43,7 @@ data "terraform_remote_state" "existing-hub" {
   config = {
     storage_account_name = var.state_sa_name
     container_name       = var.container_name
-    key                  = "04-network-tf"
+    key                  = "hub-net"
     access_key           = var.access_key
   }
 }

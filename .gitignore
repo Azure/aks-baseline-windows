@@ -25,3 +25,7 @@ Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/06-AKS-supporting/.terraf
 Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/06-AKS-supporting/.terraform/providers/registry.terraform.io/hashicorp/azuread/2.29.0/windows_amd64/terraform-provider-azuread_v2.29.0_x5.exe
 Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/06-AKS-supporting/.terraform/providers/registry.terraform.io/hashicorp/azurerm/3.9.0/windows_amd64/terraform-provider-azurerm_v3.9.0_x5.exe
 Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/06-AKS-supporting/.terraform/providers/registry.terraform.io/hashicorp/random/3.4.3/windows_amd64/terraform-provider-random_v3.4.3_x5.exe
+Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/07-AKS-cluster/terraform.exe
+Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/07-AKS-cluster/.terraform/terraform.tfstate
+Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/07-AKS-cluster/.terraform/providers/registry.terraform.io/hashicorp/azuread/2.26.1/windows_amd64/terraform-provider-azuread_v2.26.1_x5.exe
+Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/07-AKS-cluster/.terraform/providers/registry.terraform.io/hashicorp/azurerm/3.14.0/windows_amd64/terraform-provider-azurerm_v3.14.0_x5.exe

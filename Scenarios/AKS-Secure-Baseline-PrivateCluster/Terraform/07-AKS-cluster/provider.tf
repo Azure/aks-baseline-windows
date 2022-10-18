@@ -15,8 +15,8 @@ terraform {
     resource_group_name  = var.resource_group_name #"tfstateashi"   # Partial configuration, provided during "terraform init"
     storage_account_name = var.storage_account_name#"aksashi001tfsa"   # Partial configuration, provided during "terraform init"
     container_name       = var.container_name#"akscs"   # Partial configuration, provided during "terraform init"
-    access_key  = var.Access_Key#"DZYrBI0UymOYFqyjHs2Wcv8RsJgDv9K02sU/zFzp4e2D8otXuQ6NV56LsmO7sV8ysByJZ1I74LQK+ASt5NQs1Q=="
-    key = var.key #"aks"
+    #access_key  = var.Access_Key#"DZYrBI0UymOYFqyjHs2Wcv8RsJgDv9K02sU/zFzp4e2D8otXuQ6NV56LsmO7sV8ysByJZ1I74LQK+ASt5NQs1Q=="
+    key = "aks" #"aks"
   }
 
 }
