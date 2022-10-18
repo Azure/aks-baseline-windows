@@ -12,6 +12,7 @@ resource "azurerm_key_vault_access_policy" "current_user" {
 
 # Azure KeyVault secret for MongoDB
 
+
 resource "azurerm_key_vault_secret" "mongodb" {
   name         = "MongoDB"
   value        = var.mongodb_secret
@@ -22,6 +23,5 @@ resource "azurerm_key_vault_secret" "mongodb" {
 }
 
 variable "mongodb_secret" {}
-
 
 
