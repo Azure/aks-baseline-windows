@@ -11,7 +11,7 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   dns_prefix              = var.prefix
   location                = var.location
   resource_group_name     = var.resource_group_name
-  kubernetes_version      = "1.23.5"
+  kubernetes_version      = "1.24.6"
   private_cluster_enabled = true
   private_dns_zone_id     = var.private_dns_zone_id
   azure_policy_enabled    = true
@@ -62,7 +62,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
   name                  = "wnp"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
   vm_size               = "Standard_D4s_v3"
-  node_count            = 1
+  node_count            = 3
   mode                  = "User"
   os_disk_size_gb       = 128
   os_type               = "Windows"

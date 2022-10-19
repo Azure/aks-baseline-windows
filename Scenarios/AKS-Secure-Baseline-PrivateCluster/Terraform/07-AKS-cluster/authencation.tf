@@ -1,5 +1,5 @@
 
-
+/*
 variable "subscription_id" {
   description = "Azure subscription Id."
   default = null
@@ -21,3 +21,4 @@ variable "client_secret" {
 }
 
 variable "access_key" {}
+*/
