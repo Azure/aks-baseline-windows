@@ -14,14 +14,16 @@ cd ../07-AKS-cluster
 
 This deployment will need to reference data objects from the Hub deployment and will need access to the pre-existing state file, update the variables as needed.  This deployment will also need to use a storage access key (from Azure) to read the storage account data.  This is a sensitive variable and should not be committed to the code repo.
 
-Following values will require inputs in the terraform.tfvar file:
-1. wnp_count = true # if set to true windows node pools will be deployed.
-2. private_dns_zone_name = "privatelink.centralus.azmk8s.io" # default value is set to centralus region, change the dns region to your desired location, must match to the earlier resource regions. 
-
+### Following values will require inputs in the terraform.tfvar file:
+```
+# wnp_count = true # if set to true windows node pools will be deployed.
+# private_dns_zone_name = "privatelink.centralus.azmk8s.io" # default value is set to centralus region, change the dns region to your desired location, must match to the earlier resource regions. 
+```
 
 Once again, A sample terraform.tfvars.sample file is included. Update the required variables, save it and rename it to **terraform.tfvars**.
 
-Update the following variables:
+### Update the following variables:
+```
   $backendResourceGroupName=""
   $backendStorageAccountName=""
   $backendContainername="akscs"
@@ -31,7 +33,7 @@ Update the following variables:
   $servicePrincipalId=""
   $servicePrincipalKey=""
   $access_key = ""
-
+```
 
 Once the files are updated, deploy using Terraform Init, Plan and Apply.
 
