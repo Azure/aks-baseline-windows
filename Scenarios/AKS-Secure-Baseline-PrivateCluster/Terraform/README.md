@@ -17,15 +17,15 @@ This section is organized using folders that match the steps outlined below. Mak
 
 2. [Creation of Azure Storage Account for State Management](./02-state-storage.md)
 
-3. [Create or Import Azure Active Directory Groups for AKS Cluster Admins and AKS Cluster Users](./03-aad.md)
+3. [Create or Import Azure Active Directory Groups for AKS Cluster Admins and AKS Cluster Users](./03-win-aad-import.md)
 
-4. [Creation of Hub Network & its respective Components](./04-network-hub.md)
+4. [Creation of Hub Network & its respective Components](./04-win-network-hub.md)
  
-5. [Creation of Spoke Network & its respective Components](./05-network-lz.md)
+5. [Creation of Spoke Network & its respective Components](./05-win-network-lz.md)
 
-6. [Creation of Supporting Components for AKS](./06-aks-supporting.md)
+6. [Creation of Supporting Components for AKS](./06-win-aks-supporting.md)
 
-7. [Creation of AKS & enabling Addons](./07-aks-cluster.md)
+7. [Creation of AKS & enabling Addons](./07-win-aks-cluster.md)
 
 8. [Deploy a Basic Workload](./08-workload.md)
 
