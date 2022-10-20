@@ -22,15 +22,15 @@ Following values will require inputs in the terraform.tfvar file:
 Once again, A sample terraform.tfvars.sample file is included. Update the required variables, save it and rename it to **terraform.tfvars**.
 
 Update the following variables:
-$backendResourceGroupName=""
-$backendStorageAccountName=""
-$backendContainername="akscs"
-$layerNametfstate="aks" # same as state file name provided in provider.tf 
-$ARM_SUBSCRIPTION_ID=""
-$tenantId=""
-$servicePrincipalId=""
-$servicePrincipalKey=""
-$access_key = ""
+  $backendResourceGroupName=""
+  $backendStorageAccountName=""
+  $backendContainername="akscs"
+  $layerNametfstate="aks" # same as state file name provided in provider.tf 
+  $ARM_SUBSCRIPTION_ID=""
+  $tenantId=""
+  $servicePrincipalId=""
+  $servicePrincipalKey=""
+  $access_key = ""
 
 
 Once the files are updated, deploy using Terraform Init, Plan and Apply.
