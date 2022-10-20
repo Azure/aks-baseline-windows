@@ -4,27 +4,27 @@ This storage account will be used to store the state of each deployment step and
 Create some variables to start with
 
 ```bash
-REGION=<REGION>
-STORAGEACCOUNTNAME=<UNIQUENAME>
-CONTAINERNAME=akscs
-TFSTATE_RG=tfstate
+$REGION=<REGION>
+$STORAGEACCOUNTNAME=<UNIQUENAME>
+$CONTAINERNAME=akscs
+$TFSTATE_RG=tfstate
 ```
 
 
 
 Create a Resource Group:
-```bash
+```
 az group create --name $TFSTATE_RG --location $REGION
 ```
 
 Create a Storage Account:
-```bash
+```
 az storage account create -n $STORAGEACCOUNTNAME -g $TFSTATE_RG -l $REGION --sku Standard_LRS
 ```
 
 Create a Storage Container within the Storage Account:
 
-```bash
+```
 az storage container-rm create --storage-account $STORAGEACCOUNTNAME --name $CONTAINERNAME
 ```
 

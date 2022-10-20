@@ -1,3 +1,5 @@
+/*
+
 # Key Vault Access for Current User
 
 resource "azurerm_key_vault_access_policy" "current_user" {
@@ -24,4 +26,4 @@ resource "azurerm_key_vault_secret" "mongodb" {
 
 variable "mongodb_secret" {}
 
-
+*/
