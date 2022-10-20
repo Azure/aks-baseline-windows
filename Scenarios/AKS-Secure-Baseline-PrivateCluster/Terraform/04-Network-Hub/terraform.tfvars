@@ -1,0 +1,6 @@
+admin_password = "Password@12345"
+admin_username = "sysadmin"
+location="Central US"
+hub_prefix="ashis"
+#active_directory_domain="lzacc.com"
+#active_directory_netbios_name="lzacc"

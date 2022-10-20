@@ -1,0 +1,9 @@
+state_sa_name = <storage account name>
+container_name = "akscs"
+access_key = "XXXXXX"
+prefix  = "akscs"
+public_domain = <public domain to register apps hostname>
+
+
+
+
