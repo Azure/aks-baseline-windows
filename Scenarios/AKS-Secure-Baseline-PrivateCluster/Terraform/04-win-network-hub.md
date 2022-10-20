@@ -53,4 +53,4 @@ terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$te
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
 
-:arrow_forward: [Creation of Spoke Network & its respective Components](./05-network-lz.md)
+:arrow_forward: [Creation of Spoke Network & its respective Components](./05-win-network-lz.md)
