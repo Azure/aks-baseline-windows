@@ -59,5 +59,5 @@ terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$ten
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
 
-:arrow_forward: [Creation of Supporting Components for AKS](./06-aks-supporting.md)
+:arrow_forward: [Creation of Supporting Components for AKS](./06-win-aks-supporting.md)
 
