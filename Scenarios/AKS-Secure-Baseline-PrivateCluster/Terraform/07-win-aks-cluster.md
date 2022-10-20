@@ -32,7 +32,7 @@ Once again, A sample terraform.tfvars.sample file is included. Update the requir
   $tenantId=""
   $servicePrincipalId=""
   $servicePrincipalKey=""
-  $access_key = ""
+  $access_key = "" # TF state file Azure storage account access key, it will be used to access exisiitng state files.
 ```
 
 Once the files are updated, deploy using Terraform Init, Plan and Apply.

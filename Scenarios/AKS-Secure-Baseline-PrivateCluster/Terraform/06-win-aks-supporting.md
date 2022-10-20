@@ -30,7 +30,7 @@ $ARM_SUBSCRIPTION_ID=""
 $tenantId=""
 $servicePrincipalId=""
 $servicePrincipalKey=""
-$access_key = "" # accesskey for the storage account where tf state files are stored.
+$access_key = "" # TF state file Azure storage account access key, it will be used to access exisiitng state files.
 ```
 
 Once the files are updated, deploy using Terraform Init, Plan and Apply. 
