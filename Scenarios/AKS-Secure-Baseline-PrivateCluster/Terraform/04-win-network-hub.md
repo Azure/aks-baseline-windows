@@ -22,7 +22,7 @@ admin_username = ""
 location=""
 hub_prefix="" 
 
-Update the powershell variables for terrafom execution:
+### Update the powershell variables for terrafom execution:
 
 ```
 $backendResourceGroupName=""

@@ -10,7 +10,7 @@ cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import
 
 In the "variables.tf" file, update the defaults to reflect the display names as needed to either match existing groups or create names that fit your requirements.  
 
-Update the following values to your powershell instance:
+### Update the following values to your powershell instance:
 ```
 $backendResourceGroupName=""
 $backendStorageAccountName=""

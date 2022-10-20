@@ -3,7 +3,7 @@ This storage account will be used to store the state of each deployment step and
 
 Create some variables to start with
 
-```bash
+```
 $REGION=<REGION>
 $STORAGEACCOUNTNAME=<UNIQUENAME>
 $CONTAINERNAME=akscs

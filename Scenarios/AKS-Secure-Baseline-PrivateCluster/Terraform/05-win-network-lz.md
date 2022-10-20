@@ -29,7 +29,7 @@ To get the access key:
 5. Update your the terraform.tfvsars.sample file with this as the value for access_key or update the existing terraform.tfvars file. 
 6. If using terraform.tfvars.sample then Rename the file to terraform.tfvars
 
-Update the rest of the variables in the new terraform.tfvars file as well.
+### Update the rest of the variables in the new terraform.tfvars file as well.
 Update following variable
 ```
 $backendResourceGroupName=""
