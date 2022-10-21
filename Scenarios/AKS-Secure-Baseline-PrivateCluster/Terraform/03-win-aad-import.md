@@ -12,28 +12,28 @@ In the "variables.tf" file, update the defaults to reflect the display names as 
 
 ### Update the following values to your powershell instance:
 ```
-$backendResourceGroupName=""
-$backendStorageAccountName=""
-$backendContainername=""
-$layerNametfstate="aad-import"
-$ARM_SUBSCRIPTION_ID=""
-$tenantId=""
-$servicePrincipalId=""
-$servicePrincipalKey=""
+$env:backendResourceGroupName="" 
+$env:backendStorageAccountName=""
+$env:backendContainername=""
+$env:layerNametfstate="aad-import"
+$env:ARM_CLIENT_ID =""
+$env:ARM_CLIENT_SECRET =""
+$env:ARM_TENANT_ID =""
+$env:ARM_SUBSCRIPTION_ID = "" 
 ```
 
 Deploy using Terraform Init, Plan and Apply. 
 
 ```bash
-terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate" -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID" -backend-config="tenant_id=$tenantId" -backend-config="client_id=$servicePrincipalId" -backend-config="client_secret=$servicePrincipalKey"
+terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate"
 ```
 
 ```
-terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
+terraform plan -out $layerNametfstate -input=false -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 
 ```
-terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
+terraform apply -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
