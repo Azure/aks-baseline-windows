@@ -30,11 +30,11 @@ terraform init -input=false -backend-config="resource_group_name=$backendResourc
 ```
 
 ```
-terraform plan -out $layerNametfstate -input=false -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername"
+terraform plan -out $layerNametfstate -input=false -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="key=$layerNametfstate"
 ```
 
 ```
-terraform apply -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername"
+terraform apply -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="key=$layerNametfstate"
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
