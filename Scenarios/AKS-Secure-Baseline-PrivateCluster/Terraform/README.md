@@ -11,7 +11,7 @@ The code here is purposely written to avoid loops, complex variables and logic. 
 In this example, state is stored in an Azure Storage account that was created out-of-band.  All deployments reference this storage account to either store state or reference variables from other parts of the deployment however you may choose to use other tools for state managment, like Terraform Cloud after making the necessary code changes.
 
 ## Authenticating using a Service Principal with a Client Secret
-Terraform modules in this repo use ARM_* environment variables stored in local shell to allow Terraform providers to authenticate to Azure. Please, set these environment varabiles with your specific values to allow Terraform to build Azure resources. You can go [here](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/guides/service_principal_client_secret) for further details.
+Terraform modules in this repo use ARM_* environment variables stored in local shell to allow Terraform providers to authenticate to Azure. Please, set these environment variables with your specific values to allow Terraform to build Azure resources. You can go [here](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/guides/service_principal_client_secret) for further details.
 ```
 $ARM_CLIENT_ID =""
 $ARM_CLIENT_SECRET =""
