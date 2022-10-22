@@ -8,9 +8,21 @@ Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD" fol
 cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import
 ```
 
-In the "variables.tf" file, update the defaults to reflect the display names as needed to either match existing groups or create names that fit your requirements.  
+In the "variables.tf" file, update the defaults to reflect the display names as needed to either match existing groups or create names that fit your requirements. 
 
-Once the files are updated, deploy using Terraform Init, Plan and Apply. 
+### Update the following values to your powershell instance:
+```
+$backendResourceGroupName ="" 
+$backendStorageAccountName =""
+$backendContainername =""
+$layerNametfstate ="aad-import"
+$ARM_CLIENT_ID =""
+$ARM_CLIENT_SECRET =""
+$ARM_TENANT_ID =""
+$ARM_SUBSCRIPTION_ID =""
+$ARM_ACCESS_KEY =""
+```
+Deploy using Terraform Init, Plan and Apply. 
 
 ```bash
 terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate"
