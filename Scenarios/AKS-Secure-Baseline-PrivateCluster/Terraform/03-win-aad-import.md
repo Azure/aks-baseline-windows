@@ -12,15 +12,14 @@ In the "variables.tf" file, update the defaults to reflect the display names as 
 
 ### Update the following values to your powershell instance:
 ```
-$backendResourceGroupName ="" 
-$backendStorageAccountName =""
-$backendContainername =""
-$layerNametfstate ="aad-import"
-$ARM_CLIENT_ID =""
-$ARM_CLIENT_SECRET =""
-$ARM_TENANT_ID =""
-$ARM_SUBSCRIPTION_ID = ""
-$ARM_ACCESS_KEY = ""
+$env:backendResourceGroupName="" 
+$env:backendStorageAccountName=""
+$env:backendContainername=""
+$env:layerNametfstate="aad-import"
+$env:ARM_CLIENT_ID =""
+$env:ARM_CLIENT_SECRET =""
+$env:ARM_TENANT_ID =""
+$env:ARM_SUBSCRIPTION_ID = "" 
 ```
 
 Deploy using Terraform Init, Plan and Apply. 
