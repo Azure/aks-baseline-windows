@@ -12,11 +12,13 @@ In this example, state is stored in an Azure Storage account that was created ou
 
 ## Authenticating using a Service Principal with a Client Secret
 Terraform modules in this repo use ARM_* environment variables stored in local shell to allow Terraform providers to authenticate to Azure. Please, set these environment varabiles with your specific values to allow Terraform to build Azure resources. You can go [here](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/guides/service_principal_client_secret) for further details.
-
-$env:ARM_CLIENT_ID ="" \
-$env:ARM_CLIENT_SECRET ="" \
-$env:ARM_TENANT_ID ="" \
-$env:ARM_SUBSCRIPTION_ID = "" 
+```
+$ARM_CLIENT_ID =""
+$ARM_CLIENT_SECRET =""
+$ARM_TENANT_ID =""
+$ARM_SUBSCRIPTION_ID =""
+$ARM_ACCESS_KEY =""
+``` 
 
 
 ## Getting Started 
