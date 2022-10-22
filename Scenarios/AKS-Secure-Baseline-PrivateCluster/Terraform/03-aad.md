@@ -13,15 +13,15 @@ In the "variables.tf" file, update the defaults to reflect the display names as 
 Once the files are updated, deploy using Terraform Init, Plan and Apply. 
 
 ```bash
-terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config="storage_account_name=$STORAGEACCOUNTNAME" -backend-config="container_name=$CONTAINERNAME"
+terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate"
 ```
 
 ```
-terraform plan
+terraform plan -out $layerNametfstate -input=false -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="key=$layerNametfstate"
 ```
 
 ```
-terraform apply
+terraform apply -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="key=$layerNametfstate"
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
