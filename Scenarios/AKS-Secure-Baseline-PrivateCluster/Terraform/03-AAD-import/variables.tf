@@ -32,5 +32,5 @@ variable "container_name" {
 }
 
 variable "key" {
-  default = "aad"
+  default = "aad-import"
 }
