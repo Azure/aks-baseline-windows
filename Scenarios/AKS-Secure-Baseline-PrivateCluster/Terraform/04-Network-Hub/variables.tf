@@ -2,7 +2,10 @@
 # VARIABLES #
 #############
 
-variable "location" {}
+variable "location" {
+
+default = "eastus"
+}
 #variable "firewallName" {}
 
 variable "tags" {
@@ -13,7 +16,9 @@ variable "tags" {
   }
 }
 
-variable "hub_prefix" {}
+variable "hub_prefix" {
+  default = "aks-hub"
+}
 
 variable "sku_name" {
   default = "AZFW_VNet"
@@ -34,6 +39,14 @@ variable "admin_username" {
   default = "sysadmin"
 }
 
-variable "resource_group_name" {}
-variable "storage_account_name" {}
-variable "container_name" {}
+variable "resource_group_name" {
+  default = "tfstate"
+}
+
+variable "storage_account_name" {
+  default = "winaksdc"
+}
+
+variable "container_name" {
+  default = "akscs"
+}
