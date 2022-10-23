@@ -39,6 +39,8 @@ variable "admin_username" {
   default = "sysadmin"
 }
 
+## Terraform state variables ##
+
 variable "resource_group_name" {
   default = "tfstate"
 }
