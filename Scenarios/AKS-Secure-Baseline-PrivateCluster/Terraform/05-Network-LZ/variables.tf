@@ -12,41 +12,23 @@ variable "tags" {
 
 variable "lz_prefix" {}
 
-
-# Used to retrieve outputs from other state files.
-# The "access_key" variable is sensitive and should be passed using
-# a .TFVARS file or other secure method.
-
 variable "state_sa_name" {}
 
-# variable "container_name" {}
-
-# Storage Account Access Key
-# variable "access_key" {}
-variable "subscription_id" {
-  description = "Azure subscription Id."
-  default = null
+variable "resource_group_name" {
+  default = "tfstate"
 }
 
-variable "tenant_id" {
-  description = "Azure tenant Id."
-   default = null
+variable "storage_account_name" {
+  default = "winaksdc"
 }
 
-variable "client_id" {
-description = "Azure service principal application Id"
-default = null
+variable "container_name" {
+  default = "akscs"
 }
 
-variable "client_secret" {
-  description = "Azure service principal application Secret"
-  default = null
+variable "key" {
+  default = "lz-net"
 }
-
-variable "access_key" {}
-variable "resource_group_name" {}
-variable "storage_account_name" {}
-variable "container_name" {}
 
 
 
