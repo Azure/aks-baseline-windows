@@ -10,9 +10,9 @@ variable "tags" {
   }
 }
 
-variable "lz_prefix" {}
-
-variable "state_sa_name" {}
+variable "lz_prefix" {
+  default = "aks-lz"
+}
 
 variable "resource_group_name" {
   default = "tfstate"
