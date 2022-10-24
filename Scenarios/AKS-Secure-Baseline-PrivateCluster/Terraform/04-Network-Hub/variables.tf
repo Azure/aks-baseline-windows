@@ -54,5 +54,5 @@ variable "container_name" {
 }
 
 variable "key" {
-  default = "network-hub"
+  default = "hub-net"
 }
