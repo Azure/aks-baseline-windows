@@ -8,14 +8,12 @@ Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD" fol
 cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import
 ```
 
-In the "variables.tf" file, update the security group and defaults to reflect the display names as needed to either match exsisting groups or create names that fit your requirements. Also, update Terraform State variables to match storage account used for state file.
-
+In the "variables.tf" file, update the security group and defaults to reflect the display names as needed to either match exsisting groups or create names that fit your requirements. Also, update Terraform State variables to match storage account used for state file backend config. Key value is set in provider.tf.
 ### Update the following values to your powershell instance:
 ```
 $TFSTATE_RG =""
 $STORAGEACCOUNTNAME = ""
 $CONTAINERNAME = ""
-$KEY = ""
 $ARM_CLIENT_ID =""
 $ARM_CLIENT_SECRET =""
 $ARM_TENANT_ID =""
