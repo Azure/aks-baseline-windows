@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: "gmsa-win-demo"
+  name: gmsa-win-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "gmsa-win-demo"
+  template:
+    metadata:
+      labels:
+        app: "gmsa-win-demo"
+    spec:
+      securityContext:
+        windowsOptions:
+          gmsaCredentialSpecName: gmsa-win
+      containers:
+      - name: iis
+        image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+        imagePullPolicy: IfNotPresent
+        command:
+          - powershell
+        args:
+          - -File
+          - /gmsa-demo/run.ps1
+        volumeMounts:
+          - name: gmsa-demo
+            mountPath: /gmsa-demo
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: gmsa-win-demo
+        name: gmsa-demo
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: agentpool
+                operator: In
+                values:
+                - wnp
