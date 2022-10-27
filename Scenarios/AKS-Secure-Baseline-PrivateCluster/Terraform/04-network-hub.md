@@ -19,7 +19,7 @@ In the "variables.tf" file, update the defaults to reflect the tags  you'd like 
 Once the files are updated, deploy using Terraform Init, Plan and Apply. 
 
 ```bash
-terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config="storage_account_name=$STORAGEACCOUNTNAME" -backend-config="container_name=$CONTAINERNAME" -backend-config="key=$KEY"
+terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config="storage_account_name=$STORAGEACCOUNTNAME" -backend-config="container_name=$CONTAINERNAME"
 ```
 
 > Enter terraform init -reconfigure if you get an error saying there was a change in the backend configuration which may require migrating existing state
