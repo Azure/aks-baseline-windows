@@ -31,7 +31,3 @@ variable "storage_account_name" {
 variable "container_name" {
   default = "akscs"
 }
-
-variable "key" {
-  default = "aad"
-}
