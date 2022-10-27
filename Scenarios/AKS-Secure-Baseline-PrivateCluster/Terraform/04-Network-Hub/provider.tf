@@ -11,7 +11,7 @@ terraform {
     resource_group_name  = var.resource_group_name # Partial configuration, provided during "terraform init"
     storage_account_name = var.storage_account_name   # Partial configuration, provided during "terraform init"
     container_name       = var.container_name # Partial configuration, provided during "terraform init"
-    key  = var.key
+    key  = "hub-net" # Value set here because multiple state files are used in this example.
   }
 
 }
