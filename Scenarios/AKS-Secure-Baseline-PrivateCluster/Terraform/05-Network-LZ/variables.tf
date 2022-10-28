@@ -11,7 +11,7 @@ variable "tags" {
 }
 
 variable "lz_prefix" {
-  default = "aks-lz"
+  default = "aks"
 }
 
 variable "resource_group_name" {
@@ -19,16 +19,14 @@ variable "resource_group_name" {
 }
 
 variable "storage_account_name" {
-  default = "winaksdc"
+  default = "winaks"
 }
 
 variable "container_name" {
   default = "akscs"
 }
 
-variable "key" {
-  default = "lz-net"
+variable "access_key" {
+  
 }
-
-
 
