@@ -2,7 +2,7 @@
 # VARIABLES #
 #############
 variable "prefix" {
-  default = "aks-sup"
+  default = "aks"
 }
 
 # The Public Domain for the public dns zone, that is used to register the hostnames assigned to the workloads hosted in AKS; if empty the dns zone not provisioned.
@@ -17,13 +17,12 @@ variable "resource_group_name" {
 }
 
 variable "storage_account_name" {
-  default = "winaksdc"
+  default = "winaks"
 }
 
 variable "container_name" {
   default = "akscs"
 }
 
-variable "key" {
-  default = "aks-sup"
+variable "access_key" {
 }
