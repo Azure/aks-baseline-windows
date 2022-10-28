@@ -33,6 +33,7 @@ variable "sku_tier" {
 
 variable "admin_password" {
   default = "aksisthe8esT"
+  sensitive = true
 }
 
 variable "admin_username" {
