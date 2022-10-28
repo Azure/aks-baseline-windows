@@ -16,7 +16,9 @@ cd ../05-Network-LZ
 In the "variables.tf" file, update the defaults to reflect the tags you'd like to use.  
 This deployment will need to reference data objects from the Hub deployment and will need access to the pre-existing state file, update the variables as needed.  
 
-This deployment will also need to use a storage access key (from Azure) to read the storage account data.  This is a sensitive variable and should not be committed to the code repo. 
+This example calls multiple remote state files for data resources. You will need to add the following environment variable to access storage account state files.
+
+$ARM_ACCESS_KEY = "" ### Enter you storage access key used for state file backend ## 
 
 Once again, A sample terraform.tfvars.sample file is included. Update the required variables, save it and rename it to **terraform.tfvars**.
 
