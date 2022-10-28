@@ -17,7 +17,7 @@ variable "tags" {
 }
 
 variable "hub_prefix" {
-  default = "aks-hub"
+  default = "aks"
 }
 
 variable "sku_name" {
@@ -32,7 +32,7 @@ variable "sku_tier" {
 ## Sample terraform.tfvars File
 
 variable "admin_password" {
-  default = "changeme"
+  default = "aksisthe8esT"
 }
 
 variable "admin_username" {
