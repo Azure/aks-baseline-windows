@@ -143,26 +143,26 @@ Deploy certificateIssuer.yaml
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f certificateIssuer.yaml -n default" --file certificateIssuer.yaml
 ```
 
-3. Edit the '5-https-ratings-web-ingress.yaml' file with the FQDN of your host that you created earlier on the public IP of the Application Gateway.
+1. Edit the 'deployment_sampleapp.yml' Ingress section with the FQDN of your host that you created earlier on the public IP of the Application Gateway.
 
-Deploy 5-https-ratings-web-ingress.yaml
+Deploy deployment_sampleapp.yml
 
 ```bash
-   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f 5-https-ratings-web-ingress.yaml -n ratingsapp" --file 5-https-ratings-web-ingress.yaml
+   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f deployment_sampleapp.yml"
 
 ```
 
 After updating the ingress, A request will be sent to letsEncrypt to provide a 'staging' certificate. This can take a few minutes. You can check on the progress by running the below command. When the status Ready = True. You should be able to browse to the same URL you configured on the PIP of the Application Gateway earlier.
 
 ```bash
-   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl get certificate -n ratingsapp"
+   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl get certificate"
 ```
 
 If you notice the status is not changing after a few minutes, there could be a problem with your certificate request. You can gather more information by running a describe on the request using the below command.
 
 ```bash
-   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl get certificaterequest -n ratingsapp"
-   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl describe certificaterequest <certificaterequestname> -n ratingsapp"
+   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl get certificaterequest"
+   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl describe certificaterequest <certificaterequestname>"
 ```
 
 Upon navigating to your new FQDN you will see you receive a certificate warning because it is not a production certificate. If you have got this far, continue to the next step to remediate this issue.
@@ -177,27 +177,22 @@ Upon navigating to your new FQDN you will see you receive a certificate warning 
 Re-apply the updated file
 
 ```bash
-   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f certificateIssuer.yaml -n ratingsapp" --file certificateIssuer.yaml
+   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f certificateIssuer.yaml" --file certificateIssuer.yaml
 ```
 
 5. The next step is to change the ingress to point to the production certificateIssuer. At the moment it is still pointing to the old staging issuer.
 
-Edit '5-https-ratings-web-ingress.yaml' and replace the following values:
+Edit 'deployment_sampleapp.yml' and replace the following values:
 
     cert-manager.io/issuer: letsencrypt-prod
 
 Re-apply the updated file
 
 ```bash
-   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f 5-https-ratings-web-ingress.yaml -n ratingsapp" --file 5-https-ratings-web-ingress.yaml
+   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f deployment_sampleapp.yml"
 ```
 
 
 Now you can access the website using using your FQDN. When you navigate to the website using your browser you might see a warning stating the destination is not safe. Give it a few minutes and this should clear out. However, for production you want to use Certified Authority (CA) certificates.
 
 ![deployed workload https more secure](../media/deployed-workload-https-secure.png)
-
-
-## Next Step
-
-:arrow_forward: [Cleanup](./09-cleanup.md)
