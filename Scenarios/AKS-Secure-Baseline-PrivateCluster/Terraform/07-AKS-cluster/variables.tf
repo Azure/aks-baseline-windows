@@ -8,7 +8,7 @@ variable "prefix" {
 
 
 variable "private_dns_zone_name" {
-default =  "privatelink.centralus.azmk8s.io"
+  default =  "privatelink.eastus.azmk8s.io"
 }
 
 variable "wnp_count" {
@@ -21,13 +21,14 @@ variable "resource_group_name" {
 }
 
 variable "storage_account_name" {
-  default = "winaksdc"
+  default = "winaks"
 }
 
 variable "container_name" {
   default = "akscs"
 }
 
-variable "key" {
-  default = "aks"
+variable "access_key" {
+  type = string
+  sensitive = true
 }
