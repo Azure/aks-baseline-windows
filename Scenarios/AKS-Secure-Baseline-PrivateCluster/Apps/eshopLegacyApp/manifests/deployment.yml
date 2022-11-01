@@ -16,10 +16,10 @@ spec:
         "kubernetes.azure.com/os-sku": Windows2022
       securityContext:
             windowsOptions:
-              gmsaCredentialSpecName: gmsa-spec # Name of GMSA cred spec 
+              gmsaCredentialSpecName: <Your GMSA Spec Name> # Name of GMSA cred spec 
       containers:
         - name: "eshop-win-mvc"
-          image: "" # Image tag reference
+          image: <Your Image Name> # Image tag reference
           ports:
           - containerPort: 80
           imagePullPolicy: Always

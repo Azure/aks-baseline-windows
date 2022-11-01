@@ -1,4 +1,4 @@
-# Deploy a Basic Workload using the Fruit Smoothie Ratings Application
+# Deploy a  Simple GMSA Integrated Workload
 
 This application is provided by Microsoft through the [GMSA on AKS PowerShell Module](https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/gmsa-aks-ps-module). The manifest for this application has been modified to support ingress using Azure Application Gateway. After setting up GMSA, the instructions will ask you perform a deployment that grabs the sample application through the PowerShell module. Do not deploy the application through the PowerShell module and please follow the steps below.
 
@@ -8,12 +8,12 @@ Because the infrastructure has been deployed in a private AKS cluster setup with
 
 * Add a rule in the Firewall to allow internet access to the VM's private IP. Verify VM's private IP and update if necessary
 
-   ```bash
+   ```PowerShell
    az network firewall network-rule create --collection-name 'VM-egress' --destination-ports '*' --firewall-name 'vnet-ESLZ-firewall' --name 'Allow-Internet' --protocols Any --resource-group 'ESLZ-HUB' --action Allow --dest-addr '*' --priority 201 --source-addresses '10.0.3.4/32'
    ```
 * Add a rule in the Firewall to allow internet access to the your VM or computer's  IP. Verify VM's private IP and update if necessary
 
-   ```bash
+   ```PowerShell
    az network firewall network-rule create --collection-name 'VM-egress' --destination-ports '*' --firewall-name 'AZFW' --name 'Allow-Internet' --protocols Any --resource-group 'ESLZ-HUB' --action Allow --dest-addr '*' --priority 201 --source-addresses '<your vm or computer's ip>'
    ```
 ## Connecting to the Bastion Host
@@ -24,28 +24,27 @@ Because the infrastructure has been deployed in a private AKS cluster setup with
 
 * Clone it on the jumpbox.
 
-   ```bash
-   git clone https://github.com/Azure/AKS-Landing-Zone-Accelerator
+   ```Git bash
+   git clone https://github.com/Azure/aks-baseline-windows
    ```
 
-* Run the script below to install the required tools (Az CLI, Docker, Kubectl, Helm etc). Navigate to "AKS-Landing-Zone-Accelerator/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/04-Network-Hub" folder.
+* Run the script below to install the required tools (Az CLI, Docker, Kubectl, Helm etc). Navigate to "aks-baseline-windows/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/04-Network-Hub" folder.
 
-   ```bash
-   cd AKS-Landing-Zone-Accelerator/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/04-Network-Hub
-   chmod +x script.sh
-   sudo ./script.sh
+   ``` PowerShell
+   cd aks-baseline-windows/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/04-Network-Hub
+   ./Install-Tools.ps1
    ```
 
 * Login to Azure
 
-   ```bash
-   TENANTID=<tenant id>
+   ```PowerShell
+   $TENANTID=<tenant id>
    az login -t $TENANTID --debug
    ```
 
 * Ensure you are connected to the correct subscription
 
-   ```bash
+   ```PowerShell
    az account set --subscription <subscription id>
    ```
 
@@ -62,7 +61,8 @@ Follow the steps [here](https://learn.microsoft.com/en-us/virtualization/windows
 
 ### How to Validate Your GMSA Integration
 
-To validate that your cluster is successfully retrieving your GMSA, go into your domain controller local server menu, go to Tools and select Event Viewer. Look under ActiveDirectory events. Look at the contents of the most recent events for a message that says "A caller successfully fetched the password of a group managed service account." The IP address of the caller should match one of your AKS cluster IPs. 
+1. Check the status of your pods by running ``` kubectl get pods ```. If the status is *Running*, you're good to go. If the status of your pods is *CrashLoopBackOff*, run ``` kubectl logs <pod name> ``` to debug. This status likely means that your credential spec file is misconfigured or the cluster permissions to your KeyVault are misconfigured. If you believe your cred spec is correct, check the logs from the above command to verify the pod was able to pull down the image from the Azure Container Registry (ACR). 
+2. To validate that your cluster is successfully retrieving your GMSA, go into your domain controller local server menu, go to Tools and select Event Viewer. Look under ActiveDirectory events. Look at the contents of the most recent events for a message that says "A caller successfully fetched the password of a group managed service account." The IP address of the caller should match one of your AKS cluster IPs. 
 
 ### Deploy workload
 
@@ -77,8 +77,8 @@ This step is optional. If you would like to go straight to using https which is 
 
 It is important to first configure the NSG for the Application Gateway to accept traffic on port 80 if using the HTTP option. Run the following command to allow HTTP.
 
-```bash
-   APPGWSUBNSG=<Name of NSG for AppGwy>
+```PowerShell
+   $APPGWSUBNSG=<Name of NSG for AppGwy>
    az network nsg rule create -g $SPOKERG --nsg-name $APPGWSUBNSG -n AllowHTTPInbound --priority 1000 \
       --source-address-prefixes '*' --source-port-ranges '*' \
       --destination-address-prefixes '*' --destination-port-ranges 80 --access Allow \
@@ -93,7 +93,7 @@ You will also need to update the firewall rules to allow http. Go into the porta
 
 It is important to delete the rule that allows HTTP traffic to keep the cluster safe since we have completed the test.
 
-```bash
+```PowerShell
    az network nsg rule delete -g $SPOKERG --nsg-name $APPGWSUBNSG -n AllowHTTPInbound
 ```
 **the optional steps end here**
@@ -139,7 +139,7 @@ We will then proceed to test this certificate process with a staging certificate
 
 Deploy certificateIssuer.yaml
 
-```bash
+```PowerShell
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f certificateIssuer.yaml -n default" --file certificateIssuer.yaml
 ```
 
@@ -147,20 +147,20 @@ Deploy certificateIssuer.yaml
 
 Deploy deployment_sampleapp.yml
 
-```bash
+```PowerShell
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f deployment_sampleapp.yml"
 
 ```
 
 After updating the ingress, A request will be sent to letsEncrypt to provide a 'staging' certificate. This can take a few minutes. You can check on the progress by running the below command. When the status Ready = True. You should be able to browse to the same URL you configured on the PIP of the Application Gateway earlier.
 
-```bash
+```PowerShell
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl get certificate"
 ```
 
 If you notice the status is not changing after a few minutes, there could be a problem with your certificate request. You can gather more information by running a describe on the request using the below command.
 
-```bash
+```PowerShell
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl get certificaterequest"
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl describe certificaterequest <certificaterequestname>"
 ```
@@ -176,7 +176,7 @@ Upon navigating to your new FQDN you will see you receive a certificate warning 
 
 Re-apply the updated file
 
-```bash
+```PowerShell
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f certificateIssuer.yaml" --file certificateIssuer.yaml
 ```
 
@@ -188,7 +188,7 @@ Edit 'deployment_sampleapp.yml' and replace the following values:
 
 Re-apply the updated file
 
-```bash
+```PowerShell
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f deployment_sampleapp.yml"
 ```
 
