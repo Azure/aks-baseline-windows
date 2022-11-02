@@ -1,6 +1,6 @@
-# Deploy a  Simple GMSA Integrated Workload
+# Deploy a GMSA Integrated .NET Legacy Workload
 
-This application is provided by Microsoft through the [GMSA on AKS PowerShell Module](https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/gmsa-aks-ps-module). The manifest for this application has been modified to support ingress using Azure Application Gateway. After setting up GMSA, the instructions will ask you perform a deployment that grabs the sample application through the PowerShell module. Do not deploy the application through the PowerShell module and please follow the steps below.
+This application is provided by Microsoft to demonstrate a Legacy .NET 4.7 application on Windows Containers. Follow the instructions in the documentation through generating and applying the credential spec file to the AKS cluster. After you configure GMSA, you will walk through the steps of deploying the application to the cluster. 
 
 Because the infrastructure has been deployed in a private AKS cluster setup with private endpoints for the container registry and other components, you will need to perform the application container build and the publishing to the Container Registry from the Dev Jumpbox in the Hub VNET, connecting via the Bastion Host service. If your computer is connected to the hub network, you may be able to just use that as well. The rest of the steps can be performed on your local machine by using AKS Run commands which allow access into private clusters using RBAC. This will help with improving security and will provide a more user-friendly way of editing YAML files.
 
@@ -47,6 +47,52 @@ Because the infrastructure has been deployed in a private AKS cluster setup with
    ```PowerShell
    az account set --subscription <subscription id>
    ```
+## Build Container Images
+
+The Dockerfile for the eShop application is in the repository you've already cloned to your jumpbox in the previous step. 
+
+Navigate to the [eShop Dockerfile](../eshopLegacyApp/application/eshop.Dockerfile), build and tag the containers with the name of your Azure Container Registry and push the images to ACR. // Make sure it is the correct ACR
+
+```PowerShell
+# enter the name of your ACR below
+$SPOKERG=<resource group name for spoke>
+$ACRNAME=$(az acr show --name <ACR NAME> --resource-group $SPOKERG --query "name" --output tsv)
+
+cd aks-baseline-windows/Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/eshopLegacyApp/application
+
+docker build -t $ACRNAME.azurecr.io/eshopapp:v1 -f eshop.Dockerfile .
+```
+
+Log into ACR
+
+```PowerShell 
+az acr login -n $ACRNAME
+```
+
+Push the images into the container registry. Ensure you are logged into the Azure Container Registry, you should show a successful login from the command above.
+
+```PowerShell
+docker push $ACRNAME.azurecr.io/eshopapp:v1
+```
+
+To verify they have been pushed run the following commands:
+
+```PowerShell
+az acr repository show -n $ACRNAME --image eshopapp:v1
+```
+## Infrastructure Additions
+To deploy the eShop application, you will need to add a SQL database to your base architecture and a Windows Server 2022 nodepool to your AKS cluster.
+
+### Azure SQL Database
+In addition to the base private architecture that you've deployed, you will need to deploy a SQL database to hold the product information. 
+
+1. Create a SQL server and database in your Spoke resource group in the same location. 
+2. Using the query editor in Azure Portal or SQL Server Management Studio (SSMS), run the [eShop Database Query](/Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/eshopLegacyApp/database%20scripts/insertdata.sql) on your database to create the necessary tables and hydrate the tables with data. 
+3. Copy and paste your SQL database connection string in the placeholder in the [Web.config](/Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/eshopLegacyApp/application/src/eShopModernizedMVC/Web.config) for the eShop Application. DO NOT commit this connection string to your public Git repository. 
+
+### AKS Windows Server 2022 Nodepool
+
+The eShop container image uses Windows Server 2022 nodes. The base architecture deploys a default Windows nodepool which is Windows Server 2019. Update your existing cluster by adding a Windows Server 2022 nodepool through Terraform. Make sure you do this step before setting up GMSA because the setup needs the name of all Windows nodepools that need access to the KeyVault for pulling the domain credentials.  
 
 ## Setup Group Managed Service Account (GMSA) Integration
 
@@ -66,10 +112,11 @@ Follow the steps [here](https://learn.microsoft.com/en-us/virtualization/windows
 
 ### Deploy workload
 
-Navigate to "Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/RatingsApp" folder.
+Navigate to "Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/eshopLegacyApp" folder.
 
-1. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name and Windows NodePool(s) name. 
-2. Run ``` kubectl apply -f deployment_sampleapp.yml ```
+1. Update the [manifest file](/Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/eshopLegacyApp/manifests/deployment.yml) for the sample application with your GMSA name and image name. 
+2. Run ``` kubectl apply -f ingress.yml ``` to setup the Application Gateway for ingress on the cluster. 
+3.  Run ``` kubectl apply -f deployment.yml ``` to deploy the application to the Windows 2022 nodes. 
 
 ## **(Optional)** Deploy the Ingress without support for HTTPS
 
@@ -128,7 +175,7 @@ We are going to use Lets Encrypt and Cert-Manager to provide easy to use certifi
 
 1. First of all, you will need to install cert-manager into your cluster.
 
-```bash
+```PowerShell
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.8.0/cert-manager.yaml"
 ```
 First of all this will create a new namespace called cert-manager which is where all of the resources for cert-manager will be kept. This will then go ahead and download some CRDs (CustomResourceDefinitions) which provides extra functionality in the cluster for the creation of certificates.
@@ -143,12 +190,12 @@ Deploy certificateIssuer.yaml
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f certificateIssuer.yaml -n default" --file certificateIssuer.yaml
 ```
 
-1. Edit the 'deployment_sampleapp.yml' Ingress section with the FQDN of your host that you created earlier on the public IP of the Application Gateway.
+1. Edit the 'ingress.yml' with the FQDN of your host that you created earlier on the public IP of the Application Gateway.
 
-Deploy deployment_sampleapp.yml
+Deploy ingress.yml
 
 ```PowerShell
-   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f deployment_sampleapp.yml"
+   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f ingress.yml"
 
 ```
 
@@ -182,14 +229,14 @@ Re-apply the updated file
 
 5. The next step is to change the ingress to point to the production certificateIssuer. At the moment it is still pointing to the old staging issuer.
 
-Edit 'deployment_sampleapp.yml' and replace the following values:
+Edit 'deployment.yml' and replace the following values:
 
     cert-manager.io/issuer: letsencrypt-prod
 
 Re-apply the updated file
 
 ```PowerShell
-   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f deployment_sampleapp.yml"
+   az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f deployment.yml"
 ```
 
 

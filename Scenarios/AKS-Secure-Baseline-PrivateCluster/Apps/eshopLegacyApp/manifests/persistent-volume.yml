@@ -10,7 +10,7 @@ spec:
     - ReadWriteMany
   azureFile:
     secretName: azure-secret-fshare
-    shareName: "" # Your file share name
+    shareName: <Your File Share Name> # Your file share name
     readOnly: false
   mountOptions:
   - dir_mode=0777
