@@ -29,11 +29,11 @@ terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config
 > Enter terraform init -reconfigure if you get an error saying there was a change in the backend configuration which may require migrating existing state
 
 ```bash
-terraform plan -var=access_key=$ARM_ACCESS_KEY
+terraform plan
 ```
 
 ```bash
-terraform apply -var=access_key=$ARM_ACCESS_KEY
+terraform apply
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
