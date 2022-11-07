@@ -60,10 +60,11 @@ module "aks" {
   vnet_subnet_id      = data.terraform_remote_state.existing-lz.outputs.aks_subnet_id
   mi_aks_cp_id        = azurerm_user_assigned_identity.mi-aks-cp.id
   la_id               = azurerm_log_analytics_workspace.aks.id
-  gateway_name        = data.terraform_remote_state.existing-lz.outputs.gateway_name
-  gateway_id          = data.terraform_remote_state.existing-lz.outputs.gateway_id
+  # gateway_name        = data.terraform_remote_state.existing-lz.outputs.gateway_name
+  # gateway_id          = data.terraform_remote_state.existing-lz.outputs.gateway_id
   private_dns_zone_id = azurerm_private_dns_zone.aks-dns.id
   wnp_count = var.wnp_count
+  appgwSubnet_Id = data.terraform_remote_state.existing-lz.outputs.appgwSubnet_Id
 }
 
 # These role assignments grant the groups made in "03-AAD" access to use

@@ -6,7 +6,6 @@ variable "prefix" {
   default = "aks-cluster"
 }
 
-
 variable "private_dns_zone_name" {
   default =  "privatelink.eastus.azmk8s.io"
 }

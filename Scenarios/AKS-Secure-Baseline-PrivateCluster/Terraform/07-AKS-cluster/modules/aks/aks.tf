@@ -1,5 +1,4 @@
 # Creates cluster with default linux node pool
-
 resource "azurerm_kubernetes_cluster" "akscluster" {
   lifecycle {
    ignore_changes = [
@@ -16,9 +15,9 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   private_dns_zone_id     = var.private_dns_zone_id
   azure_policy_enabled    = true
 
-  #ingress_application_gateway {
-  #  gateway_id = var.gateway_id
-  #}
+  ingress_application_gateway {
+    subnet_id = var.appgwSubnet_Id
+  }
 
   oms_agent {
     log_analytics_workspace_id = var.la_id
