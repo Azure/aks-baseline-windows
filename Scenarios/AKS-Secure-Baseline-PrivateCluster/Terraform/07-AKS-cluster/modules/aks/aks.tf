@@ -71,7 +71,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
   mode                  = "User"
   os_disk_size_gb       = 128
   os_type               = "Windows"
-  os_sku = "Windows2022"
   vnet_subnet_id        = var.vnet_subnet_id
   tags = {
     "nodepool-type" = "user"
