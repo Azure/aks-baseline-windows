@@ -32,7 +32,7 @@ variable "sku_tier" {
 ## Sample terraform.tfvars File
 
 variable "admin_password" {
-  default = "aksisthe8esT"
+  default = ""
   sensitive = true
 }
 
@@ -40,7 +40,7 @@ variable "admin_username" {
   default = "sysadmin"
 }
 
-## Terraform backend state variables ##
+## Terraform backend state variables update with your storage account information ##
 
 variable "resource_group_name" {
   default = "tfstate"
