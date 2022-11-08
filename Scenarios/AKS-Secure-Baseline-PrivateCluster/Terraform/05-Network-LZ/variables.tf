@@ -11,7 +11,7 @@ variable "tags" {
 }
 
 variable "lz_prefix" {
-  default = "aks"
+  default = "lz"
 }
 
 variable "resource_group_name" {
