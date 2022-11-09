@@ -1,6 +1,0 @@
-#admin_password = "Password@12345"
-#admin_username = "sysadmin"
-#location="eastus"
-#hub_prefix="akshub"
-#active_directory_domain="lzacc.com"
-#active_directory_netbios_name="lzacc"
