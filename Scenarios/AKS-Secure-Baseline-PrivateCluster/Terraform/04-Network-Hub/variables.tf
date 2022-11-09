@@ -4,7 +4,7 @@
 
 variable "location" {
 
-default = "eastus"
+  default = "eastus"
 }
 #variable "firewallName" {}
 
@@ -32,7 +32,7 @@ variable "sku_tier" {
 ## Sample terraform.tfvars File
 
 variable "admin_password" {
-  default = ""
+  default   = ""
   sensitive = true
 }
 
@@ -47,7 +47,6 @@ variable "resource_group_name" {
 }
 
 variable "storage_account_name" {
-  default = "winaksdc"
 }
 
 variable "container_name" {

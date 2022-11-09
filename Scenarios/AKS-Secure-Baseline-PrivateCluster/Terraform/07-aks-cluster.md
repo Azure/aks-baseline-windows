@@ -14,7 +14,7 @@ cd ../07-AKS-cluster
 
 This deployment will need to reference data objects from the Hub deployment and will need access to the pre-existing state file, update the variables as needed.  This deployment will also need to use a storage access key (from Azure) to read the storage account data.  This is a sensitive variable and should not be committed to the code repo.
 
-Once again, A sample terraform.tfvars.sample file is included. Update the required variables, save it and rename it to **terraform.tfvars**.
+Once again, A sample terraform.tfvars.sample file is included. Update the required variables, save it and rename it to **terraform.tfvars**. Remember to update your private dns zone name variable with the appropriate location.
 
 Once the files are updated, deploy using Terraform Init, Plan and Apply.
 

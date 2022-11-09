@@ -11,19 +11,19 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = var.resource_group_name #   Partial configuration, provided during "terraform init"
+    resource_group_name  = var.resource_group_name  #   Partial configuration, provided during "terraform init"
     storage_account_name = var.storage_account_name #  Partial configuration, provided during "terraform init"
-    container_name       = var.container_name #   Partial configuration, provided during "terraform init"
-    key  = "aad-import" # Value set here because multiple state files are used in this example.
+    container_name       = var.container_name       #   Partial configuration, provided during "terraform init"
+    key                  = "aad"                    # Value set here because multiple state files are used in this example.
   }
 
 }
 
 provider "azurerm" {
-    features {}
-    
+  features {}
+
 }
 
 provider "azuread" {
-   
+
 }
