@@ -8,8 +8,7 @@ Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD" fol
 cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import
 ```
 
-In the "variables.tf" file, update the defaults to reflect the display names as needed to either match existing groups or create names that fit your requirements.  
-
+In the "variables.tf" file, update the security group and defaults to reflect the display names as needed to either match exsisting groups or create names that fit your requirements. Also, update Terraform State variables to match storage account used for state file backend config. Key value is set in provider.tf.
 ### Update the following values to your powershell instance:
 ```
 $backendResourceGroupName=""
@@ -21,12 +20,13 @@ $tenantId=""
 $servicePrincipalId=""
 $servicePrincipalKey=""
 ```
-
 Deploy using Terraform Init, Plan and Apply. 
 
 ```bash
 terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate" -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID" -backend-config="tenant_id=$tenantId" -backend-config="client_id=$servicePrincipalId" -backend-config="client_secret=$servicePrincipalKey"
 ```
+
+
 
 ```
 terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"

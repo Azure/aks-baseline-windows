@@ -16,7 +16,7 @@ Once again, A sample terraform.tfvars.sample file is included. Update the requir
 
 ### Add the Access key variable to terraform.tfvars
 
-1. Open the *terraform.tfvars.sample* file and add the access key as the value of the access_key variable.  Update the other storage related variables. 
+1. Open the *terraform.tfvars.sample* file and add the access key as the value of the storage_account_name  variable.  Update the other storage related variables. If you are planning on using a Public DNS zone set the value  as well otherwise leave the value as `""`
 1. Rename the file to *terraform.tfvars*
 
 ## Deploy the Supporting Services 
@@ -28,7 +28,7 @@ terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config
 ```
 
 ```
-terraform plan
+terraform plan 
 ```
 
 ```

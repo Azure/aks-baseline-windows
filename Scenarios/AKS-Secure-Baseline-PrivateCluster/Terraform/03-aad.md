@@ -5,23 +5,34 @@ Depending on the needs of your organization, you may have a choice of existing g
 
 Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD" folder, either "03-AAD-create" or "03-AAD-import"
 ```
-cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import
+cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-create
 ```
 
-In the "variables.tf" file, update the defaults to reflect the display names as needed to either match existing groups or create names that fit your requirements.  
+In the "variables.tf" file, update the security group and defaults to reflect the display names as needed to either match existing groups or create names that fit your requirements. Also, update Terraform State variables to match storage account used for state file backend config. Key value is set in provider.tf.
 
-Once the files are updated, deploy using Terraform Init, Plan and Apply. 
+### Update the following values to your powershell instance:
+```
+$TFSTATE_RG =""
+$STORAGEACCOUNTNAME = ""
+$CONTAINERNAME = ""
+$ARM_CLIENT_ID =""
+$ARM_CLIENT_SECRET =""
+$ARM_TENANT_ID =""
+$ARM_SUBSCRIPTION_ID =""
+$ARM_ACCESS_KEY =""
+```
+Deploy using Terraform Init, Plan and Apply. 
 
 ```bash
-terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config="storage_account_name=$STORAGEACCOUNTNAME" -backend-config="container_name=$CONTAINERNAME"
+terraform init -input=false -backend-config="resource_group_name=$TFSTATE_RG" -backend-config="storage_account_name=$STORAGEACCOUNTNAME" -backend-config="container_name=$CONTAINERNAME"
 ```
 
 ```
-terraform plan
+terraform plan 
 ```
 
 ```
-terraform apply
+terraform apply 
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.

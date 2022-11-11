@@ -1,10 +1,9 @@
 # Creates cluster with default linux node pool
-
 resource "azurerm_kubernetes_cluster" "akscluster" {
   lifecycle {
-   ignore_changes = [
-     default_node_pool[0].node_count
-   ]
+    ignore_changes = [
+      default_node_pool[0].node_count
+    ]
   }
 
   name                    = var.prefix
@@ -16,9 +15,19 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   private_dns_zone_id     = var.private_dns_zone_id
   azure_policy_enabled    = true
 
-  #ingress_application_gateway {
+  ingress_application_gateway {
+    subnet_id = var.appgwSubnet_Id
+  }
+
+  # required if you are using an existing app gateway
+  # ingress_application_gateway {
   #  gateway_id = var.gateway_id
   #}
+
+  key_vault_secrets_provider {
+    secret_rotation_enabled  = true
+    secret_rotation_interval = "2m"
+  }
 
   oms_agent {
     log_analytics_workspace_id = var.la_id
@@ -36,9 +45,10 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   network_profile {
     network_plugin = "azure"
     # network_policy = "azure"
-    outbound_type = "userDefinedRouting"
-    dns_service_ip = "192.168.100.10"
-    service_cidr = "192.168.100.0/24"
+    load_balancer_sku  = "standard"
+    outbound_type      = "userDefinedRouting"
+    dns_service_ip     = "192.168.100.10"
+    service_cidr       = "192.168.100.0/24"
     docker_bridge_cidr = "172.17.0.1/16"
 
   }
@@ -46,10 +56,10 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   role_based_access_control_enabled = true
 
   azure_active_directory_role_based_access_control {
-      managed            = true
+    managed = true
     //  admin_group_object_ids = talk to Ayo about this one, this arg could reduce code other places possibly 
-      azure_rbac_enabled = true
-    }
+    azure_rbac_enabled = true
+  }
 
   identity {
     type         = "UserAssigned"
@@ -58,7 +68,7 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
-  count = var.wnp_count ? 1 : 0
+  count                 = var.wnp_count ? 1 : 0
   name                  = "wnp"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
   vm_size               = "Standard_D4s_v3"

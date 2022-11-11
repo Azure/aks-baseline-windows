@@ -16,7 +16,7 @@ cd ../05-Network-LZ
 In the "variables.tf" file, update the defaults to reflect the tags you'd like to use.  
 This deployment will need to reference data objects from the Hub deployment and will need access to the pre-existing state file, update the variables as needed.  
 
-This deployment will also need to use a storage access key (from Azure) to read the storage account data.  This is a sensitive variable and should not be committed to the code repo. 
+This deployment will also need to use a storage access key (from Azure) to read the storage account data. This is a sensitive variable and should not be committed to the code repo.
 
 Once again, A sample terraform.tfvars.sample file is included. Update the required variables, save it and rename it to **terraform.tfvars**.
 
@@ -38,11 +38,11 @@ terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config
 ```
 
 ```bash
-terraform plan
+terraform plan 
 ```
 
 ```bash
-terraform apply
+terraform apply 
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.

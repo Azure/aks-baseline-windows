@@ -17,7 +17,7 @@ output "lz_rg_name" {
 # Virtual Network
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet-${var.lz_prefix}"
+  name                = "${var.lz_prefix}-vnet"
   resource_group_name = azurerm_resource_group.spoke-rg.name
   location            = azurerm_resource_group.spoke-rg.location
   address_space       = ["10.1.0.0/16"]

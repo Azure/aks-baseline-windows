@@ -11,23 +11,22 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = var.resource_group_name #"tfstateashi"   # Partial configuration, provided during "terraform init"
+    resource_group_name  = var.resource_group_name  #"tfstateashi"   # Partial configuration, provided during "terraform init"
     storage_account_name = var.storage_account_name #"aksashi001tfsa"   # Partial configuration, provided during "terraform init"
-    container_name       = var.container_name #"akscs"   # Partial configuration, provided during "terraform init"
-    key  = "aad"
+    container_name       = var.container_name       #"akscs"   # Partial configuration, provided during "terraform init"
+    key                  = "aad"                    # Value set here because multiple state files are used in this example.
   }
 
 }
 
 provider "azurerm" {
-    features {}
-    subscription_id = var.subscription_id #"82e70289-bf40-45f9-8476-eab93d2031f4"
-    tenant_id = var.tenant_id #"449fbe1d-9c99-4509-9014-4fd5cf25b014"
-    client_id  = var.client_id #"f5174545-d5ae-49ab-be0a-48eed78a9c5c"
-    client_secret = var.client_secret #"F8U8~bmRCb4Lu7l.25r6ETc928ZPzBaqzw"
-
+  features {}
+  # subscription_id = var.subscription_id #"82e70289-bf40-45f9-8476-easdsd2031f4"	
+  # tenant_id = var.tenant_id #"449fbe1d-9c99-4509-9014-4fdsdsdsd5b014"	
+  # client_id  = var.client_id #"f5174545-d5ae-49ab-be0a-48sdsdsda9c5c"	
+  # client_secret = var.client_secret #"F8U8~bmRCb4Lu7l.25r6Edsdsdw8ZPzBaqzw"
 }
 
 provider "azuread" {
-  tenant_id = var.tenant_id #"449fbe1d-9c99-4509-9014-4fd5cf25b014"
+  # tenant_id = var.tenant_id #"449fbe1d-9c99-4509-9014-4fd5cf25b014"
 }
