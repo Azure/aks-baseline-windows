@@ -16,10 +16,6 @@ cd ../04-Network-Hub
 
 In the "variables.tf" file, update the defaults to reflect the tags  you'd like to use throughout the rest of the deployment.  There are a group of "sensitive" variables for the username and password of the jumpbox.  It is not recommended that these variables be commited to code in a public repo, you should instead create a separate terraform.tfvars file (not committed via gitignore) or use GitHub secrets (with a workflow) to pass those values in at deployment time. (A sample terraform.tfvars.sample file is included for reference. Enter your values and rename it **terraform.tfvars**)
 
-This example calls multiple remote state files for data resources. You will need to add the following environment variable to access storage account state files.
-
-$ARM_ACCESS_KEY = "" ### Enter you storage access key used for state file backend ##
-
 Once the files are updated, deploy using Terraform Init, Plan and Apply. 
 
 ```bash

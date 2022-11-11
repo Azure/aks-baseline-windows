@@ -23,7 +23,7 @@ terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config
 ```
 
 ```bash
-terraform plan -
+terraform plan 
 ```
 
 ```bash
