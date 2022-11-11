@@ -11,27 +11,29 @@ cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import
 In the "variables.tf" file, update the security group and defaults to reflect the display names as needed to either match exsisting groups or create names that fit your requirements. Also, update Terraform State variables to match storage account used for state file backend config. Key value is set in provider.tf.
 ### Update the following values to your powershell instance:
 ```
-$TFSTATE_RG =""
-$STORAGEACCOUNTNAME = ""
-$CONTAINERNAME = ""
-$ARM_CLIENT_ID =""
-$ARM_CLIENT_SECRET =""
-$ARM_TENANT_ID =""
-$ARM_SUBSCRIPTION_ID =""
-$ARM_ACCESS_KEY =""
+$backendResourceGroupName=""
+$backendStorageAccountName=""
+$backendContainername=""
+$layerNametfstate="aad-import"
+$ARM_SUBSCRIPTION_ID=""
+$tenantId=""
+$servicePrincipalId=""
+$servicePrincipalKey=""
 ```
 Deploy using Terraform Init, Plan and Apply. 
 
 ```bash
-terraform init -input=false -backend-config="resource_group_name=$TFSTATE_RG" -backend-config="storage_account_name=$STORAGEACCOUNTNAME" -backend-config="container_name=$CONTAINERNAME"
+terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate" -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID" -backend-config="tenant_id=$tenantId" -backend-config="client_id=$servicePrincipalId" -backend-config="client_secret=$servicePrincipalKey"
+```
+
+
+
+```
+terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 
 ```
-terraform plan 
-```
-
-```
-terraform apply 
+terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.

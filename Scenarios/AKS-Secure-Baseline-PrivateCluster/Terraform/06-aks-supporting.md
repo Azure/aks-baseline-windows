@@ -28,11 +28,11 @@ terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config
 ```
 
 ```
-terraform plan -var=access_key=$ARM_ACCESS_KEY
+terraform plan 
 ```
 
 ```
-terraform apply -var=access_key=$ARM_ACCESS_KEY
+terraform apply
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
