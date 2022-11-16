@@ -47,7 +47,7 @@ spec:
     spec:
       securityContext:
         windowsOptions:
-          gmsaCredentialSpecName: <GMSA Name>
+          gmsaCredentialSpecName: gmsa-spec
       containers:
       - name: iis
         image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
@@ -73,9 +73,23 @@ spec:
               - key: agentpool
                 operator: In
                 values:
-                - <Windows NodePool name>
+                - wnp
 ---
-apiVersion: extensions/v1beta1
+apiVersion: v1
+kind: Service
+metadata:
+  name: gmsa-win-demo
+spec:
+  selector:
+    app: gmsa-win-demo
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: gmsa-win-demo
@@ -85,6 +99,10 @@ spec:
   rules:
   - http:
       paths:
-      - backend:
-          serviceName: frontend
-          servicePort: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: gmsa-win-demo
+            port:
+             number: 80
