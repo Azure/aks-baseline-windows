@@ -8,6 +8,7 @@ resource "azurerm_subnet" "aks" {
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = ["10.1.16.0/20"]
   enforce_private_link_endpoint_network_policies = true
+  service_endpoints = ["Microsoft.KeyVault"]
 
 }
 
