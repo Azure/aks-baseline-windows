@@ -1,5 +1,8 @@
 {
     "version": "0.2",
+    "ignorePaths": [
+        "Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/eshopLegacyApp/application/src/**"
+    ],
     "ignoreRegExpList": [
         "/^\\s*```[\\s\\S]*?^\\s*```/gm"
     ],
@@ -19,7 +22,7 @@
     "ignoreWords": [],
     "import": [],
     "enableFiletypes": [
-        "!css",
+        "md",
         "!jsonc",
         "!yml",
         "json"
