@@ -1,7 +1,7 @@
 # Create the Landing Zone Network
 
 The following will be created:
-* Resource Group for Landing Zone Neworking (lz-networking.tf)
+* Resource Group for Landing Zone Networking (lz-networking.tf)
 * Route Table (lz-networking.tf)
 * Peering of Hub and Spoke Networks (hub-spoke-peering.tf)
 * Private DNS Zones (dns-zones.tf)
@@ -26,7 +26,7 @@ To get the access key:
 2. Under **Security + networking** section in the left blade, click on **Access keys**
 3. Click on **Show keys** at the top of the resulting page 
 4. Copy the string under **Key** from one of the two keys provided
-5. Update your the terraform.tfvsars.sample file with this as the value for access_key or update the existing terraform.tfvars file. 
+5. Update your the terraform.tfvars.sample file with this as the value for access_key or update the existing terraform.tfvars file. 
 6. If using terraform.tfvars.sample then Rename the file to terraform.tfvars
 
 ### Update the rest of the variables in the new terraform.tfvars file as well.

@@ -21,12 +21,14 @@
         "Keyvault",
         "kubelogin",
         "letsencrypt",
+        "MSRC",
         "nodepool",
         "nodepools",
         "SDLC",
         "SSMS",
         "tfvar",
-        "tfvars"
+        "tfvars",
+        "VNET"
     ],
     "ignoreWords": [],
     "import": [],
