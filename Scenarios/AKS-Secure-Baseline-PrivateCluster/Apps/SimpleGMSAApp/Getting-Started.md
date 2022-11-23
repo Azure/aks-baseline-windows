@@ -1,6 +1,6 @@
 # Deploy a  Simple GMSA Integrated Workload
 
-This application is provided by Microsoft through the [GMSA on AKS PowerShell Module](https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/gmsa-aks-ps-module). The manifest for this application has been modified to support ingress using Azure Application Gateway. After setting up GMSA, the instructions will ask you perform a deployment that grabs the sample application through the PowerShell module. Do not deploy the application through the PowerShell module and please follow the steps below.
+This application is provided by Microsoft through the [GMSA on AKS PowerShell Module](https://learn.microsoft.com/virtualization/windowscontainers/manage-containers/gmsa-aks-ps-module). The manifest for this application has been modified to support ingress using Azure Application Gateway. After setting up GMSA, the instructions will ask you perform a deployment that grabs the sample application through the PowerShell module. Do not deploy the application through the PowerShell module and please follow the steps below.
 
 Because the infrastructure has been deployed in a private AKS cluster setup with private endpoints for the container registry and other components, you will need to perform the application container build and the publishing to the Container Registry from the Dev Jumpbox in the Hub VNET, connecting via the Bastion Host service. If your computer is connected to the hub network, you may be able to just use that as well. The rest of the steps can be performed on your local machine by using AKS Run commands which allow access into private clusters using RBAC. This will help with improving security and will provide a more user-friendly way of editing YAML files.
 
@@ -54,7 +54,7 @@ Before enabling GMSA on your AKS cluster, you will need to make the following up
 1. Update the DNS server on the hub and spoke VNETs to from Azure Default to Custom. The IP address will be the IP address of your domain controller. Reboot all virtual machines and your domain controller after performing this action.
 2. Enable the application gateway add-on for your AKS cluster. This will allow the application to be accessed through the public IP address of the gateway. 
 
-Follow the steps [here](https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/gmsa-aks-ps-module) to setup your environment and setup GMSA on your cluster. These commands will need to be run on your domain controller or on a domain joined virtual machine.  
+Follow the steps [here](https://learn.microsoft.com/virtualization/windowscontainers/manage-containers/gmsa-aks-ps-module) to setup your environment and setup GMSA on your cluster. These commands will need to be run on your domain controller or on a domain joined virtual machine.  
 
 ### Common Issues
 1. If you are running these commands on your domain controller that is a Windows Server machine, you may have trouble installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/) and [kubelogin](https://github.com/Azure/kubelogin). The error would mention "Install-AzAksKubectl". If so, you will need to manually install both following the links above. 
@@ -105,7 +105,7 @@ A fully qualified DNS name and a certificate are needed to configure HTTPS suppo
 
 **Objectives**
 
-1. Configure the Public IP address of your Application Gateway to have a DNS name. It will be in the format of customprefix.region.cloudapp.azure.com
+1. Configure the Public IP address of your Application Gateway to have a DNS name. It will be in the format of customPrefix.region.cloudapp.azure.com
 2. Create a certificate using the FQDN and store it in Key Vault.
 
 ### Creating Public IP address for your Application Gateway
