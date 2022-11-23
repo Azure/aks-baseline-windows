@@ -143,7 +143,7 @@ Deploy certificateIssuer.yaml
    az aks command invoke --resource-group $ClusterRGName --name $ClusterName   --command "kubectl apply -f certificateIssuer.yaml -n default" --file certificateIssuer.yaml
 ```
 
-1. Edit the 'deployment_sampleapp.yml' Ingress section with the FQDN of your host that you created earlier on the public IP of the Application Gateway.
+1. Edit the `deployment_sampleapp.yml` Ingress section with the FQDN of your host that you created earlier on the public IP of the Application Gateway.
 
 Deploy deployment_sampleapp.yml
 

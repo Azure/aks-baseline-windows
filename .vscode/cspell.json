@@ -4,7 +4,9 @@
         "Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/eshopLegacyApp/application/src/**"
     ],
     "ignoreRegExpList": [
-        "/^\\s*```[\\s\\S]*?^\\s*```/gm"
+        "/^\\s*```[\\s\\S]*?^\\s*```/gm",
+        "```[a-z]*[\\s\\S]*?```",
+        "`[a-z]*[\\s\\S]*?`"
     ],
     "dictionaryDefinitions": [],
     "dictionaries": [],
