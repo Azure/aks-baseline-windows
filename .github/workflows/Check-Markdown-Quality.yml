@@ -10,9 +10,9 @@ jobs:
   MustPass:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.5.0
 
-      - uses: streetsidesoftware/cspell-action@v1.3.4
+      - uses: streetsidesoftware/cspell-action@v2.12.1
         name: Spell Check
         with:
           config: './.vscode/cspell.json'
