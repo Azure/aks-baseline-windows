@@ -13,13 +13,20 @@
     "language": "en_US",
     "words": [
         "cloudapp",
+        "ecommerce",
+        "escs",
         "eshop",
         "GMSA",
         "jumpbox",
+        "Keyvault",
         "kubelogin",
         "letsencrypt",
         "nodepool",
-        "nodepools"
+        "nodepools",
+        "SDLC",
+        "SSMS",
+        "tfvar",
+        "tfvars"
     ],
     "ignoreWords": [],
     "import": [],

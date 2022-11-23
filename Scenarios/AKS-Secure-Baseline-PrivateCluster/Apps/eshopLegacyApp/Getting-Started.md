@@ -152,7 +152,7 @@ A fully qualified DNS name and a certificate are needed to configure HTTPS suppo
 
 **Objectives**
 
-1. Configure the Public IP address of your Application Gateway to have a DNS name. It will be in the format of customprefix.region.cloudapp.azure.com
+1. Configure the Public IP address of your Application Gateway to have a DNS name. It will be in the format of customPrefix.region.cloudapp.azure.com
 2. Create a certificate using the FQDN and store it in Key Vault.
 
 ### Creating Public IP address for your Application Gateway
