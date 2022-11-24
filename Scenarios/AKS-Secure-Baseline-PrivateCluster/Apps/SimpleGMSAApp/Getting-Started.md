@@ -14,7 +14,7 @@ Because the infrastructure has been deployed in a private AKS cluster setup with
 
 * Install az cli for windows. You can find latest version [here](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 * After installing az cli you will need to install aks add-on. Run az aks install-cli to add support for kubelogin and kubectl.
-* Please add "C:\Users\sysadmin\.azure-kubelogin" and "C:\Users\sysadmin\.auzre-kubectl to your search PATH so the `kubelogin.exe` can be found. 3 options:
+* Please add "C:\Users\sysadmin\.azure-kubelogin" and "C:\Users\sysadmin\.azure-kubectl to your search PATH so the `kubelogin.exe` can be found. 3 options:
 
     1. Run set PATH=%PATH%;C:\Users\sysadmin\.azure-kubelogin or $env:path += 'C:\Users\sysadmin\.azure-kubelogin' for PowerShell. This is good for the current command session.
 
