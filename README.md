@@ -1,28 +1,16 @@
 # AKS Windows Baseline
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+This repository demonstrates recommended ways to deploy and manage Windows workloads on AKS. To learn more about how enterprises can look at setting up their team and manage in terms of a separation of concerns and automation / CI/CD,please take a look at our [Automation baseline repo](https://github.com/Azure/aks-baseline-automation/).
 
-As the maintainer of this project, please make a few updates:
+This repository is a part of the [AKS Landing zone accelerator](https://github.com/Azure/AKS-Landing-Zone-Accelerator), an open-source collection of ARM, Bicep and Terraform templates that represent the strategic design path and target technical state for an Azure Kubernetes Service (AKS) deployment. Head over there to started.
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
-
-Below is a picture of the architecture for the privatized scenario. 
+Our baseline architecture, which is our Secure Baseline Private Cluster scenario is available in the Scenarios folder and uses the architecture below. 
 
 ![architecture diagram](/media/AKS%20Windows%20Diagram.png)
 
 ## Contributing
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+This project welcomes contributions and suggestions.  Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
@@ -30,8 +18,13 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 ## Trademarks
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft trademarks or logos is subject to and must follow [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
+
+## Next steps: 
+### Follow a scenario driven tutorial within this repo
+
+Pick the available Secure baseline private cluster scenario below. 
+
+:arrow_forward: [Windows Secure Baseline in a Private Cluster](./Scenarios/AKS-Secure-Baseline-PrivateCluster) 

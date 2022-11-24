@@ -1,3 +1,14 @@
+<!-- ## Authenticating using a Service Principal with a Client Secret
+Terraform modules in this repo use ARM_* environment variables stored in local shell to allow Terraform providers to authenticate to Azure. Please, set these environment variables with your specific values to allow Terraform to build Azure resources. You can go [here](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/guides/service_principal_client_secret) for further details.
+```
+$ARM_CLIENT_ID =""
+$ARM_CLIENT_SECRET =""
+$ARM_TENANT_ID =""
+$ARM_SUBSCRIPTION_ID =""
+$ARM_ACCESS_KEY =""
+```  -->
+
+
 # Create or Import Azure Active Directory Groups for AKS
 Before creating the Azure Active Directory integrated cluster, groups must be created that can be later mapped to the Built-In Roles of "Azure Kubernetes Service Cluster User Role" and "Azure Kubernetes Service RBAC Cluster Admin".
 
@@ -10,6 +21,8 @@ cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import
 
 In the "variables.tf" file, update the security group and defaults to reflect the display names as needed to either match existing groups or create names that fit your requirements. Also, update Terraform State variables to match storage account used for state file backend config. Key value is set in provider.tf.
 ### Update the following values to your powershell instance:
+For the powershell option, we will be running the commands using a service principal. If you don't have a service principal, please create one by following the instructions [here](https://learn.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli#password-based-authentication). You will then be able to get your servicePrincipalId (which would be your appId) and servicePrincipalKey (which will be your password).
+
 ```
 $backendResourceGroupName=""
 $backendStorageAccountName=""
@@ -22,7 +35,7 @@ $servicePrincipalKey=""
 ```
 Deploy using Terraform Init, Plan and Apply. 
 
-```bash
+```powershell
 terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate" -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID" -backend-config="tenant_id=$tenantId" -backend-config="client_id=$servicePrincipalId" -backend-config="client_secret=$servicePrincipalKey"
 ```
 
@@ -53,6 +66,3 @@ If you get an error about changes to the configuration, go with the `-reconfigur
 ### Next step
 
 :arrow_forward: [Creation of Hub Network & its respective Components](./04-win-network-hub.md)
-
-
-end of the file.

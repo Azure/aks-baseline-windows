@@ -15,11 +15,6 @@ In the "variables.tf" file, update the security group and defaults to reflect th
 $TFSTATE_RG =""
 $STORAGEACCOUNTNAME = ""
 $CONTAINERNAME = ""
-$ARM_CLIENT_ID =""
-$ARM_CLIENT_SECRET =""
-$ARM_TENANT_ID =""
-$ARM_SUBSCRIPTION_ID =""
-$ARM_ACCESS_KEY =""
 ```
 Deploy using Terraform Init, Plan and Apply. 
 
