@@ -11,6 +11,7 @@ resource "azurerm_subnet" "devSubnetdc" {
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = ["10.0.5.0/24"]
   enforce_private_link_endpoint_network_policies = false
+  service_endpoints = ["Microsoft.KeyVault"]
 
 }
 
@@ -24,6 +25,11 @@ resource "azurerm_network_security_group" "dev-nsg-dc" {
 resource "azurerm_subnet_network_security_group_association" "subnetdc" {
   subnet_id                 = azurerm_subnet.devSubnetdc.id
   network_security_group_id = azurerm_network_security_group.dev-nsg-dc.id
+}
+
+output "hub-devSubnetdc_id" {
+  value = azurerm_subnet.devSubnetdc.id
+  
 }
 
 

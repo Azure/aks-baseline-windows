@@ -33,15 +33,3 @@ output "acr_id" {
 output "custom_dns_configs" {
     value = azurerm_private_endpoint.acr-endpoint.custom_dns_configs
 }
-
-# Variables
-
-variable "acrname" {}
-
-variable "resource_group_name" {}
-
-variable "location" {}
-
-variable "aks_sub_id" {}
-
-variable "private_zone_id" {}

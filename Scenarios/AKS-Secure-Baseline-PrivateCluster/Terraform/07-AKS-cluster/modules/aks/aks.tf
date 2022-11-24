@@ -38,7 +38,7 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
     vm_size         = "Standard_DS2_v2"
     os_disk_size_gb = 30
     type            = "VirtualMachineScaleSets"
-    node_count      = 1
+    node_count      = 2
     vnet_subnet_id  = var.vnet_subnet_id
   }
 
