@@ -1,4 +1,4 @@
-# Create resources for the AKS Priavte Cluster
+# Create resources for the AKS Private Cluster
 
 The following will be created:
 * AKS Private Cluster
@@ -46,7 +46,7 @@ KV_RESOURCEGROUP=<KV RG name>
 
 
 
-## Enable aks-preview Azure CLI extenstion and add AKS-AzureKeyVaultSecretsProvider preview feature
+## Enable aks-preview Azure CLI extension and add AKS-AzureKeyVaultSecretsProvider preview feature
 
 You also need the *aks-preview* Azure CLI extension version 0.5.9 or later. If you don't already, enter the following in your command line
 
