@@ -15,15 +15,6 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   private_dns_zone_id     = var.private_dns_zone_id
   azure_policy_enabled    = true
 
-  ingress_application_gateway {
-    subnet_id = var.appgwSubnet_Id
-  }
-
-  # required if you are using an existing app gateway
-  # ingress_application_gateway {
-  #  gateway_id = var.gateway_id
-  #}
-
   key_vault_secrets_provider {
     secret_rotation_enabled  = true
     secret_rotation_interval = "2m"
@@ -101,7 +92,3 @@ output "node_pool_rg" {
 output "kubelet_id" {
   value = azurerm_kubernetes_cluster.akscluster.kubelet_identity[0].object_id
 }
-
-#output "agic_id" {
-#  value = azurerm_kubernetes_cluster.akscluster.ingress_application_gateway[0].ingress_application_gateway_identity[0].object_id
-#}
