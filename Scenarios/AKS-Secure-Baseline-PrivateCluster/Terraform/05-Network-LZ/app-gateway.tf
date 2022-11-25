@@ -24,32 +24,32 @@ locals {
 
 */
 
-locals {
-  appgws = {
-    "appgw_blue" = {
-      name_prefix="blue"
-      appgw_turn_on=true
-    },
-    "appgw_green" = {
-      name_prefix="green"
-      appgw_turn_on=false
-    }
-  }
-}
+# locals {
+#   appgws = {
+#     "appgw_blue" = {
+#       name_prefix="blue"
+#       appgw_turn_on=true
+#     },
+#     "appgw_green" = {
+#       name_prefix="green"
+#       appgw_turn_on=false
+#     }
+#   }
+# }
 
-resource "azurerm_subnet" "appgw" {
-  name                                             = "appgwSubnet"
-  resource_group_name                              = azurerm_resource_group.spoke-rg.name
-  virtual_network_name                             = azurerm_virtual_network.vnet.name
-  address_prefixes                                 = ["10.1.1.0/24"]
-  # enforce_private_link_endpoint_network_policies = false
+# resource "azurerm_subnet" "appgw" {
+#   name                                             = "appgwSubnet"
+#   resource_group_name                              = azurerm_resource_group.spoke-rg.name
+#   virtual_network_name                             = azurerm_virtual_network.vnet.name
+#   address_prefixes                                 = ["10.1.1.0/24"]
+#   # enforce_private_link_endpoint_network_policies = false
 
-}
+# }
 
-output "appgwSubnet_Id" {
-  value = azurerm_subnet.appgw.id
+# output "appgwSubnet_Id" {
+#   value = azurerm_subnet.appgw.id
   
-}
+# }
 
 # module "appgw_nsgs" {
 #   source = "./modules/app_gw_nsg"
