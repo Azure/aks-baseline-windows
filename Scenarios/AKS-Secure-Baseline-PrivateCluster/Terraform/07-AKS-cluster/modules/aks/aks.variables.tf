@@ -2,11 +2,7 @@ variable "prefix" {
   description = "A prefix used for all resources in this example"
 }
 
-variable "location" {
-
-default = "Central US"
-
-}
+variable "location" {}
 
 variable "resource_group_name" {}
 
@@ -29,6 +25,4 @@ variable "private_dns_zone_id" {}
 variable "wnp_count" {
   type = bool
 }
-
- variable "appgwSubnet_Id" {}
  
