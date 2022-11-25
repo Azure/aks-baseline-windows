@@ -48,7 +48,7 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
 
   azure_active_directory_role_based_access_control {
     managed = true
-    //  admin_group_object_ids = talk to Ayo about this one, this arg could reduce code other places possibly 
+    admin_group_object_ids = [var.appdevs]
     azure_rbac_enabled = true
   }
 
