@@ -61,7 +61,9 @@ module "aks" {
   mi_aks_cp_id        = azurerm_user_assigned_identity.mi-aks-cp.id
   la_id               = azurerm_log_analytics_workspace.aks.id
   private_dns_zone_id = azurerm_private_dns_zone.aks-dns.id
-  wnp_count = var.wnp_count
+  wnp_count           = var.wnp_count
+  appdevs             = data.azuread_group.aks_admin_group
+  aksops              = data.azuread_group.aks_user_group
 }
 
 # These role assignments grant the groups made in "03-AAD" access to use
