@@ -21,12 +21,7 @@ terraform {
 
 provider "azurerm" {
   features {}
-  # subscription_id = var.subscription_id #"82e70289-bf40-45f9-8476-easdsd2031f4"	
-  # tenant_id = var.tenant_id #"449fbe1d-9c99-4509-9014-4fdsdsdsd5b014"	
-  # client_id  = var.client_id #"f5174545-d5ae-49ab-be0a-48sdsdsda9c5c"	
-  # client_secret = var.client_secret #"F8U8~bmRCb4Lu7l.25r6Edsdsdw8ZPzBaqzw"
 }
 
 provider "azuread" {
-  # tenant_id = var.tenant_id #"449fbe1d-9c99-4509-9014-4fd5cf25b014"
 }
