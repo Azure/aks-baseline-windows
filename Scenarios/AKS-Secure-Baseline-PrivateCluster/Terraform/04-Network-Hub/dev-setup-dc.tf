@@ -32,10 +32,6 @@ output "hub-devSubnetdc_id" {
   
 }
 
-
-
-
-
 # Domain Controller Server VM
 
 module "create_windows_DC" {
