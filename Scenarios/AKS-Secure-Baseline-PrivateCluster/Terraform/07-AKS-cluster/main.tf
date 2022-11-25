@@ -50,16 +50,12 @@ data "terraform_remote_state" "existing-hub" {
 
 data "azurerm_client_config" "current" {}
 
-resource "azuread_group" "appdevs" {
+azure_active_directory_role_based_access_control "azuread_group" "appdevs" {
   display_name     = var.aks_admin_group
-  owners           = [data.azuread_client_config.current.object_id]
-  security_enabled = true
 }
 
-resource "azuread_group" "aksops" {
+data "azuread_group" "aksops" {
   display_name     = var.aks_user_group
-  owners           = [data.azuread_client_config.current.object_id]
-  security_enabled = true
 }
 
 
