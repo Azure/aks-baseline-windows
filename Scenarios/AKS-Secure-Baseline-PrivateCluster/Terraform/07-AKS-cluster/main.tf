@@ -57,7 +57,3 @@ data "azuread_group" "aksops" {
 data "azuread_group" "appdevs" {
   display_name     = var.aks_admin_group
 }
-
-output "aksops" {
-  value = data.azuread_group.aksops
-}
