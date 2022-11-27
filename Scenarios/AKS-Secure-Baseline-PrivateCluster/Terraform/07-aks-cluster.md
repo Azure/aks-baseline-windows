@@ -18,15 +18,26 @@ Once again, A sample terraform.tfvars.sample file is included. Update the requir
 
 Once the files are updated, deploy using Terraform Init, Plan and Apply.
 
-```bash
+### Update the following values to your powershell instance:
+```
+$TFSTATE_RG =""
+$STORAGEACCOUNTNAME = ""
+$CONTAINERNAME = ""
+$ARM_CLIENT_ID =""
+$ARM_CLIENT_SECRET =""
+$ARM_TENANT_ID =""
+$ARM_SUBSCRIPTION_ID =""
+$ARM_ACCESS_KEY =""
+
+```Powershell
 terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config="storage_account_name=$STORAGEACCOUNTNAME" -backend-config="container_name=$CONTAINERNAME"
 ```
 
-```bash
+```Powershell
 terraform plan 
 ```
 
-```bash
+```Powershell
 terraform apply 
 ```
 
