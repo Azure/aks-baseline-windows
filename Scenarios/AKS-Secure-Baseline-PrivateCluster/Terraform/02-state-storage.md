@@ -3,14 +3,20 @@ This storage account will be used to store the state of each deployment step and
 
 Create some variables to start with
 
+```bash
+REGION=<REGION>
+STORAGEACCOUNTNAME=<UNIQUENAME>
+CONTAINERNAME=akscs
+TFSTATE_RG=tfstate
 ```
+
+or with Powershell
+```powershell
 $REGION=<REGION>
 $STORAGEACCOUNTNAME=<UNIQUENAME>
 $CONTAINERNAME=akscs
 $TFSTATE_RG=tfstate
 ```
-
-
 
 Create a Resource Group:
 ```
@@ -30,4 +36,6 @@ az storage container-rm create --storage-account $STORAGEACCOUNTNAME --name $CON
 
 ### Next step
 
-:arrow_forward: [Create or Import Azure Active Directory Groups for AKS Cluster Admins and AKS Cluster Users](./03-win-aad-import.md)
+:arrow_forward: Using bash, [Create or Import Azure Active Directory Groups for AKS Cluster Admins and AKS Cluster Users](./03-aad.md)
+
+:arrow_forward: Using PowerShell, [Create or Import Azure Active Directory Groups for AKS Cluster Admins and AKS Cluster Users](./03-win-aad-import.md)

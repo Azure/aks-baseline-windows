@@ -52,7 +52,7 @@ Follow the steps [here](https://learn.microsoft.com/virtualization/windowscontai
 
 * Before enabling GMSA on your AKS cluster, you will need to  make the following updates to your architecture:
 
-    1. Update the DNS server on the hub and spoke VNETs to from Azure Default to Custom. The IP address will be the IP address of your domain controller. Reboot all virtual machines, VM Scale Sets, and your domain controller after performing this action.
+    1. Update the DNS server on the hub and spoke VNETs to from Azure Default to Custom. The IP address will be the IP address of your domain controller (your jumpbox). Reboot all virtual machines, VM Scale Sets, and your domain controller after performing this action.
 
     2. Add your login identity to Key Vault access policy. Assign Secret Management (Get, List, Set, Delete, Recover). This is needed during GMSA setup.
 
