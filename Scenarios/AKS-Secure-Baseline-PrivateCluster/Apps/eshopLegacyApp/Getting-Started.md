@@ -7,7 +7,7 @@ This application is provided by Microsoft to demonstrate a Legacy .NET 4.7 appli
 
 Because the infrastructure has been deployed in a private AKS cluster setup with private endpoints for the container registry and other components, you will need to perform the application container build and the publishing to the Container Registry from the Dev Jumpbox in the Hub VNET, connecting via the Bastion Host service. If your computer is connected to the hub network, you may be able to just use that as well. The rest of the steps can be performed on your local machine by using AKS Run commands which allow access into private clusters using RBAC. This will help with improving security and will provide a more user-friendly way of editing YAML files.
 
-1. ## Prepare your Jumpbox VM with tools (run from local machine) // validate this step because of previous error
+1. ## Prepare your Jumpbox VM with tools (run from local machine) 
 
 * Add a rule in the Firewall to allow internet access to the VM's private IP. Verify VM's private IP and update if necessary
 
