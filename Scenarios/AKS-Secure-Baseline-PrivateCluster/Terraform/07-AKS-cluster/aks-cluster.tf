@@ -62,7 +62,7 @@ module "aks" {
   la_id               = azurerm_log_analytics_workspace.aks.id
   private_dns_zone_id = azurerm_private_dns_zone.aks-dns.id
   wnp_count           = var.wnp_count
-  appdevs             = data.azuread_group.appdevs
+  aks_admin_group     = data.azuread_group.aks_admin_group.object_id
 }
 
 # These role assignments grant the groups made in "03-AAD" access to use
