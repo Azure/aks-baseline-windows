@@ -50,10 +50,6 @@ data "terraform_remote_state" "existing-hub" {
 
 data "azurerm_client_config" "current" {}
 
-data "azuread_group" "aksops" {
-  display_name     = var.aks_user_group
-}
-
-data "azuread_group" "appdevs" {
+data "azuread_group" "aks_admin_group" {
   display_name     = var.aks_admin_group
 }
