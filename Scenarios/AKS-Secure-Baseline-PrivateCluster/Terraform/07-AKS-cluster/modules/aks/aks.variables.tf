@@ -10,19 +10,9 @@ variable "vnet_subnet_id" {}
 
 variable "mi_aks_cp_id" {}
 
-#variable "aks_user_group" {}
-
-variable "appdevs" {}
-
-# variable "mi_aks_kubelet_id" {
-  
-# }
+variable "aks_admin_group" {}
 
 variable "la_id" {}
-
-# variable "gateway_name" {}
-
-# variable "gateway_id" {}
 
 variable "private_dns_zone_id" {}
 
