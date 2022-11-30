@@ -50,7 +50,6 @@ variable "zone_resource_group_name" {}
 
 variable "dest_sub_id" {}
 
-
 variable "private_zone_id" {}
 
 variable "private_zone_name" {}

@@ -80,30 +80,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: gmsa-win-demo
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
+  type: LoadBalancer
   selector:
     app: gmsa-win-demo
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 80
-
----
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: gmsa-win-demo
-  annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: gmsa-win-demo
-            port:
-             number: 80

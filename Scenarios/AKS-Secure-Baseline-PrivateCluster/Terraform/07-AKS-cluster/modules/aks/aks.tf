@@ -15,15 +15,6 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   private_dns_zone_id     = var.private_dns_zone_id
   azure_policy_enabled    = true
 
-  ingress_application_gateway {
-    subnet_id = var.appgwSubnet_Id
-  }
-
-  # required if you are using an existing app gateway
-  # ingress_application_gateway {
-  #  gateway_id = var.gateway_id
-  #}
-
   key_vault_secrets_provider {
     secret_rotation_enabled  = true
     secret_rotation_interval = "2m"
@@ -44,7 +35,6 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
 
   network_profile {
     network_plugin = "azure"
-    # network_policy = "azure"
     load_balancer_sku  = "standard"
     outbound_type      = "userDefinedRouting"
     dns_service_ip     = "192.168.100.10"
@@ -57,7 +47,7 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
 
   azure_active_directory_role_based_access_control {
     managed = true
-    //  admin_group_object_ids = talk to Ayo about this one, this arg could reduce code other places possibly 
+    admin_group_object_ids = [var.aks_admin_group]
     azure_rbac_enabled = true
   }
 
@@ -92,16 +82,8 @@ output "node_pool_rg" {
   value = azurerm_kubernetes_cluster.akscluster.node_resource_group
 }
 
-# output "wnp_id" {
-#  value = azurerm_kubernetes_cluster_node_pool.windows_node_pool[1].id  
-#}
-
 # Managed Identities created for Addons
 
 output "kubelet_id" {
   value = azurerm_kubernetes_cluster.akscluster.kubelet_identity[0].object_id
 }
-
-#output "agic_id" {
-#  value = azurerm_kubernetes_cluster.akscluster.ingress_application_gateway[0].ingress_application_gateway_identity[0].object_id
-#}

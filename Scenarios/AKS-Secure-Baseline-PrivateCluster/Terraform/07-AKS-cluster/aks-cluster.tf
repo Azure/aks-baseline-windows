@@ -60,11 +60,9 @@ module "aks" {
   vnet_subnet_id      = data.terraform_remote_state.existing-lz.outputs.aks_subnet_id
   mi_aks_cp_id        = azurerm_user_assigned_identity.mi-aks-cp.id
   la_id               = azurerm_log_analytics_workspace.aks.id
-  # gateway_name        = data.terraform_remote_state.existing-lz.outputs.gateway_name
-  # gateway_id          = data.terraform_remote_state.existing-lz.outputs.gateway_id
   private_dns_zone_id = azurerm_private_dns_zone.aks-dns.id
-  wnp_count = var.wnp_count
-  appgwSubnet_Id = data.terraform_remote_state.existing-lz.outputs.appgwSubnet_Id
+  wnp_count           = var.wnp_count
+  aks_admin_group     = data.azuread_group.aks_admin_group.object_id
 }
 
 # These role assignments grant the groups made in "03-AAD" access to use
@@ -98,12 +96,3 @@ resource "azurerm_role_assignment" "aks-to-acr" {
   role_definition_name = "AcrPull"
   principal_id         = module.aks.kubelet_id
 }
-
-# Role Assignments for AGIC on AppGW
-# This must be granted after the cluster is created in order to use the ingress identity.
-
-#resource "azurerm_role_assignment" "agic_appgw" {
-#  scope                = data.terraform_remote_state.existing-lz.outputs.gateway_id
-#  role_definition_name = "Contributor"
-#  principal_id         = module.aks.agic_id
-#}

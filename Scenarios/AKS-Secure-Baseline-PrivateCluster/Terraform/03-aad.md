@@ -18,15 +18,15 @@ $CONTAINERNAME = ""
 ```
 Deploy using Terraform Init, Plan and Apply. 
 
-```bash
+```Powersehll
 terraform init -input=false -backend-config="resource_group_name=$TFSTATE_RG" -backend-config="storage_account_name=$STORAGEACCOUNTNAME" -backend-config="container_name=$CONTAINERNAME"
 ```
 
-```
+```Powershell
 terraform plan 
 ```
 
-```
+```Powershell
 terraform apply 
 ```
 

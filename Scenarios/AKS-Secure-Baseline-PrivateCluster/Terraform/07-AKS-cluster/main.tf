@@ -49,3 +49,7 @@ data "terraform_remote_state" "existing-hub" {
 }
 
 data "azurerm_client_config" "current" {}
+
+data "azuread_group" "aks_admin_group" {
+  display_name     = var.aks_admin_group
+}

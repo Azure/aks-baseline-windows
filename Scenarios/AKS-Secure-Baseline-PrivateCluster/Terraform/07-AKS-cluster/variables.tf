@@ -12,7 +12,7 @@ variable "private_dns_zone_name" {
 
 variable "wnp_count" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "resource_group_name" {
@@ -30,24 +30,8 @@ variable "access_key" {
   sensitive = true
 }
 
-# required in some cases
+variable "aks_admin_group" {
+}
 
-# variable "subscription_id" {
-#   description = "Azure subscription Id."
-#   default = null
-# }
-
-# variable "tenant_id" {
-#   description = "Azure tenant Id."
-#    default = null
-# }
-
-# variable "client_id" {
-# description = "Azure service principal application Id"
-# default = null
-# }
-
-# variable "client_secret" {
-#   description = "Azure service principal application Secret"
-#   default = null
-# }
+variable "aks_user_group" {
+}
