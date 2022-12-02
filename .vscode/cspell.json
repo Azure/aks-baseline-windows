@@ -30,7 +30,9 @@
         "SSMS",
         "tfvar",
         "tfvars",
-        "VNET"
+        "VNET",
+        "STORAGEACCOUNTNAME",
+        "TFSTATE"
     ],
     "ignoreWords": [],
     "import": [],
