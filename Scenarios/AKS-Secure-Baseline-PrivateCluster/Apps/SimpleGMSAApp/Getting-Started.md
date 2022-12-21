@@ -36,7 +36,7 @@ az account set --subscription <subscription id>
 * Get AKS credentials.
 
 ```Powershell
-az aks get-credentials -n <aks cluster name> -g <resource group> --admin
+az aks get-credentials -n <aks cluster name> -g <resource group>
 ```
 
 * Validate you can query AKS cluster.
@@ -44,7 +44,12 @@ az aks get-credentials -n <aks cluster name> -g <resource group> --admin
 ```Powershell
 kubectl get ns
 ```
-Follow the steps [here](https://learn.microsoft.com/virtualization/windowscontainers/manage-containers/gmsa-aks-ps-module) to setup GMSA on your cluster. These commands will need to be run on your domain controller or on a domain joined virtual machine.  
+
+## Setup GMSA on your AKS cluster
+
+- Follow the steps [here](https://learn.microsoft.com/virtualization/windowscontainers/manage-containers/gmsa-aks-ps-module) to setup GMSA on your cluster. These commands will need to be run on your domain controller or on a domain joined virtual machine (the Windows VM jumpbox from the previous step). Follow all instructions on pages, _gMSA on AKS PowerShell Module_ and _Configure gMSA on AKS with PowerShell Module_. You may optionally follow the instructions on _Validate gMSA on AKS with PowerShell Module_, but it is not required for setup. 
+- For the keyvault used in the setup, use the keyvault deployed as apart of this reference implementation. The module will check if a keyvault with that name exists before creating the secret with the GMSA credentials. 
+- For the managed identity used in the setup, use the managed identity deployed as apart of this reference implementation. The module will check if a managed identity with that name exists before creating a new one. 
 
 ## Setup Group Managed Service Account (GMSA) Integration
 
