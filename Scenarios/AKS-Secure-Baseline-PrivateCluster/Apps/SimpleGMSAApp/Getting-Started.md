@@ -8,7 +8,7 @@ Because the infrastructure has been deployed in a private AKS cluster setup with
 
 Follow the instructions [here](https://learn.microsoft.com/en-us/azure/bastion/bastion-connect-vm-rdp-windows) to connect to your Windows jumpbox via Bastion using RDP or instructions [here](https://learn.microsoft.com/en-us/azure/bastion/bastion-connect-vm-ssh-windows) to connect via SSH. 
 
-## Prepare your Jumpbox VM with tools (run from local machine) // validate this step because of previous error
+## Prepare your Jumpbox VM with tools (run from local machine)
 
 * Install az cli for windows. You can find latest version [here](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 * After installing az cli you will need to install aks add-on. Run az aks install-cli to add support for kubelogin and kubectl.
@@ -69,11 +69,11 @@ installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools
 
 1. To validate that your cluster is successfully retrieving your GMSA, go into your domain controller local server menu, go to Tools and select Event Viewer. Look under ActiveDirectory events. Look at the contents of the most recent events for a message that says "A caller successfully fetched the password of a group managed service account." The IP address of the caller should match one of your AKS cluster IPs.
 
-### Deploy workload without support for HTTPS
+## Deploy workload without support for HTTPS
 
 Navigate to "Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/RatingsApp" folder.
 
-1. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name and Windows NodePool(s) name.
+1. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for <GMSA Name> in the manifest) and Windows NodePool(s) name (Look for NodePool Name in the manifest).
 2. Run ``` kubectl apply -f deployment_sampleapp.yml ```
 
 ### Check your deployed workload
