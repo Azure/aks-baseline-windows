@@ -74,7 +74,7 @@ installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools
 Navigate to "Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/RatingsApp" folder.
 
 1. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for <GMSA Name> in the manifest) and Windows NodePool(s) name (Look for NodePool Name in the manifest).
-2. Run ``` kubectl apply -f deployment_sampleapp.yml ```
+2. Run ``` kubectl apply -f deployment_sampleapp.yml -n sampleapp ```
 
 ### Check your deployed workload
 
@@ -82,7 +82,7 @@ Navigate to "Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/RatingsApp" folde
 
 ```Powershell
 kubectl get deployment
-kubectl get pod
+kubectl get pods -n sampleapp
 kubectl describe ingress
 ```
 2. Copy the ip address displayed by running kubectl describe ingress, open a browser, navigate to the IP address obtained above from the ingress controller and explore your website.
