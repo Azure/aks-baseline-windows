@@ -6,9 +6,7 @@ Because the infrastructure has been deployed in a private AKS cluster setup with
 
 ## Connecting to the Bastion Host
 
-1. Use Bastion Host to connect to the jumpbox.
-2. Enter the username and password. If you have used a public key, then select upload private key (corresponding to the public key) to connect.
-3. Once you connect ensure you permit the site to read the content of your clipboard
+Follow the instructions [here](https://learn.microsoft.com/en-us/azure/bastion/bastion-connect-vm-rdp-windows) to connect to your Windows jumpbox via Bastion using RDP or instructions [here](https://learn.microsoft.com/en-us/azure/bastion/bastion-connect-vm-ssh-windows) to connect via SSH. 
 
 ## Prepare your Jumpbox VM with tools (run from local machine) // validate this step because of previous error
 
