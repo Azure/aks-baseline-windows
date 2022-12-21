@@ -12,6 +12,6 @@ We've included two sample applications demonstrating Windows Integrated Authenti
 
 [Legacy .NET Application](../Apps/eshopLegacyApp/Getting-Started.md)
    
-   The Legacy .NET (.NET 4.7) Application also walks you through setting up GMSA for your cluster, but the application is ecommerce focused with a shopping webpage UI and backend SQL database for storing product information. As a full .NET project as opposed to the simple application, it also demonstrates how to turn on Windows Integrated through the Web.config for .NET. 
+   The Legacy .NET (.NET 4.7) Application also walks you through setting up GMSA for your cluster, but the application is ecommerce focused with a shopping webpage UI and backend SQL database for storing product information. As a full .NET project as opposed to the simple application, it also demonstrates how to turn on Windows Integrated Authentication through the Web.config for .NET. 
    
    **If you have a legacy .NET application you're looking to deploy onto AKS, try deploying this application.**
