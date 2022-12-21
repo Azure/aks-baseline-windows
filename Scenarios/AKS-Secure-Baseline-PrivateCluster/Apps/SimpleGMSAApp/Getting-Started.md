@@ -65,11 +65,9 @@ kubectl get ns
 1. If you are running these commands on your domain controller that is a Windows Server machine, you may have trouble
 installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/) and [kubelogin](https://github.com/Azure/kubelogin). The error would mention "Install-AzAksKubectl". If so, you will need to manually install both following the links above.
 
-## How to Validate Your GMSA Integration
+## How to Validate Your GMSA Integration before Deployment
 
-1. Check the status of your pods by running ``` kubectl get pods ```. If the status is *Running*, you're good to go. If the status of your pods is *CrashLoopBackOff*, run ``` kubectl logs <pod name> ``` to debug. This status likely means that your credential spec file is misconfigured or the cluster permissions to your KeyVault are misconfigured. If you believe your cred spec is correct, check the logs from the above command to verify the pod was able to pull down the image from the Azure Container Registry (ACR).
-
-2. To validate that your cluster is successfully retrieving your GMSA, go into your domain controller local server menu, go to Tools and select Event Viewer. Look under ActiveDirectory events. Look at the contents of the most recent events for a message that says "A caller successfully fetched the password of a group managed service account." The IP address of the caller should match one of your AKS cluster IPs.
+1. To validate that your cluster is successfully retrieving your GMSA, go into your domain controller local server menu, go to Tools and select Event Viewer. Look under ActiveDirectory events. Look at the contents of the most recent events for a message that says "A caller successfully fetched the password of a group managed service account." The IP address of the caller should match one of your AKS cluster IPs.
 
 ### Deploy workload without support for HTTPS
 
@@ -98,6 +96,10 @@ kubectl exec -it "pod name" powershell
 ```Powershell
 nltest /sc_verify:lzacc.com
 ```
+
+## How to Validate Your GMSA Integration after Deployment
+
+1. Check the status of your pods by running ``` kubectl get pods ```. If the status is *Running*, you're good to go. If the status of your pods is *CrashLoopBackOff*, run ``` kubectl logs <pod name> ``` to debug. This status likely means that your credential spec file is misconfigured or the cluster permissions to your KeyVault are misconfigured. An example credential spec can be found [here](https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/manage-serviceaccounts#create-a-credential-spec). When you look through your credential spec file, ensure that the DnsName, NetBiosName and GroupManagedServiceAccounts match the values from your domain controller. 
 
 ## Deploy the Ingress with HTTPS support
 
