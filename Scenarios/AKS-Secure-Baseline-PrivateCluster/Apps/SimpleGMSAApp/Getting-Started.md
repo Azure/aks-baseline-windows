@@ -73,34 +73,37 @@ installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools
 
 Navigate to "Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/RatingsApp" folder.
 
-1. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for <GMSA Name> in the manifest) and Windows NodePool(s) name (Look for NodePool Name in the manifest).
+1. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for < GMSA Credential Spec Name > in the manifest) and Windows NodePool(s) name (Look for NodePool Name in the manifest).
 2. Run ``` kubectl apply -f deployment_sampleapp.yml -n sampleapp ```
 
 ### Check your deployed workload
 
-1. Verify Deployment by executing the following commands:
+1. Verify Deployment by executing the following commands on your jumpbox:
 
 ```Powershell
 kubectl get deployment
 kubectl get pods -n sampleapp
 kubectl describe ingress
 ```
-2. Copy the ip address displayed by running kubectl describe ingress, open a browser, navigate to the IP address obtained above from the ingress controller and explore your website.
+2. Copy the ip address displayed by running ``` kubectl describe ingress ``` on your jumpbox, open a browser, navigate to the IP address obtained above from the ingress controller and explore your website.
 
-3. You can also login to pod by running:
+# Next Steps
+- [Troubleshooting](#how-to-validate-your-gmsa-integration-after-deployment)
+- [Try deploying our Legacy .NET Application example](../eshopLegacyApp/Getting-Started.md)
+- [Add support for HTTPS](#deploy-the-ingress-with-https-support)
+  
+## How to Validate Your GMSA Integration after Deployment
+
+1. Check the status of your pods by running ``` kubectl get pods ``` on your jumpbox. If the status is *Running*, you're good to go. If the status of your pods is *CrashLoopBackOff*, run ``` kubectl logs <pod name> ``` to debug. This status likely means that your credential spec file is misconfigured or the cluster permissions to your KeyVault are misconfigured. An example credential spec can be found [here](https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/manage-serviceaccounts#create-a-credential-spec). When you look through your credential spec file, ensure that the DnsName, NetBiosName and GroupManagedServiceAccounts match the values from your domain controller. 
+2. To check if the container is connected to the domain your GMSA is running under, run the following commands:
+To login to the pod running your workload:
 ```Powershell
+kubectl get pods -n sampleapp
 kubectl exec -it "pod name" powershell
 ```
-
-4. To check if the gMSA is working correctly, run the following cmdlet in the container:
 ```Powershell
 nltest /sc_verify:lzacc.com
 ```
-
-## How to Validate Your GMSA Integration after Deployment
-
-1. Check the status of your pods by running ``` kubectl get pods ```. If the status is *Running*, you're good to go. If the status of your pods is *CrashLoopBackOff*, run ``` kubectl logs <pod name> ``` to debug. This status likely means that your credential spec file is misconfigured or the cluster permissions to your KeyVault are misconfigured. An example credential spec can be found [here](https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/manage-serviceaccounts#create-a-credential-spec). When you look through your credential spec file, ensure that the DnsName, NetBiosName and GroupManagedServiceAccounts match the values from your domain controller. 
-
 ## Deploy the Ingress with HTTPS support
 
 **Please note: This section is still in development**

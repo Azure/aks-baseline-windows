@@ -35,6 +35,7 @@ metadata:
   labels:
     app: "gmsa-win-demo"
   name: gmsa-win-demo
+  namespace: sampleapp
 spec:
   replicas: 1
   selector:
@@ -45,10 +46,9 @@ spec:
       labels:
         app: "gmsa-win-demo"
     spec:
-      # serviceAccountName: gMSA-aks
       securityContext:
         windowsOptions:
-           gmsaCredentialSpecName: gmsa-spec
+           gmsaCredentialSpecName: < GMSA Credential Spec Name >
       containers:
       - name: iis
         image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
@@ -61,6 +61,13 @@ spec:
         volumeMounts:
            - name: gmsa-win-demo
              mountPath: /gmsa-demo
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
       volumes:
         - name: gmsa-win-demo 
           configMap:
