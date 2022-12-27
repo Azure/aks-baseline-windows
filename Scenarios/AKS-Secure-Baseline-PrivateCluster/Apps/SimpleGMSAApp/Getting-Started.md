@@ -73,7 +73,7 @@ installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools
 
 The Dockerfile for the Simple application is in the repository you've already cloned to your jumpbox in the previous step. 
 
-Navigate to the [Simple Application Dockerfile](../SimpleGMSAApp/application/SimpleApp.Dockerfile), build and tag the containers with the name of your Azure Container Registry and push the images to ACR. // Make sure it is the correct ACR
+Navigate to the [Simple Application Dockerfile](../SimpleGMSAApp/application/SimpleApp.Dockerfile), build and tag the containers with the name of your Azure Container Registry and push the images to ACR. Use the ACR you created as apart of the reference implementation deployment. // Make sure it is the correct ACR
 
 ```PowerShell
 # enter the name of your ACR below
