@@ -69,11 +69,44 @@ installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools
 
 1. To validate that your cluster is successfully retrieving your GMSA, go into your domain controller local server menu, go to Tools and select Event Viewer. Look under ActiveDirectory events. Look at the contents of the most recent events for a message that says "A caller successfully fetched the password of a group managed service account." The IP address of the caller should match one of your AKS cluster IPs.
 
+## Build Simple Application Container Image
+
+The Dockerfile for the Simple application is in the repository you've already cloned to your jumpbox in the previous step. 
+
+Navigate to the [Simple Application Dockerfile](../SimpleGMSAApp/application/SimpleApp.Dockerfile), build and tag the containers with the name of your Azure Container Registry and push the images to ACR. // Make sure it is the correct ACR
+
+```PowerShell
+# enter the name of your ACR below
+$SPOKERG=<resource group name for spoke>
+$ACRNAME=$(az acr show --name <ACR NAME> --resource-group $SPOKERG --query "name" --output tsv)
+
+cd aks-baseline-windows/Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/SimpleGMSAAPP/application
+
+docker build -t $ACRNAME.azurecr.io/simpleapp:v1 -f SimpleApp.Dockerfile .
+```
+
+Log into ACR
+
+```PowerShell 
+az acr login -n $ACRNAME
+```
+
+Push the images into the container registry. Ensure you are logged into the Azure Container Registry, you should show a successful login from the command above.
+
+```PowerShell
+docker push $ACRNAME.azurecr.io/simpleapp:v1
+```
+
+To verify they have been pushed run the following commands:
+
+```PowerShell
+az acr repository show -n $ACRNAME --image simpleapp:v1
+```
 ## Deploy workload without support for HTTPS
 
-Navigate to "Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/RatingsApp" folder.
+Navigate to "aks-baseline-windows/Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/SimpleGMSAAPP/manifests" folder.
 
-1. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for < GMSA Credential Spec Name > in the manifest) and Windows NodePool(s) name (Look for NodePool Name in the manifest).
+1. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for < GMSA Credential Spec Name > in the manifest) and application container image name (Look for < Image Name > in the manifest).
 2. Run ``` kubectl apply -f deployment_sampleapp.yml -n sampleapp ```
 
 ### Check your deployed workload
