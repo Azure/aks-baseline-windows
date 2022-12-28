@@ -96,7 +96,7 @@ To verify that the image has been imported:
 Navigate to "aks-baseline-windows/Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/SimpleGMSAAPP/manifests" folder.
 
 1. Create a namespace for your application by running ``` kubectl create namespace simpleapp ``` 
-2. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for < GMSA Credential Spec Name > in the manifest), Windows Nodepool name (look for < Windows Nodepool Name > in the manifest) and application container image name (Look for < Image Name > in the manifest).
+2. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for **< GMSA Credential Spec Name >** in the manifest) and application container registry name (Look for **< Registry Name >** in the manifest).
 3. Run ``` kubectl apply -f deployment_sampleapp.yml -n simpleapp ```
 
 ### Check your deployed workload
