@@ -39,6 +39,7 @@ This section is organized using folders that match the steps outlined below. Mak
 7. [Creation of AKS & enabling Addons](./07-aks-cluster.md)
 
 8. [Deploy a Basic Workload](./08-workload.md)
+9. [Cleanup](./09-cleanup.md)
 
 
 ## Deploying AKS into Existing Infrastructure

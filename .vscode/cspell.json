@@ -30,7 +30,11 @@
         "SSMS",
         "tfvar",
         "tfvars",
-        "VNET"
+        "VNET",
+        "LTSC",
+        "TFSTATE",
+        "STORAGEACCOUNTNAME",
+        "GMSAAPP"
     ],
     "ignoreWords": [],
     "import": [],
