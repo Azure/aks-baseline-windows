@@ -65,7 +65,7 @@ kubectl get ns
 1. If you are running these commands on your domain controller that is a Windows Server machine, you may have trouble
 installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/) and [kubelogin](https://github.com/Azure/kubelogin). The error would mention "Install-AzAksKubectl". If so, you will need to manually install both following the links above.
 
-## How to Validate Your GMSA Integration before Deployment
+## How to validate your GMSA integration before deployment
 
 1. To validate that your cluster is successfully retrieving your GMSA, go into your domain controller local server menu, go to Tools and select Event Viewer. Look under ActiveDirectory events. Look at the contents of the most recent events for a message that says "A caller successfully fetched the password of a group managed service account." The IP address of the caller should match one of your AKS cluster IPs.
 
