@@ -2,15 +2,15 @@
 
 This application is provided by Microsoft through the [GMSA on AKS PowerShell Module](https://learn.microsoft.com/virtualization/windowscontainers/manage-containers/gmsa-aks-ps-module). The manifest for this application has been modified to support ingress using Azure private load balancer. After setting up GMSA, the instructions will ask you perform a deployment that grabs the sample application through the PowerShell module. Do not deploy the application through the PowerShell module and please follow the steps below.
 
-Because the infrastructure has been deployed in a private AKS cluster setup with private endpoints for the container registry and other components, you will need to perform the application container build and the publishing to the Container Registry from the Dev Domain Controller Jumpbox  in the Hub VNET, connecting via the Bastion Host service. If your computer is connected to the hub network, you may be able to just use that as well. The rest of the steps can be performed on your local machine by using AKS Run commands which allow access into private clusters using RBAC. This will help with improving security and will provide a more user-friendly way of editing YAML files.
+Because the infrastructure has been deployed in a private AKS cluster setup with private endpoints for the container registry and other components, you will need to perform the application container build and the publishing to the Container Registry from the Domain Controller in the Hub VNET, connecting via the Bastion Host service. If your computer is connected to the hub network, you may be able to just use that as well. The rest of the steps can be performed on your local machine by using AKS Run commands which allow access into private clusters using RBAC. This will help with improving security and will provide a more user-friendly way of editing YAML files.
 
 ## Connecting to the Bastion Host
 
-Follow the instructions [here](https://learn.microsoft.com/en-us/azure/bastion/bastion-connect-vm-rdp-windows) to connect to your Windows jumpbox via Bastion using RDP or instructions [here](https://learn.microsoft.com/en-us/azure/bastion/bastion-connect-vm-ssh-windows) to connect via SSH. 
+Follow the instructions [here](https://learn.microsoft.com/azure/bastion/bastion-connect-vm-rdp-windows) to connect to your Domain Controller deployed through the reference architecture via Bastion using RDP or instructions [here](https://learn.microsoft.com/azure/bastion/bastion-connect-vm-ssh-windows) to connect via SSH. 
 
 ## Prepare your Jumpbox VM with tools (run from local machine)
 
-* Install az cli for windows. You can find latest version [here](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
+* Install az cli for windows. You can find latest version [here](https://learn.microsoft.com/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 * After installing az cli you will need to install aks add-on. Run az aks install-cli to add support for kubelogin and kubectl.
 * Please add "C:\Users\sysadmin\.azure-kubelogin" and "C:\Users\sysadmin\.azure-kubectl to your search PATH so the `kubelogin.exe` can be found. 3 options:
 
@@ -69,20 +69,14 @@ installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools
 
 1. To validate that your cluster is successfully retrieving your GMSA, go into your domain controller local server menu, go to Tools and select Event Viewer. Look under ActiveDirectory events. Look at the contents of the most recent events for a message that says "A caller successfully fetched the password of a group managed service account." The IP address of the caller should match one of your AKS cluster IPs.
 
-## Build Simple Application Container Image
+## Import Simple Application Container Image
 
-The Dockerfile for the Simple application is in the repository you've already cloned to your jumpbox in the previous step. 
-
-Navigate to the [Simple Application Dockerfile](../SimpleGMSAApp/application/SimpleApp.Dockerfile), build and tag the containers with the name of your Azure Container Registry and push the images to ACR. Use the ACR you created as apart of the reference implementation deployment. // Make sure it is the correct ACR
+To build the application container image, you will need to import the Windows Server 2019 LTSC image to your Azure Container Registry that was deployed as apart of the reference architecture. Once this image is imported, you will reference the version from your ACR in the workload manifest rather than the public image from Microsoft Container Registry. 
 
 ```PowerShell
 # enter the name of your ACR below
 $SPOKERG=<resource group name for spoke>
 $ACRNAME=$(az acr show --name <ACR NAME> --resource-group $SPOKERG --query "name" --output tsv)
-
-cd aks-baseline-windows/Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/SimpleGMSAAPP/application
-
-docker build -t $ACRNAME.azurecr.io/simpleapp:v1 -f SimpleApp.Dockerfile .
 ```
 
 Log into ACR
@@ -91,47 +85,44 @@ Log into ACR
 az acr login -n $ACRNAME
 ```
 
-Push the images into the container registry. Ensure you are logged into the Azure Container Registry, you should show a successful login from the command above.
+Import the Windows Server 2019 LTSC image into the container registry. Ensure you are logged into the Azure Container Registry, you should show a successful login from the command above.
 
 ```PowerShell
-docker push $ACRNAME.azurecr.io/simpleapp:v1
+az acr import -n $ACRNAME --source mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
 ```
 
-To verify they have been pushed run the following commands:
+To verify that the image has been imported:
 
 ```PowerShell
-az acr repository show -n $ACRNAME --image simpleapp:v1
-```
+ az acr repository show -n $ACRNAME --image windows/servercore/iis:windowsservercore-ltsc2019
+ ```
+
 ## Deploy workload without support for HTTPS
 
 Navigate to "aks-baseline-windows/Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/SimpleGMSAAPP/manifests" folder.
 
-1. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for < GMSA Credential Spec Name > in the manifest) and application container image name (Look for < Image Name > in the manifest).
-2. Run ``` kubectl apply -f deployment_sampleapp.yml -n sampleapp ```
+1. Create a namespace for your application by running ``` kubectl create namespace simpleapp ``` 
+2. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for < GMSA Credential Spec Name > in the manifest), Windows Nodepool name (look for < Windows Nodepool Name > in the manifest) and application container image name (Look for < Image Name > in the manifest).
+3. Run ``` kubectl apply -f deployment_sampleapp.yml -n simpleapp ```
 
 ### Check your deployed workload
 
 1. Verify Deployment by executing the following commands on your jumpbox:
 
 ```Powershell
-kubectl get deployment
-kubectl get pods -n sampleapp
-kubectl describe ingress
+kubectl get deployment -n simpleapp
+kubectl get pods -n simpleapp
+kubectl describe ingress -n simpleapp
 ```
-2. Copy the ip address displayed by running ``` kubectl describe ingress ``` on your jumpbox, open a browser, navigate to the IP address obtained above from the ingress controller and explore your website.
+2. Copy the ip address displayed by running ``` kubectl describe ingress -n simpleapp ``` on your jumpbox, open a browser, navigate to the IP address obtained above from the ingress controller and explore your website.
 
-# Next Steps
-- [Troubleshooting](#how-to-validate-your-gmsa-integration-after-deployment)
-- [Try deploying our Legacy .NET Application example](../eshopLegacyApp/Getting-Started.md)
-- [Add support for HTTPS](#deploy-the-ingress-with-https-support)
-  
 ## How to Validate Your GMSA Integration after Deployment
 
-1. Check the status of your pods by running ``` kubectl get pods ``` on your jumpbox. If the status is *Running*, you're good to go. If the status of your pods is *CrashLoopBackOff*, run ``` kubectl logs <pod name> ``` to debug. This status likely means that your credential spec file is misconfigured or the cluster permissions to your KeyVault are misconfigured. An example credential spec can be found [here](https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-containers/manage-serviceaccounts#create-a-credential-spec). When you look through your credential spec file, ensure that the DnsName, NetBiosName and GroupManagedServiceAccounts match the values from your domain controller. 
+1. Check the status of your pods by running ``` kubectl get pods -n simpleapp``` on your jumpbox. If the status is *Running*, you're good to go. If the status of your pods is *CrashLoopBackOff*, run ``` kubectl logs <pod name> ``` to debug. This status likely means that your credential spec file is misconfigured or the cluster permissions to your KeyVault are misconfigured. An example credential spec can be found [here](https://learn.microsoft.com/virtualization/windowscontainers/manage-containers/manage-serviceaccounts#create-a-credential-spec). When you look through your credential spec file, ensure that the DnsName, NetBiosName and GroupManagedServiceAccounts match the values from your domain controller. 
 2. To check if the container is connected to the domain your GMSA is running under, run the following commands:
 To login to the pod running your workload:
 ```Powershell
-kubectl get pods -n sampleapp
+kubectl get pods -n simpleapp
 kubectl exec -it "pod name" powershell
 ```
 ```Powershell
@@ -154,13 +145,9 @@ A fully qualified DNS name and a certificate are needed to configure HTTPS suppo
 
 2. Click on the *Frontend public IP address*
 
-   ![front end public ip address](../media/front-end-pip-link.png)
-
 3. Click on configuration in the left blade of the resulting page.
 
 4. Enter a unique DNS name in the field provided and click **Save**.
-
-   ![creating nds](../media/dns-created.png)
 
 ### Create the self-signed certificate using Lets Encrypt
 
@@ -207,7 +194,6 @@ If you notice the status is not changing after a few minutes, there could be a p
 ```
 
 Upon navigating to your new FQDN you will see you receive a certificate warning because it is not a production certificate. If you have got this far, continue to the next step to remediate this issue.
-![deployed workload https](../media/deployed-workload-https.png)
 
 4. Edit the 'certificateIssuer.yaml' file and replace the following:
 
@@ -235,4 +221,7 @@ Re-apply the updated file
 
 Now you can access the website using using your FQDN. When you navigate to the website using your browser you might see a warning stating the destination is not safe. Give it a few minutes and this should clear out. However, for production you want to use Certified Authority (CA) certificates.
 
-![deployed workload https more secure](../media/deployed-workload-https-secure.png)
+
+# Next Steps
+- [Cleanup](../../Terraform/09-cleanup.md)
+  

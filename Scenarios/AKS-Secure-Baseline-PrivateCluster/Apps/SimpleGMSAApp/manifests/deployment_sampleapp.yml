@@ -47,12 +47,13 @@ spec:
               - key: agentpool
                 operator: In
                 values:
-                - wnp
+                - < Windows Nodepool Name >
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: gmsa-win-demo
+  namespace: simpleapp
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
