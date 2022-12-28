@@ -20,7 +20,7 @@ spec:
            gmsaCredentialSpecName: < GMSA Credential Spec Name >
       containers:
       - name: iis
-        image: < Image Name >
+        image: < Registry Name >.azurecr.io/windows/servercore/iis:windowsservercore-ltsc2019
         imagePullPolicy: IfNotPresent
         command:
           - powershell
