@@ -79,13 +79,7 @@ $SPOKERG=<resource group name for spoke>
 $ACRNAME=$(az acr show --name <ACR NAME> --resource-group $SPOKERG --query "name" --output tsv)
 ```
 
-Log into ACR
-
-```PowerShell 
-az acr login -n $ACRNAME
-```
-
-Import the Windows Server 2019 LTSC image into the container registry. Ensure you are logged into the Azure Container Registry, you should show a successful login from the command above.
+Import the Windows Server 2019 LTSC image into your container registry.
 
 ```PowerShell
 az acr import -n $ACRNAME --source mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
