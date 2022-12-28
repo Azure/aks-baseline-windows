@@ -71,7 +71,7 @@ installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools
 
 ## Import Simple Application Container Image
 
-To build the application container image, you will need to import the Windows Server 2019 LTSC image to your Azure Container Registry that was deployed as apart of the reference architecture. Once this image is imported, you will reference the version from your ACR in the workload manifest rather than the public image from Microsoft Container Registry. 
+To run the application container image, you will first need to import the Windows Server 2019 LTSC image to your Azure Container Registry that was deployed as a part of the reference implementation. Once this image is imported, you will reference it in the workload's manifest file rather than the public image from Microsoft Container Registry. 
 
 ```PowerShell
 # enter the name of your ACR below
