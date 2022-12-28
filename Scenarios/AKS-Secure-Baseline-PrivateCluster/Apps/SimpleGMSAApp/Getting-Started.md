@@ -65,13 +65,13 @@ kubectl get ns
 1. If you are running these commands on your domain controller that is a Windows Server machine, you may have trouble
 installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/) and [kubelogin](https://github.com/Azure/kubelogin). The error would mention "Install-AzAksKubectl". If so, you will need to manually install both following the links above.
 
-## How to Validate Your GMSA Integration before Deployment
+## How to validate your GMSA integration before deployment
 
 1. To validate that your cluster is successfully retrieving your GMSA, go into your domain controller local server menu, go to Tools and select Event Viewer. Look under ActiveDirectory events. Look at the contents of the most recent events for a message that says "A caller successfully fetched the password of a group managed service account." The IP address of the caller should match one of your AKS cluster IPs.
 
-## Import Simple Application Container Image
+## Import simple GSMA application to your container registry
 
-To build the application container image, you will need to import the Windows Server 2019 LTSC image to your Azure Container Registry that was deployed as apart of the reference architecture. Once this image is imported, you will reference the version from your ACR in the workload manifest rather than the public image from Microsoft Container Registry. 
+To run the application container image, you will first need to import the Windows Server 2019 LTSC image to your Azure Container Registry that was deployed as a part of the reference implementation. Once this image is imported, you will reference it in the workload's manifest file rather than the public image from Microsoft Container Registry. 
 
 ```PowerShell
 # enter the name of your ACR below
@@ -79,13 +79,7 @@ $SPOKERG=<resource group name for spoke>
 $ACRNAME=$(az acr show --name <ACR NAME> --resource-group $SPOKERG --query "name" --output tsv)
 ```
 
-Log into ACR
-
-```PowerShell 
-az acr login -n $ACRNAME
-```
-
-Import the Windows Server 2019 LTSC image into the container registry. Ensure you are logged into the Azure Container Registry, you should show a successful login from the command above.
+Import the Windows Server 2019 LTSC image into your container registry.
 
 ```PowerShell
 az acr import -n $ACRNAME --source mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
@@ -102,7 +96,7 @@ To verify that the image has been imported:
 Navigate to "aks-baseline-windows/Scenarios/AKS-Secure-Baseline-PrivateCluster/Apps/SimpleGMSAAPP/manifests" folder.
 
 1. Create a namespace for your application by running ``` kubectl create namespace simpleapp ``` 
-2. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for < GMSA Credential Spec Name > in the manifest), Windows Nodepool name (look for < Windows Nodepool Name > in the manifest) and application container image name (Look for < Image Name > in the manifest).
+2. Update the [manifest file](manifests/deployment_sampleapp.yml) for the sample application with your GMSA name (look for **< GMSA Credential Spec Name >** in the manifest) and application container registry name (Look for **< Registry Name >** in the manifest).
 3. Run ``` kubectl apply -f deployment_sampleapp.yml -n simpleapp ```
 
 ### Check your deployed workload
