@@ -69,7 +69,7 @@ installing the [Kubernetes CLI (kubectl)](https://kubernetes.io/docs/tasks/tools
 
 1. To validate that your cluster is successfully retrieving your GMSA, go into your domain controller local server menu, go to Tools and select Event Viewer. Look under ActiveDirectory events. Look at the contents of the most recent events for a message that says "A caller successfully fetched the password of a group managed service account." The IP address of the caller should match one of your AKS cluster IPs.
 
-## Import Simple Application Container Image
+## Import simple GSMA application to your container registry
 
 To run the application container image, you will first need to import the Windows Server 2019 LTSC image to your Azure Container Registry that was deployed as a part of the reference implementation. Once this image is imported, you will reference it in the workload's manifest file rather than the public image from Microsoft Container Registry. 
 
