@@ -10,11 +10,6 @@ variable "private_dns_zone_name" {
   # update this in the .tfvars file
 }
 
-variable "wnp_count" {
-  type    = bool
-  default = true
-}
-
 variable "resource_group_name" {
   default = "tfstate"
 }
