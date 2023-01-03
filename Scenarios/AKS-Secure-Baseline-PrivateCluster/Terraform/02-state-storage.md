@@ -27,7 +27,7 @@ This storage account will be used to store the state of each deployment step and
 
 5. Create a Storage Container within the Storage Account:
 
-    ```
+    ```Shell
     az storage container-rm create --storage-account $STORAGEACCOUNTNAME --name $CONTAINERNAME
     ```
 
