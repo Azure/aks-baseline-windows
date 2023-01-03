@@ -24,7 +24,7 @@ $ARM_ACCESS_KEY =""
 ## Getting Started 
 This section is organized using folders that match the steps outlined below. Make any necessary adjustments to the variables and settings within that folder to match the needs of your deployment. 
 
-1. Prerequisites: Clone this repo, install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=powershell#powershell), install [Terraform](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-windows-bash?tabs=bash#4-install-terraform-for-windows) and generate the Azure [SPN](https://learn.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli#password-based-authentication)
+1. [Prerequisites](./01-prerequisites.md)
 
 2. [Creation of Azure Storage Account for State Management](./02-state-storage.md)
 
