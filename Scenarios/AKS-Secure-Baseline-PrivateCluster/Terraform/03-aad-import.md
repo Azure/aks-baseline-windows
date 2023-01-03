@@ -9,21 +9,23 @@ $ARM_ACCESS_KEY =""
 ```  -->
 
 
-# Create or Import Azure Active Directory Groups for AKS
-Before creating the Azure Active Directory integrated cluster, groups must be created that can be later mapped to the Built-In Roles of "Azure Kubernetes Service Cluster User Role" and "Azure Kubernetes Service RBAC Cluster Admin".
+# Import Azure Active Directory Groups for AKS
+Before creating the Azure Active Directory integrated cluster, groups must exist that can be later mapped to the Built-In Roles of "Azure Kubernetes Service Cluster User Role" and "Azure Kubernetes Service RBAC Cluster Admin".
 
-Depending on the needs of your organization, you may have a choice of existing groups to use or a new groups may need to be created for each cluster deployment.  
+Navigate to the "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import" folder.
 
-Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD" folder, either "03-AAD-create" or "03-AAD-import"
-```
+```Shell
 cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import
 ```
 
-In the "variables.tf" file, update the security group and defaults to reflect the display names as needed to either match existing groups or create names that fit your requirements. Also, update Terraform State variables to match storage account used for state file backend config. Key value is set in provider.tf.
-### Update the following values to your powershell instance:
-For the powershell option, we will be running the commands using a service principal. If you don't have a service principal, please create one by following the instructions [here](https://learn.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli#password-based-authentication). You will then be able to get your servicePrincipalId (which would be your appId) and servicePrincipalKey (which will be your password).
+In the "variables.tf" file, update the security group and defaults to reflect the display names as needed to match existing groups. Also, update Terraform State variables to match storage account used for state file backend config. Key value is set in provider.tf.
 
-```
+### Update the following values to your PowerShell instance:
+We will be running the commands using the service principal you created in [prerequisites/step 1](./01-prerequisites.md). You will need your SPN client ID, SPN tenant id and client secret. 
+
+Create the following variables for ease of use during deployment. 
+
+```Shell
 $backendResourceGroupName=""
 $backendStorageAccountName=""
 $backendContainername=""
@@ -35,17 +37,15 @@ $servicePrincipalKey=""
 ```
 Deploy using Terraform Init, Plan and Apply. 
 
-```powershell
+```Shell 
 terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate" -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID" -backend-config="tenant_id=$tenantId" -backend-config="client_id=$servicePrincipalId" -backend-config="client_secret=$servicePrincipalKey"
 ```
 
-
-
-```
+``` Shell 
 terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 
-```
+```Shell 
 terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 

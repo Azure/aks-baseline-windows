@@ -7,7 +7,7 @@
 
         - Contributor role is required at the subscription level to have the ability to create resource groups and perform deployments.
         - User Access Administrator role is required at the subscription level since you'll be performing role assignments to managed identities across various resource groups.
-2. Bash or PowerShell terminal. This reference reference implementation can be deployed using either a Bash or PowerShell terminal. In later steps of the deployment such as setting up your AKS cluster for Group Managed Service Accounts with Windows Integrated, you must use a PowerShell terminal on your jumpbox to use PowerShell modules. For the purposes of this reference implementation, instructions will be written using PowerShell. 
+2. PowerShell terminal. This reference reference implementation uses PowerShell for deployment.
 3. Latest [Azure CLI installed](https://learn.microsoft.com/cli/azure/install-azure-cli-windows?tabs=powershell#powershell)
 4. [Terraform version 3.9.0 or greater](https://learn.microsoft.com/azure/developer/terraform/get-started-windows-bash?tabs=bash#4-install-terraform-for-windows)
 5. Clone/download this repo locally using a Git Bash terminal, GitHub Desktop app or VSCode.
