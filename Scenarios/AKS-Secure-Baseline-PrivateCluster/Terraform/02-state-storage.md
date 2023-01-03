@@ -28,6 +28,11 @@ This storage account will be used to store the state of each deployment step and
     az storage container-rm create --storage-account $STORAGEACCOUNTNAME --name $CONTAINERNAME
     ```
 
+Key points:
+
+* For this example and for simplicity, public access is allowed to this Azure storage account for storing Terraform state. In a production deployment, it is recommended to retrict access to this storage account using a [storage firewall, service endpoint, or private endpoint](https://learn.microsoft.com/azure/storage/common/storage-network-security).
+* Azure storage accounts require a globally unique name. To learn more about troubleshooting storage account names, see [Resolve errors for storage account names.](https://learn.microsoft.com/azure/azure-resource-manager/templates/error-storage-account-name)
+
 ### Next step
 
 :arrow_forward: Using bash, [Create or Import Azure Active Directory Groups for AKS Cluster Admins and AKS Cluster Users](./03-aad.md)
