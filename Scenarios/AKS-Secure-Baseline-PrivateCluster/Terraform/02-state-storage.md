@@ -20,7 +20,8 @@ This storage account will be used to store the state of each deployment step and
     ```
 
 4. Create a Storage Account:
-    ```
+
+    ```Shell
     az storage account create -n $STORAGEACCOUNTNAME -g $TFSTATE_RG -l $REGION --sku Standard_LRS
     ```
 
