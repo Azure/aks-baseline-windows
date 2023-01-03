@@ -11,8 +11,9 @@
 3. [Terraform version 3.9.0 or greater](https://learn.microsoft.com/azure/developer/terraform/get-started-windows-bash?tabs=bash#4-install-terraform-for-windows)
 4. Bash and PowerShell terminal. This reference reference implementation can be deployed using either a Bash or PowerShell terminal. In later steps of the deployment such as setting up your AKS cluster for Group Managed Service Accounts with Windows Integrated, you must use a PowerShell terminal on your jumpbox to use PowerShell modules. 
 5. Clone/download this repo locally.
-    ``` git clone https://github.com/Azure/aks-baseline-windows.git
-        cd aks-baseline-windows
-    ``` 
+    ```bash
+    git clone https://github.com/Azure/aks-baseline-windows.git
+    cd aks-baseline-windows
+    ```
 # Next Step
 :arrow_forward: [Setup state storage for Terraform](./02-state-storage.md)
