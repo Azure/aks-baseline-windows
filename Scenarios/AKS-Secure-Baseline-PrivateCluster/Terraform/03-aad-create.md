@@ -12,7 +12,7 @@ In the "variables.tf" file, update the security group and defaults to reflect th
 We will be running the commands using the service principal you created in [prerequisites/step 1](./01-prerequisites.md). You will need your SPN client ID, SPN tenant id and client secret. 
 Create the following variables for ease of use during deployment. 
 
-```Shell
+```PowerShell
 $backendResourceGroupName=""
 $backendStorageAccountName=""
 $backendContainername=""
@@ -24,15 +24,15 @@ $servicePrincipalKey=""
 ```
 Deploy using Terraform Init, Plan and Apply. 
 
-```Shell 
+```PowerShell 
 terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate" -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID" -backend-config="tenant_id=$tenantId" -backend-config="client_id=$servicePrincipalId" -backend-config="client_secret=$servicePrincipalKey"
 ```
 
-``` Shell 
+``` PowerShell 
 terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 
-```Shell 
+```PowerShell 
 terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 

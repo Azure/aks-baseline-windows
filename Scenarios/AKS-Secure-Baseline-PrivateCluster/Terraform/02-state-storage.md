@@ -3,13 +3,13 @@ This storage account will be used to store the state of each deployment step and
 
 1. Login to the Azure subscription that you'll be deploying into with your credentials.
 
-   ```Shell
+   ```PowerShell
    az login
    az account set --subscription <YOUR SUBSCRIPTION ID>
    ```
 2. Create some variables to start with about where your storage account will live.
    
-    ```Shell
+    ```PowerShell
     $REGION=<REGION>
     $STORAGEACCOUNTNAME=<UNIQUENAME>
     $CONTAINERNAME=akscs
@@ -17,19 +17,19 @@ This storage account will be used to store the state of each deployment step and
     ```
 3. Create a Resource Group.
     
-    ```Shell
+    ```PowerShell
     az group create --name $TFSTATE_RG --location $REGION
     ```
 
 4. Create a Storage Account.
 
-    ```Shell
+    ```PowerShell
     az storage account create -n $STORAGEACCOUNTNAME -g $TFSTATE_RG -l $REGION --sku Standard_LRS
     ```
 
 5. Create a Storage Container within the Storage Account.
 
-    ```Shell
+    ```PowerShell
     az storage container-rm create --storage-account $STORAGEACCOUNTNAME --name $CONTAINERNAME
     ```
 
