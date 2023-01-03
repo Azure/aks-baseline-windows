@@ -2,8 +2,10 @@
 This storage account will be used to store the state of each deployment step and will be accessed by Terraform to reference values stored in the various deployment state files.
 
 1. Login to the Azure subscription that you'll be deploying into with your credentials
-   ``` az login 
-       az account set --subscription <Your subscription ID> 
+
+   ```Shell
+   az login
+   az account set --subscription <YOUR SUBSCRIPTION ID>
    ```
 2. Create some variables to start with about where your storage account will live.
     ```Powershell
