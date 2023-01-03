@@ -14,7 +14,7 @@ Before creating the Azure Active Directory integrated cluster, groups must exist
 
 Navigate to the "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import" folder.
 
-```Shell
+```PowerShell
 cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-import
 ```
 
