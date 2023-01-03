@@ -1,4 +1,4 @@
-# Prerequisities 
+# Prerequisites
 
 1. An Azure subscription
    The subscription used in this deployment cannot be a free account; it must be a standard EA, pay-as-you-go, or Visual Studio benefit subscription. This is because the resources deployed here are beyond the quotas of free subscriptions.
