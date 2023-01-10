@@ -1,11 +1,10 @@
 # Create resources for the AKS Private Cluster
 
 The following will be created:
-* AKS Private Cluster
-* Log Analytics Workspace
-* Managed Identity for AKS Control Plane
-* Managed Identity for Application Gateway Ingress Controller
-* AKS Pod Identity Assignments - OPTIONAL
+* [AKS Private Cluster](./07-AKS-cluster/aks-cluster.tf)
+* [Log Analytics Workspace](./07-AKS-cluster/aks-cluster.tf)
+* [Managed Identity for AKS Control Plane](./07-AKS-cluster/aks-cluster.tf)
+* [AKS Pod Identity Assignments - OPTIONAL](./07-AKS-cluster/aks-pod-identity.tf)
 
 Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/07-AKS-cluster" folder
 ```PowerShell
