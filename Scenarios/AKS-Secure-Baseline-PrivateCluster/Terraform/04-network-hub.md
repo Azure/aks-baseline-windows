@@ -24,16 +24,12 @@ location=""
 hub_prefix="" 
 
 ### Update the PowerShell variables for Terraform execution:
+Using the same PowerShell session from the previous step, update the state file name that will be used for this part of the deployment.
 
 ```PowerShell
-$backendResourceGroupName=""
-$backendStorageAccountName=""
-$backendContainername=""
-$layerNametfstate="hub-net" # # same as state file name provided in provider.tf 
-$ARM_SUBSCRIPTION_ID=""
-$tenantId=""
-$servicePrincipalId=""
-$servicePrincipalKey=""
+
+$layerNametfstate="hub-net"
+
 ```
 
 Deploy using Terraform Init, Plan and Apply. 
@@ -51,6 +47,13 @@ terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SU
 ```PowerShell
 terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
+
+After the domain controller is up and running, you will need to update the DNS on the vnet to use the domain controller for routing. 
+
+1. Locate the private IP address of your domain controller. (It should be a 10.X IP address)
+2. In the portal, navigate to Settings-> DNS servers
+3. Choose Custom, input your domain controller's IP address and hit Save. 
+4. Restart your jumpbox VM and domain controller to propagate the new DNS settings. 
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
 

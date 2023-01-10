@@ -8,37 +8,57 @@ The following will be created:
 * AKS Pod Identity Assignments - OPTIONAL
 
 Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/07-AKS-cluster" folder
-```bash
+```PowerShell
 cd ../07-AKS-cluster
 ```
 
 This deployment will need to reference data objects from the Hub deployment and will need access to the pre-existing state file, update the variables as needed.  This deployment will also need to use a storage access key (from Azure) to read the storage account data.  This is a sensitive variable and should not be committed to the code repo.
 
-Once again, A sample terraform.tfvars.sample file is included. Update the required variables, including `private_dns_zone_name` save it and rename it to **terraform.tfvars**. Remember to update your private dns zone name variable with the appropriate location.
+### Following values will require inputs in the terraform.tfvars file:
+```
+# wnp_count = true # if set to true windows node pools will be deployed.
+# private_dns_zone_name = "privatelink.centralus.azmk8s.io" # default value is set to centralus region, change the dns region to your desired location, must match to the earlier resource regions. 
+```
+
+Once again, A sample terraform.tfvars.sample file is included. Update the required variables, save it and rename it to **terraform.tfvars**.
+
+### Update the PowerShell variables for Terraform execution:
+Using the same PowerShell session from the previous step, update the state file name that will be used for this part of the deployment.
+
+```PowerShell
+  $layerNametfstate="aks" # same as state file name provided in provider.tf 
+  $access_key = "" # TF state file Azure storage account access key, it will be used to access exisiitng state files.
+```
 
 Once the files are updated, deploy using Terraform Init, Plan and Apply.
 
-### Update the following values to your powershell instance:
-```
-$TFSTATE_RG =""
-$STORAGEACCOUNTNAME = ""
-$CONTAINERNAME = ""
-$ARM_CLIENT_ID =""
-$ARM_CLIENT_SECRET =""
-$ARM_TENANT_ID =""
-$ARM_SUBSCRIPTION_ID =""
-$ARM_ACCESS_KEY =""
-
-```Powershell
-terraform init -backend-config="resource_group_name=$TFSTATE_RG" -backend-config="storage_account_name=$STORAGEACCOUNTNAME" -backend-config="container_name=$CONTAINERNAME"
+```PowerShell
+terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate" -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID" -backend-config="tenant_id=$tenantId" -backend-config="client_id=$servicePrincipalId" -backend-config="client_secret=$servicePrincipalKey"
 ```
 
-```Powershell
-terraform plan 
+```PowerShell
+terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$access_key" -var="state_sa_name=$backendStorageAccountName" 
 ```
 
-```Powershell
-terraform apply 
+```PowerShell
+terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$access_key" 
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
+
+## Grant access from hub network to private link created for keyvault
+
+For the jumpbox you just created in the hub network to have access to Key vault's private link you need to add the network to the access. To do this,
+
+1. Find the Private DNS zone created for keyvault. This should be in the landing zone resource group (escs-lz01-rg for example)
+
+   ![Location of private link for keyvault](../media/keyvault-privatelink-location.png)
+
+2. Click on **Virtual network links** in the left blade under **Settings**
+3. Click on **+ Add** in the in the top left of the next screen
+4. enter a name for the link eg *hub_to_kv*
+5. Select the hub virtual network for the **Virtual network** field
+6. Click on **OK** at the bottom
+
+# Next Step
+:arrow_forward: [Deploy a Basic Workload](./08-workload.md)
