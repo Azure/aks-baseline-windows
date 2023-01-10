@@ -58,4 +58,4 @@ After the domain controller is up and running, you will need to update the DNS o
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
 
 # Next Steps
-:arrow_forward: [Creation of Spoke Network & its respective Components](./05-win-network-lz.md)
+:arrow_forward: [Creation of Spoke Network & its respective Components](./05-network-lz.md)
