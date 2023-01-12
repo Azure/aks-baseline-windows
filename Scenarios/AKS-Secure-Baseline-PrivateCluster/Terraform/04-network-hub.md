@@ -19,10 +19,12 @@ In the "variables.tf" file, update the defaults to reflect the tags  you'd like 
 
 If using **terraform.tfvars**, then update the following in the file.
 
+```
 admin_password = ""
 admin_username = ""
-location=""
-hub_prefix="" 
+location = ""
+hub_prefix = "" 
+```
 
 ### Update the PowerShell variables for Terraform execution:
 Using the same PowerShell session from the previous step, update the state file name that will be used for this part of the deployment.
