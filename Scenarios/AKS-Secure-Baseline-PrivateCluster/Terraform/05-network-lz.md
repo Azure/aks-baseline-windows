@@ -30,7 +30,8 @@ To get the access key:
 5. Update your the terraform.tfvars.sample file with this as the value for access_key or update the existing terraform.tfvars file. 
 6. If using terraform.tfvars.sample then Rename the file to terraform.tfvars
 
-### Update the PowerShell variables for Terraform execution:
+### Deploy the spoke networking and Application Gateway
+
 Using the same PowerShell session from the previous step, update the state file name that will be used for this part of the deployment.
 
 ```PowerShell
