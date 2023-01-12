@@ -45,7 +45,7 @@ terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$ten
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
 
-## Grant access from hub network to private link created for keyvault
+### Grant access from the hub network to the private link created for Key Vault
 
 For the jumpbox you just created in the hub network to have access to Key vault's private link you need to add the network to the access. To do this,
 
