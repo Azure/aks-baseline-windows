@@ -9,7 +9,8 @@ The following will be created:
 * [Subnet for AKS](./05-Network-LZ/aks-networking.tf)
 
 Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/05-Network-LZ" folder
-```
+
+```PowerShell
 cd ../05-Network-LZ
 ```
 
