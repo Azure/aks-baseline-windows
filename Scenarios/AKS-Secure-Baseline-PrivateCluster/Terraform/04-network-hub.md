@@ -51,7 +51,9 @@ terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SU
 terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 
-After the domain controller is up and running, you will need to update the DNS on the vnet to use the domain controller for routing. 
+### Configure DNS on the hub network
+
+After the domain controller is up and running, you will need to update the DNS on the virtual network to use the domain controller for resolution.
 
 1. Locate the private IP address of your domain controller. (It should be a 10.X IP address)
 2. In the portal, navigate to Settings-> DNS servers
