@@ -26,7 +26,8 @@ location = ""
 hub_prefix = "" 
 ```
 
-### Update the PowerShell variables for Terraform execution:
+### Deploy the hub networking and Windows domain controller
+
 Using the same PowerShell session from the previous step, update the state file name that will be used for this part of the deployment.
 
 ```PowerShell
