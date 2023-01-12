@@ -21,7 +21,7 @@ This deployment will need to reference data objects from the Hub deployment and 
 
 Once again, A sample terraform.tfvars.sample file is included. Update the required variables, save it and rename it to **terraform.tfvars**.
 
-### Update the PowerShell variables for Terraform execution:
+### Deploy the cluster
 Using the same PowerShell session from the previous step, update the state file name that will be used for this part of the deployment.
 
 ```PowerShell
@@ -49,15 +49,12 @@ If you get an error about changes to the configuration, go with the `-reconfigur
 
 For the jumpbox you created in the hub network to have access to Key Vault's private link you need to add the network to the access.
 
-1. Find the Private DNS zone created for keyvault. This should be in the landing zone resource group (escs-lz01-rg for example)
-
-   ![Location of private link for keyvault](../media/keyvault-privatelink-location.png)
-
+1. Find the Private DNS zone created for Key Vault. This should be in the landing zone resource group (escs-lz01-rg for example)
 2. Click on **Virtual network links** in the left blade under **Settings**
 3. Click on **+ Add** in the in the top left of the next screen
 4. enter a name for the link eg *hub_to_kv*
 5. Select the hub virtual network for the **Virtual network** field
 6. Click on **OK** at the bottom
 
-# Next Step
+## Next Step
 :arrow_forward: [Deploy a Basic Workload](./08-workload.md)

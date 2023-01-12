@@ -1,12 +1,12 @@
 # Create resources that support AKS
 
 The following will be created:
-* [Azure Container Registry](./06-AKS-supporting/supporting-infra.tf)
+* [Azure Container Registry](ACR)(./06-AKS-supporting/supporting-infra.tf)
 * [Azure Key Vault](./06-AKS-supporting/supporting-infra.tf)
-* [Private Link Endpoints for ACR and Key Vault]()
+* Private Link Endpoints for ACR and Key Vault
 
 Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/06-AKS-supporting" folder
-```
+```PowerShell
 cd ../06-AKS-supporting
 ```
 
@@ -20,7 +20,7 @@ Once again, A sample terraform.tfvars.sample file is included. Update the requir
 1. Rename the file to *terraform.tfvars* or use the existing terraform.tfvars file.
 
 
-### Update the PowerShell variables for Terraform execution:
+### Deploy the adjacent cluster resources
 Using the same PowerShell session from the previous step, update the state file name that will be used for this part of the deployment.
 
 ```PowerShell
@@ -44,5 +44,5 @@ terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$ten
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
 
-# Next Step
+## Next Step
 :arrow_forward: [Creation of AKS & enabling Addons](./07-aks-cluster.md)
