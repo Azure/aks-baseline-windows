@@ -47,7 +47,7 @@ If you get an error about changes to the configuration, go with the `-reconfigur
 
 ### Grant access from the hub network to the private link created for Key Vault
 
-For the jumpbox you just created in the hub network to have access to Key vault's private link you need to add the network to the access. To do this,
+For the jumpbox you created in the hub network to have access to Key Vault's private link you need to add the network to the access.
 
 1. Find the Private DNS zone created for keyvault. This should be in the landing zone resource group (escs-lz01-rg for example)
 
