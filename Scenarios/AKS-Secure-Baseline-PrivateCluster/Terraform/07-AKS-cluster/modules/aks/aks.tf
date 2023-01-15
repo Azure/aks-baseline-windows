@@ -28,8 +28,9 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
     name            = "defaultpool"
     vm_size         = "Standard_DS2_v2"
     os_disk_size_gb = 30
+    os_disk_type    = "Ephemeral"
     type            = "VirtualMachineScaleSets"
-    node_count      = 2
+    node_count      = 3
     vnet_subnet_id  = var.vnet_subnet_id
   }
 
@@ -58,13 +59,12 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
-  count                 = var.wnp_count ? 1 : 0
   name                  = "wnp"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
-  vm_size               = "Standard_D4s_v3"
+  vm_size               = "Standard_DS4_v2"
   node_count            = 3
   mode                  = "User"
-  os_disk_size_gb       = 128
+  os_disk_type          = "Ephemeral"
   os_type               = "Windows"
   vnet_subnet_id        = var.vnet_subnet_id
   tags = {
