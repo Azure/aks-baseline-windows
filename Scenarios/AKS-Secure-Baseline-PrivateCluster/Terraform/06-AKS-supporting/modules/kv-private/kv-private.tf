@@ -11,7 +11,7 @@ resource "azurerm_key_vault" "key-vault" {
   network_acls {
     bypass         = "AzureServices"
     default_action = "Deny"
-    virtual_network_subnet_ids = ["${var.aks_sub_id}", "${var.devSubnetdc_id}"]
+    #virtual_network_subnet_ids = ["${var.aks_sub_id}", "${var.devSubnetdc_id}"]
 
   }
 }
@@ -20,7 +20,7 @@ resource "azurerm_private_endpoint" "kv-endpoint" {
   name                = "${var.name}-endpoint"
   location            = var.location
   resource_group_name = var.resource_group_name
-  subnet_id           = var.dest_sub_id
+  subnet_id           = var.priv_sub_id
 
   private_service_connection {
     name                           = "${var.name}-privateserviceconnection"
@@ -47,8 +47,6 @@ output "key_vault_url" {
 # Variables
 
 variable "zone_resource_group_name" {}
-
-variable "dest_sub_id" {}
 
 variable "private_zone_id" {}
 
