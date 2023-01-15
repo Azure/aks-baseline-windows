@@ -6,7 +6,7 @@ resource "azurerm_virtual_network" "vnet" {
   name                = "vnet-${var.hub_prefix}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
-  address_space       = ["10.0.0.0/16"]
+  address_space       = ["10.200.0.0/24"]
   dns_servers         = null
   tags                = var.tags
 
@@ -21,7 +21,7 @@ resource "azurerm_subnet" "firewall" {
   name                                           = "AzureFirewallSubnet"
   resource_group_name                            = azurerm_resource_group.rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = ["10.0.1.0/26"]
+  address_prefixes                               = ["10.200.0.0/26"]
   enforce_private_link_endpoint_network_policies = false
 
 }
@@ -32,7 +32,7 @@ resource "azurerm_subnet" "gateway" {
   name                                           = "GatewaySubnet"
   resource_group_name                            = azurerm_resource_group.rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = ["10.0.2.0/27"]
+  address_prefixes                               = ["10.200.0.64/27"]
   enforce_private_link_endpoint_network_policies = false
 
 }
@@ -41,7 +41,7 @@ resource "azurerm_subnet" "gateway" {
 module "bastion" {
   source = "./modules/bastion"
 
-  subnet_cidr          = "10.0.3.0/26"
+  subnet_cidr          = "10.200.0.128/26"
   virtual_network_name = azurerm_virtual_network.vnet.name
   resource_group_name  = azurerm_resource_group.rg.name
   location             = azurerm_resource_group.rg.location
