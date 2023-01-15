@@ -6,7 +6,17 @@ resource "azurerm_subnet" "aks" {
   name                                           = "aksSubnet"
   resource_group_name                            = azurerm_resource_group.spoke-rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = ["10.1.16.0/20"]
+  address_prefixes                               = ["10.240.0.0/22"]
+  enforce_private_link_endpoint_network_policies = true
+  service_endpoints = ["Microsoft.KeyVault"]
+
+}
+
+resource "azurerm_subnet" "lb" {
+  name                                           = "lbSubnet"
+  resource_group_name                            = azurerm_resource_group.spoke-rg.name
+  virtual_network_name                           = azurerm_virtual_network.vnet.name
+  address_prefixes                               = ["10.240.4.0/28"]
   enforce_private_link_endpoint_network_policies = true
   service_endpoints = ["Microsoft.KeyVault"]
 
