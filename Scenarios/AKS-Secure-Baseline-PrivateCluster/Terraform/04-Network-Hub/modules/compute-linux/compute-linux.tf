@@ -14,7 +14,7 @@ resource "azurerm_linux_virtual_machine" "compute" {
   ]
 
   os_disk {
-    caching              = "ReadWrite"
+    caching              = "None"
     storage_account_type = var.storage_account_type
   }
 
