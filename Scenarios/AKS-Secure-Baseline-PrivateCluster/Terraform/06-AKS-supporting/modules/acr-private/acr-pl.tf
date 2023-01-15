@@ -11,7 +11,7 @@ resource "azurerm_private_endpoint" "acr-endpoint" {
   name                = "${var.acrname}-to_aks"
   location            = var.location
   resource_group_name = var.resource_group_name
-  subnet_id           = var.aks_sub_id
+  subnet_id           = var.priv_sub_id
 
   private_service_connection {
     name                           = "${var.acrname}-privateserviceconnection"
