@@ -39,7 +39,7 @@ variable "access_key" {
 ## Sample terraform.tfvars File
 
 variable "admin_password" {
-  default   = "Superm@n1234"
+  default   = ""
   sensitive = true
 }
 
