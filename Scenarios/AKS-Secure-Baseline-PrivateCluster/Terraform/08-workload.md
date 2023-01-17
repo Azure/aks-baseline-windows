@@ -1,6 +1,6 @@
 # Deploy a Sample Workload
 
-These applications are provided to demonstrate examples of various types of applications and authentication scenarios for AKS Windows container scenarios. 
+These applications are provided to demonstrate examples of various types of applications and authentication scenarios for AKS Windows container scenarios. You may deploy one or both. 
 
 We've included two sample applications demonstrating Windows Integrated Authentication with Group Managed Service Accounts (GMSA):
 

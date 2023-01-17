@@ -8,20 +8,19 @@ For more information about private clusters and why they are recommended, check 
 Core architecture components
 * AKS Private Cluster
 * Azure Virtual Networks (hub-spoke)
-  * Azure Firewall managed egress
-* Application Gateway Ingress Controller
+* Azure Firewall managed egress
 * AKS-managed Internal Load Balancer
 * Azure CNI
 * Azure Keyvault
-* Azure Container registry
+* Azure Container Registry
 * Azure Bastion
-* Azure Monitor for containers
-* Azure firewall
+* Azure Monitor for Containers
+* Azure Firewall
 * [Group managed service accounts](https://learn.microsoft.com/en-us/azure/aks/use-group-managed-service-accounts) (GMSA)
 * [Secret store CSI driver](https://learn.microsoft.com/azure/aks/csi-secrets-store-driver)
 
 ## Next
-Pick one of the IaC options below and follow the instructions to deploy the AKS reference implementation.
+Follow the instructions below to deploy the AKS reference implementation.
 
 :arrow_forward: [Terraform](./Terraform)
 
