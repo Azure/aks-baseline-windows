@@ -1,7 +1,7 @@
 # Create resources that support AKS
 
 The following will be created:
-* [Azure Container Registry](ACR)(./06-AKS-supporting/supporting-infra.tf)
+* [Azure Container Registry (ACR)](./06-AKS-supporting/supporting-infra.tf)
 * [Azure Key Vault](./06-AKS-supporting/supporting-infra.tf)
 * Private Link Endpoints for ACR and Key Vault
 

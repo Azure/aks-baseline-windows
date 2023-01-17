@@ -59,7 +59,7 @@ After the domain controller is up and running, you will need to update the DNS o
 1. To check your domain controller is up, verify that the VM is in a running state by going to the Portal, clicking on the domain controller VM and verifying that the "Status" property says "Running". You should also verify that the Networking property "Private IP address" has a value. 
 2. Locate the private IP address of your domain controller. (It should be a 10.X IP address)
    ```PowerShell
-    $nicId = (az vm show -g <Your Hub RG Name> -n <name of Domain Controller VM> --query "networkProfile.networkInterfaces[0].id")
+    $nicId = (az vm show -g "aks-HUB" -n <name of Domain Controller VM> --query "networkProfile.networkInterfaces[0].id")
     az network nic show --id $nicId --query "ipConfigurations[0].privateIpAddress"
    ```
 3. In the portal, navigate to Settings-> DNS servers
