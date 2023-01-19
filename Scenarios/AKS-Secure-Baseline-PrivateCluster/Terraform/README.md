@@ -47,4 +47,3 @@ The steps above assume that you will be creating the Hub and Spoke (Landing Zone
 
 To deploy AKS into an existing network, use the [AKS for Existing Cluster](./07-AKS-cluster-existing-infra) folder.  Update the "existing-infra.variables.tf" file to reference the names and resource IDs of the pre-existing infrastructure.
 
-testing the ashish branch.
