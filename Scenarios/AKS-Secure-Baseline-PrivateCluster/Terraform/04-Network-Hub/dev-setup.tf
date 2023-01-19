@@ -28,14 +28,14 @@ resource "azurerm_subnet_network_security_group_association" "subnet" {
 
 # Linux Server VM
 
-module "create_linuxsserver" {
-  source = "./modules/compute-linux"
+module "create_WindowsClient" {
+  source = "./modules/compute-win"
 
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   vnet_subnet_id      = azurerm_subnet.dev.id
 
-  server_name         = "server-dev-linux"
+  server_name         = "client-dev-win"
   admin_username      = var.admin_username
   admin_password      = var.admin_password
 

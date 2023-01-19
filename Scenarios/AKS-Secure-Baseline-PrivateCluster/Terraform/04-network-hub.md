@@ -70,6 +70,10 @@ After the domain controller is up and running, you will need to update the DNS o
    az vm restart -g "aks-HUB" -n "server-dev-linux"
    ```
 
+### Windows client for system to manage the cluster
+04-Network-Hub will execute one client system as well to run the admin and operational tasks of the AKS cluster. Sub module (compute-Win) will have a client system ready with min required tools such as AzCli, Kubectl etc.
+To connect client system you can use Bastion service and provide the VM name or IP address in bastion service. Username and Password for the client will be used from variable.tf. 
+
 ## Next Step
 
 :arrow_forward: [Creation of Spoke Network & its respective Components](./05-network-lz.md)
