@@ -72,7 +72,7 @@ After the domain controller is up and running, you will need to update the DNS o
 ### Windows client for system to manage the cluster
 The 04-Network-Hub module will deploy a Windows client system to run the administrative and operational tasks for the Azure Kubernetes Service (AKS) cluster. The sub-module, compute-Win, will have a client system preconfigured with the minimum required tools, such as Azure CLI and Kubectl.
 To connect to the client system, the Bastion service can be utilized and the virtual machine name or IP address can be provided in the Bastion service. The username and password for the client system will be retrieved from the variable.tf file. The following screenshot illustrates the process of accessing the Bastion service.
-![architecture diagram](../../media/Screenshot_BastionService.jpg)
+![Bastion service access](../../../media/Screenshot_BastionService.jpg)
 
 
 ## Next Step
