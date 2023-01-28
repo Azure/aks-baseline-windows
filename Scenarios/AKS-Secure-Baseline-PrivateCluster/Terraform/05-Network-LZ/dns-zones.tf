@@ -13,14 +13,6 @@ resource "azurerm_private_dns_zone_virtual_network_link" "lz_acr" {
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
 
-output "acr_private_zone_id" {
-  value = azurerm_private_dns_zone.acr-dns.id
-}
-
-output "acr_private_zone_name" {
-  value = azurerm_private_dns_zone.acr-dns.name
-}
-
 # # Deploy DNS Private Zone for KV
 
 resource "azurerm_private_dns_zone" "kv-dns" {
@@ -33,6 +25,14 @@ resource "azurerm_private_dns_zone_virtual_network_link" "lz_kv" {
   resource_group_name   = azurerm_resource_group.spoke-rg.name
   private_dns_zone_name = azurerm_private_dns_zone.kv-dns.name
   virtual_network_id    = azurerm_virtual_network.vnet.id
+}
+
+output "acr_private_zone_id" {
+  value = azurerm_private_dns_zone.acr-dns.id
+}
+
+output "acr_private_zone_name" {
+  value = azurerm_private_dns_zone.acr-dns.name
 }
 
 output "kv_private_zone_id" {
