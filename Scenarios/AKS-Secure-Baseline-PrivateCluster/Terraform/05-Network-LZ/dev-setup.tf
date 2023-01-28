@@ -1,10 +1,10 @@
 ####################################
-# These resources will create an addtional subnet for Domain Controller
-# Use Bastion Service to connect with VM.
+# These resources will create an addtional subnet for Domain Controller and JumpBox
+# Use Bastion Service to connect with JumpBox VM.
 ####################################
 
 # Dev Subnet
-# (Additional subnet for Developer Jumpbox)
+# (Additional subnet for Developer DC and Jumpbox)
 resource "azurerm_subnet" "devSubnetdc" {
   name                                           = "devSubnetdc"
   resource_group_name                            = azurerm_resource_group.spoke-rg.name
@@ -38,7 +38,6 @@ output "lz-devSubnetdc_id" {
 }
 
 # Domain Controller Server VM
-
 module "create_windows_DC" {
   source = "./modules/compute-win-DC"
 
@@ -51,6 +50,7 @@ module "create_windows_DC" {
   admin_password      = var.admin_password
 }
 
+# JumpBox Server VM
 module "create_windows_jump" {
   source = "./modules/compute-win-jump"
 
@@ -63,8 +63,3 @@ module "create_windows_jump" {
   admin_password      = var.admin_password
 
 }
-
-
-
-
-
