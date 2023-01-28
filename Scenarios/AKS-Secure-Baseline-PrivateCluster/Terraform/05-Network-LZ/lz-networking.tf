@@ -21,7 +21,7 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.spoke-rg.name
   location            = azurerm_resource_group.spoke-rg.location
   address_space       = ["10.240.0.0/16"]
-  dns_servers         = null
+  dns_servers         = ["10.240.6.4"]
   tags                = var.tags
 
 }
