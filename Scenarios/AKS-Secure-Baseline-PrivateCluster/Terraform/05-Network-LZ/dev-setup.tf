@@ -32,11 +32,6 @@ resource "azurerm_subnet_route_table_association" "rt_association_dc" {
   route_table_id = azurerm_route_table.route_table.id
 }
 
-output "lz-devSubnetdc_id" {
-  value = azurerm_subnet.devSubnetdc.id
-  
-}
-
 # Domain Controller Server VM
 module "create_windows_DC" {
   source = "./modules/compute-win-DC"
@@ -62,4 +57,12 @@ module "create_windows_jump" {
   admin_username      = var.admin_username
   admin_password      = var.admin_password
 
+}
+
+#############
+## OUTPUTS ##
+#############
+# These outputs are used by later deployments
+output "lz-devSubnetdc_id" {
+  value = azurerm_subnet.devSubnetdc.id
 }
