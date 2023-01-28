@@ -43,7 +43,8 @@ resource "azurerm_network_interface" "win" {
   ip_configuration {
     name                          = "internal"
     subnet_id                     = var.vnet_subnet_id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "10.240.6.5"
   }
 }
 
