@@ -5,15 +5,6 @@ resource "azurerm_resource_group" "spoke-rg" {
   location = data.terraform_remote_state.existing-hub.outputs.hub_rg_location
 }
 
-output "lz_rg_location" {
-  value = azurerm_resource_group.spoke-rg.location
-}
-
-output "lz_rg_name" {
-  value = azurerm_resource_group.spoke-rg.name
-}
-
-
 # Virtual Network
 
 resource "azurerm_virtual_network" "vnet" {
@@ -35,18 +26,6 @@ resource "azurerm_subnet" "priv-link" {
 
 }
 
-output "lz_vnet_name" {
-  value = azurerm_virtual_network.vnet.name
-}
-
-output "lz_vnet_id" {
-  value = azurerm_virtual_network.vnet.id
-}
-
-output "priv_subnet_id" {
-  value = azurerm_subnet.priv-link.id
-}
-
 # # Create Route Table for Landing Zone
 # (All subnets in the landing zone will need to connect to this Route Table)
 resource "azurerm_route_table" "route_table" {
@@ -63,6 +42,29 @@ resource "azurerm_route_table" "route_table" {
   }
 }
 
+#############
+## OUTPUTS ##
+#############
+# These outputs are used by later deployments
+output "lz_rg_location" {
+  value = azurerm_resource_group.spoke-rg.location
+}
+
+output "lz_rg_name" {
+  value = azurerm_resource_group.spoke-rg.name
+}
+
+output "lz_vnet_name" {
+  value = azurerm_virtual_network.vnet.name
+}
+
+output "lz_vnet_id" {
+  value = azurerm_virtual_network.vnet.id
+}
+
+output "priv_subnet_id" {
+  value = azurerm_subnet.priv-link.id
+}
 output "lz_rt_id" {
   value = azurerm_route_table.route_table.id
 }
