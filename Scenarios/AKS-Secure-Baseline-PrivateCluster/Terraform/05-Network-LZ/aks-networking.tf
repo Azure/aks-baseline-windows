@@ -36,6 +36,10 @@ resource "azurerm_subnet_route_table_association" "rt_association" {
   route_table_id = azurerm_route_table.route_table.id
 }
 
+#############
+## OUTPUTS ##
+#############
+# These outputs are used by later deployments
 output "aks_subnet_id" {
   value = azurerm_subnet.aks.id
 }
