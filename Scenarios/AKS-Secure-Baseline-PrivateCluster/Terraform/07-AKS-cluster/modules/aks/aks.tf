@@ -10,10 +10,11 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   dns_prefix              = var.prefix
   location                = var.location
   resource_group_name     = var.resource_group_name
-  kubernetes_version      = "1.24.6"
+  kubernetes_version      = "1.25.2"
   private_cluster_enabled = true
   private_dns_zone_id     = var.private_dns_zone_id
   azure_policy_enabled    = true
+  local_account_disabled  = true
 
   key_vault_secrets_provider {
     secret_rotation_enabled  = true
@@ -32,6 +33,8 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
     type            = "VirtualMachineScaleSets"
     node_count      = 3
     vnet_subnet_id  = var.vnet_subnet_id
+    only_critical_addons_enabled = true
+    zones           = ["1","2","3"]
   }
 
   network_profile {
@@ -41,6 +44,7 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
     dns_service_ip     = "192.168.100.10"
     service_cidr       = "192.168.100.0/24"
     docker_bridge_cidr = "172.17.0.1/16"
+    network_policy     = "azure"
 
   }
 
@@ -67,6 +71,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
   os_disk_type          = "Ephemeral"
   os_type               = "Windows"
   vnet_subnet_id        = var.vnet_subnet_id
+  zones                 = ["1","2","3"]
   tags = {
     "nodepool-type" = "user"
     "env_type"      = "Windows_np"
