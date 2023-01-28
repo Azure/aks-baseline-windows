@@ -59,14 +59,13 @@ locals {
   install_ad_command   = "Add-WindowsFeature -name ad-domain-services -IncludeManagementTools"
   configure_ad_command = "Install-ADDSForest -CreateDnsDelegation:$false -DomainMode Win2012R2 -DomainName ${var.active_directory_domain} -DomainNetbiosName ${var.active_directory_netbios_name} -ForestMode Win2012R2 -InstallDns:$true -SafeModeAdministratorPassword $password -Force:$true"
   shutdown_command     = "shutdown -r -t 10"
+  dns_forwarder        = "Set-DnsServerForwarder -IPAddress 168.63.129.16"
   exit_code_hack       = "exit 0"
-  powershell_command   = "${local.import_command}; ${local.password_command}; ${local.install_ad_command}; ${local.configure_ad_command}; ${local.shutdown_command}; ${local.exit_code_hack}"
+  powershell_command   = "${local.import_command}; ${local.password_command}; ${local.install_ad_command}; ${local.configure_ad_command}; ${local.shutdown_command}; ${local.dns_forwarder}; ${local.exit_code_hack}"
 }
 
 resource "azurerm_virtual_machine_extension" "create-active-directory-forest" {
   name                 = "create-active-directory-forest"
-  #location             = var.location
-  #resource_group_name  = var.resource_group_name
   virtual_machine_id = azurerm_windows_virtual_machine.computedc.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
@@ -78,7 +77,6 @@ resource "azurerm_virtual_machine_extension" "create-active-directory-forest" {
     }
 SETTINGS
 }
-
 
 
 ##########################################################
@@ -98,30 +96,38 @@ variable "resource_group_name" {}
 variable "location" {}
 
 variable "vnet_subnet_id" {}
+
 variable "os_publisher" {
   default = "MicrosoftWindowsServer"
 }
+
 variable "os_offer" {
   default = "WindowsServer"
 }
+
 variable "os_sku" {
   default = "2019-Datacenter"
 }
+
 variable "os_version" {
   default = "latest"
 }
+
 variable "disable_password_authentication" {
   default = false #leave as true if using ssh key, if using a password make the value false
 }
+
 variable "enable_accelerated_networking" {
   default = "false"
 }
+
 variable "storage_account_type" {
   default = "Standard_LRS"
 }
 variable "vm_size" {
   default = "Standard_D2s_v3"
 }
+
 variable "tags" {
   type = map(string)
 
