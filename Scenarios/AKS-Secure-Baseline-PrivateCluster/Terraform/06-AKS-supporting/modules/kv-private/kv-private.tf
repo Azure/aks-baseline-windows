@@ -35,6 +35,10 @@ resource "azurerm_private_endpoint" "kv-endpoint" {
   }
 }
 
+#############
+## OUTPUTS ##
+#############
+# These outputs are used by later deployments
 output "kv_id" {
     value = azurerm_key_vault.key-vault.id
 }
