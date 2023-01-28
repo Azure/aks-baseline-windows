@@ -21,10 +21,6 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
     secret_rotation_interval = "2m"
   }
 
-  oms_agent {
-    log_analytics_workspace_id = var.la_id
-  }
-
   default_node_pool {
     name            = "defaultpool"
     vm_size         = "Standard_DS2_v2"
@@ -60,6 +56,10 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
     type         = "UserAssigned"
     identity_ids = [var.mi_aks_cp_id]
   }
+
+  oms_agent {
+    log_analytics_workspace_id = var.la_id
+  }
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
@@ -78,6 +78,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
     "app"           = "dotnet-apps"
   }
 }
+
 
 output "aks_id" {
   value = azurerm_kubernetes_cluster.akscluster.id
