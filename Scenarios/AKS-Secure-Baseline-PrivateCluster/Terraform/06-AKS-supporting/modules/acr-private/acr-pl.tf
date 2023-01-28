@@ -4,7 +4,6 @@ resource "azurerm_container_registry" "acr" {
   location                      = var.location
   sku                           = "Premium"
   public_network_access_enabled = false
-  admin_enabled                 = true
 }
 
 resource "azurerm_private_endpoint" "acr-endpoint" {
