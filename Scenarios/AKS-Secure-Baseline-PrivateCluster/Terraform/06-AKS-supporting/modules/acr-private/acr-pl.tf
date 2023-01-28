@@ -24,7 +24,10 @@ resource "azurerm_private_endpoint" "acr-endpoint" {
     private_dns_zone_ids = [var.private_zone_id]
   }
 }
-
+#############
+## OUTPUTS ##
+#############
+# These outputs are used by later deployments
 output "acr_id" {
   value = azurerm_container_registry.acr.id
 }
