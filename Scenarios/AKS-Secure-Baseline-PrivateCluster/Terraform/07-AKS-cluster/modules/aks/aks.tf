@@ -70,6 +70,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
   mode                  = "User"
   os_disk_type          = "Ephemeral"
   os_type               = "Windows"
+  os_sku                = "Windows2019"
   vnet_subnet_id        = var.vnet_subnet_id
   zones                 = ["1","2","3"]
   tags = {
