@@ -67,11 +67,11 @@ spec:
              mountPath: /gmsa-demo
         resources:
           requests:
-            cpu: 50m
-            memory: 128Mi
+            cpu: 500m
+            memory: 512Mi
           limits:
-            cpu: 100m
-            memory: 256Mi
+            cpu: 500m
+            memory: 1024Mi
       volumes:
         - name: gmsa-win-demo 
           configMap:
@@ -94,6 +94,7 @@ metadata:
   namespace: simpleapp
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "<Subnet Name>"
 spec:
   type: LoadBalancer
   selector:
