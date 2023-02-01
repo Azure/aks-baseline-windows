@@ -30,3 +30,10 @@ variable "storage_account_name" {
 variable "container_name" {
   default = "akscs"
 }
+
+variable "access_key" {}
+variable "tenant_id" {}
+variable "client_id" {}
+variable "client_secret" {}
+
+
