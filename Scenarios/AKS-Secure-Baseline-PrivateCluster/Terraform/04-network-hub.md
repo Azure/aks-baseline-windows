@@ -64,14 +64,11 @@ After the domain controller is up and running, you will need to update the DNS o
    ```
 3. In the portal, navigate to Settings-> DNS servers
 4. Choose Custom, input your domain controller's IP address and hit Save. 
-5. Restart your domain controller first and then the jumpbox VM to propagate the new DNS settings. Default values for the network resource group and VM names used in example below. 
+5. Restart your domain controller to propagate the new DNS settings.Default values for the network resource group and VM names used in example below. 
    ```PowerShell
    az vm restart -g "aks-HUB" -n "svr-dev-dc"
    ```
-
-### Windows client for system to manage the cluster
-The 04-Network-Hub module will deploy a Windows client system to run the administrative and operational tasks for the Azure Kubernetes Service (AKS) cluster. The sub-module, compute-Win, will have a client system preconfigured with the minimum required tools, such as Azure CLI and Kubectl.
-To connect to the client system, the Bastion service can be utilized and the virtual machine name or IP address can be provided in the Bastion service. The username and password for the client system will be retrieved from the variable.tf file. The following screenshot illustrates the process of accessing the Bastion service.
+Note: Please make a note of the IP address assigned to the newly created Windows client machine. This IP will be utilized for accessing the cluster via the bastion service for administrative purposes. The following screenshot illustrates the process of accessing the Bastion service.
 ![Bastion service access](../../../media/Screenshot_BastionService.jpg)
 
 
