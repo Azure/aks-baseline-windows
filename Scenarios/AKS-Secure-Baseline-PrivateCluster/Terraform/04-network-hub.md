@@ -64,7 +64,7 @@ After the domain controller is up and running, you will need to update the DNS o
    ```
 3. In the portal, navigate to Settings-> DNS servers
 4. Choose Custom, input your domain controller's IP address and hit Save. 
-5. Restart your domain controller to propagate the new DNS settings.Default values for the network resource group and VM names used in example below. 
+5. Restart your domain controller to propagate the new DNS settings. Default values for the network resource group and VM name used in example below. 
    ```PowerShell
    az vm restart -g "aks-HUB" -n "svr-dev-dc"
    ```
