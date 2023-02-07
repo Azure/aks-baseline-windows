@@ -12,7 +12,7 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.spoke-rg.name
   location            = azurerm_resource_group.spoke-rg.location
   address_space       = ["10.240.0.0/16"]
-  dns_servers         = ["10.240.6.4"]
+  dns_servers         = ["10.200.0.100"]
   tags                = var.tags
 
 }
@@ -22,7 +22,7 @@ resource "azurerm_subnet" "priv-link" {
   resource_group_name                            = azurerm_resource_group.spoke-rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = ["10.240.4.32/28"]
-  enforce_private_link_endpoint_network_policies = true
+  private_endpoint_network_policies_enabled      = true
 
 }
 
