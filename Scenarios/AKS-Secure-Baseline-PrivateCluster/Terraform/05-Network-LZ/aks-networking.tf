@@ -5,7 +5,7 @@ resource "azurerm_subnet" "aks" {
   resource_group_name                            = azurerm_resource_group.spoke-rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = ["10.240.0.0/22"]
-  enforce_private_link_endpoint_network_policies = true
+  private_endpoint_network_policies_enabled      = true
 
 }
 
@@ -15,7 +15,7 @@ resource "azurerm_subnet" "lb" {
   resource_group_name                            = azurerm_resource_group.spoke-rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = ["10.240.4.0/28"]
-  enforce_private_link_endpoint_network_policies = true
+  private_endpoint_network_policies_enabled      = true
 
 }
 
