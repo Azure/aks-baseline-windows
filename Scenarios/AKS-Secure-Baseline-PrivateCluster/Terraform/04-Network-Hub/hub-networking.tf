@@ -7,7 +7,7 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   address_space       = ["10.200.0.0/24"]
-  dns_servers         = null
+  dns_servers         = ["10.200.0.100"]
   tags                = var.tags
 
 }
@@ -22,7 +22,7 @@ resource "azurerm_subnet" "firewall" {
   resource_group_name                            = azurerm_resource_group.rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = ["10.200.0.0/26"]
-  enforce_private_link_endpoint_network_policies = false
+  private_endpoint_network_policies_enabled      = false
 
 }
 
@@ -33,7 +33,7 @@ resource "azurerm_subnet" "gateway" {
   resource_group_name                            = azurerm_resource_group.rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = ["10.200.0.64/27"]
-  enforce_private_link_endpoint_network_policies = false
+  private_endpoint_network_policies_enabled      = false
 
 }
 
