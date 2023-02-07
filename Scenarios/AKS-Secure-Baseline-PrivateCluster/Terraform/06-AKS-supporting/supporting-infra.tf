@@ -30,8 +30,6 @@ module "create_kv" {
   private_zone_id          = data.terraform_remote_state.existing-lz.outputs.kv_private_zone_id
   private_zone_name        = data.terraform_remote_state.existing-lz.outputs.kv_private_zone_name
   zone_resource_group_name = data.terraform_remote_state.existing-lz.outputs.lz_rg_name
-  aks_sub_id               = data.terraform_remote_state.existing-lz.outputs.aks_subnet_id
-  devSubnetdc_id           = data.terraform_remote_state.existing-lz.outputs.lz-devSubnetdc_id
 }
 
 # Deploy Public DNS to register application domains hosted in AKS. If you are not planning to use the blue green deployment, then you don't need to deploy the public DNS Zone and you can skip this leaving empty the variable public_domain.
