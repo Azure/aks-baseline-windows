@@ -42,6 +42,16 @@ resource "azurerm_route_table" "route_table" {
   }
 }
 
+#############################
+## Build Azure front door CDN ##
+#############################
+module "cdn" {
+    source      = "./modules/cdn"
+    name        = "${var.lz_prefix}-cdn"
+    rg          = azurerm_resource_group.spoke-rg.name
+    prefix      = var.lz_prefix
+}
+
 #############
 ## OUTPUTS ##
 #############
