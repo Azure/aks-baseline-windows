@@ -13,15 +13,15 @@ Azure Application Proxy helps route the incoming request from Front Door to the 
    ![App Proxy](../../../media/appproxy.png)
    
 ## Update the routing rules for Azure Front Door
-1. Navigate to your Front Door instance created in your spoke resource group. 
-2. Click add a route
-3. Add an origin group as show below:
-   ![Origin group](../../../media/FrontDoor_OriginGroup.png)
-4. Add an origin as show below:
-   ![Origin](../../../media/FrontDoor_Origin.png)
-5. Add a WAF policy as show below:
-   ![WAF](../../../media/FrontDoor_WAF.png)
 
+1. Navigate to your Front Door instance created in your spoke resource group.
+1. Click **Add a route**.
+1. Add an origin group as show below:
+   ![Screenshot of Origin group configuration](../../../media/FrontDoor_OriginGroup.png)
+1. Add an origin as show below:
+   ![Screenshot of Origin configuration](../../../media/FrontDoor_Origin.png)
+1. Add a WAF policy as show below:
+   ![Screenshot of creating a new WAF policy.](../../../media/FrontDoor_WAF.png)
 
 # Next Steps
 - [Cleanup](../../Terraform/../AKS-Secure-Baseline-PrivateCluster/Terraform/10-cleanup.md)
