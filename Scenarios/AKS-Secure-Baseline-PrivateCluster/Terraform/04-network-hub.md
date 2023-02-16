@@ -52,24 +52,6 @@ terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SU
 terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 
-### Configure DNS on the hub network
-
-After the domain controller is up and running, you will need to update the DNS on the virtual network to use the domain controller for resolution.
-
-1. To check your domain controller is up, verify that the VM is in a running state by going to the Portal, clicking on the domain controller VM and verifying that the "Status" property says "Running". You should also verify that the Networking property "Private IP address" has a value. 
-2. Locate the private IP address of your domain controller. (It should be a 10.X IP address)
-   ```PowerShell
-    $nicId = (az vm show -g "aks-HUB" -n <name of Domain Controller VM> --query "networkProfile.networkInterfaces[0].id")
-    az network nic show --id $nicId --query "ipConfigurations[0].privateIpAddress"
-   ```
-3. In the portal, navigate to Settings-> DNS servers
-4. Choose Custom, input your domain controller's IP address and hit Save. 
-5. Restart your domain controller first and then the jumpbox VM to propagate the new DNS settings. Default values for the network resource group and VM names used in example below. 
-   ```PowerShell
-   az vm restart -g "aks-HUB" -n "svr-dev-dc"
-   az vm restart -g "aks-HUB" -n "server-dev-linux"
-   ```
-
 ## Next Step
 
 :arrow_forward: [Creation of Spoke Network & its respective Components](./05-network-lz.md)
