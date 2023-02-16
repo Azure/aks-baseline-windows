@@ -6,7 +6,7 @@ This repository is a part of the [AKS Landing zone accelerator](https://github.c
 
 Our baseline architecture, which is our Secure Baseline Private Cluster scenario is available in the Scenarios folder and uses the architecture below. 
 
-![architecture diagram](/media/AKS%20Windows%20Diagram.png)
+![architecture diagram](/media/aks-windows-baseline-architecture.png)
 
 ## Contributing
 

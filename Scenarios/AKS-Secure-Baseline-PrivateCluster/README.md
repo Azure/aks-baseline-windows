@@ -16,6 +16,8 @@ Core architecture components
 * Azure Bastion
 * Azure Monitor for Containers
 * Azure Firewall
+* Azure Front Door
+* Azure Application Proxy
 * [Group managed service accounts](https://learn.microsoft.com/en-us/azure/aks/use-group-managed-service-accounts) (GMSA)
 * [Secret store CSI driver](https://learn.microsoft.com/azure/aks/csi-secrets-store-driver)
 
