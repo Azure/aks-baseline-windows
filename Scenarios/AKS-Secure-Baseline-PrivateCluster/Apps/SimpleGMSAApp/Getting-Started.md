@@ -5,7 +5,8 @@ This application is provided by Microsoft through the [GMSA on AKS PowerShell Mo
 Because the infrastructure has been deployed in a private AKS cluster setup with private endpoints for the container registry and other components, you will need to perform the application container build and the publishing to the Container Registry from the Domain Controller in the Hub VNET, connecting via the Bastion Host service. If your computer is connected to the hub network, you may be able to just use that as well. The rest of the steps can be performed on your local machine by using AKS Run commands which allow access into private clusters using RBAC. This will help with improving security and will provide a more user-friendly way of editing YAML files.
 
 ## Note on the resource constraints in the workload manifest
-The values used for CPU and memory represent the minimums to run a Windows application with GMSA. Windows applications require higher memory thresholds than Linux applications. You may need to adjust these values for running your own application on this reference framework. 
+
+The values used for CPU and memory represent the minimums to run a Windows application with GMSA. Windows applications require higher memory thresholds than Linux applications. You should adjust these values when running your own application in this cluster.
 
 ## Connecting to the Bastion Host
 
