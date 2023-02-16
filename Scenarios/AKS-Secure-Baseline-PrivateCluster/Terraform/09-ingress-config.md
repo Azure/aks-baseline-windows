@@ -7,21 +7,21 @@ You will be creating or updating the following:
 ## Create Azure Application Proxy
 Azure Application Proxy helps route the incoming request from Front Door to the application on AKS. Currently, Azure Application Proxy can't be created through Terraform and has to be created manually. As a reminder, you will need Global Admin on your Azure AD tenant to complete this step. 
 
-1. Follow the [Microsoft Learn docs](https://learn.microsoft.com/en-us/azure/active-directory/app-proxy/application-proxy-add-on-premises-application#install-and-register-a-connector) from "Install and Register a connector" until you get to "Test the sign-on". Please see notes below before proceeding. 
-   - The connector you will be installing should be downloaded to your domain controller that you created in the previous steps. 
-   - Azure Application Proxy supports Passthrough or Azure AD for pre-authentication of a user's access request. We recommend using Azure AD for pre-authentication. If you choose not to use Azure AD for pre-authentication, users can hit your application directly without going through Front Door. 
+1. Follow the [Microsoft Learn docs](https://learn.microsoft.com/azure/active-directory/app-proxy/application-proxy-add-on-premises-application#install-and-register-a-connector) from "Install and Register a connector" until you get to "Test the sign-on". Please see notes below before proceeding.
+   - The connector you will be installing should be downloaded to your domain controller that you created in the previous steps.
+   - Azure Application Proxy supports Passthrough or Azure AD for pre-authentication of a user's access request. We recommend using Azure AD for pre-authentication. If you choose not to use Azure AD for pre-authentication, users can hit your application directly without going through Azure Front Door.
    ![App Proxy](../../../media/appproxy.png)
    
 ## Update the routing rules for Azure Front Door
-1. Navigate to your Front Door instance created in your spoke resource group. 
-2. Click add a route
-3. Add an origin group as show below:
-   ![Origin group](../../../media/FrontDoor_OriginGroup.png)
-4. Add an origin as show below:
-   ![Origin](../../../media/FrontDoor_Origin.png)
-5. Add a WAF policy as show below:
-   ![WAF](../../../media/FrontDoor_WAF.png)
 
+1. Navigate to your Front Door instance created in your spoke resource group.
+1. Click **Add a route**.
+1. Add an origin group as show below:
+   ![Screenshot of Origin group configuration](../../../media/FrontDoor_OriginGroup.png)
+1. Add an origin as show below:
+   ![Screenshot of Origin configuration](../../../media/FrontDoor_Origin.png)
+1. Add a WAF policy as show below:
+   ![Screenshot of creating a new WAF policy.](../../../media/FrontDoor_WAF.png)
 
 # Next Step
 :arrow_forward:[Cleanup](../../Terraform/../AKS-Secure-Baseline-PrivateCluster/Terraform/10-cleanup.md)
