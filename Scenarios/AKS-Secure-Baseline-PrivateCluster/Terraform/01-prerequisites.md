@@ -7,6 +7,7 @@
 
         - Contributor role is required at the subscription level to have the ability to create resource groups and perform deployments.
         - User Access Administrator role is required at the subscription level since you'll be performing role assignments to managed identities across various resource groups.
+        - Global Admin on Azure AD Tenant is required for setting up Azure Application Proxy. This setup is done manually. An admin could perform this step for you as it's the last step in the setup after deploying your application. 
 2. PowerShell terminal. This reference reference implementation uses PowerShell for deployment.
 3. Latest [Azure CLI installed](https://learn.microsoft.com/cli/azure/install-azure-cli-windows?tabs=powershell#powershell)
 4. [Terraform version 3.9.0 or greater](https://learn.microsoft.com/azure/developer/terraform/get-started-windows-bash?tabs=bash#4-install-terraform-for-windows)

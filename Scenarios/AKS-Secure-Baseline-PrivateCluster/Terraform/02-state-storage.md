@@ -38,7 +38,7 @@ Key points:
 * For this example and for simplicity, public access is allowed to this Azure storage account for storing Terraform state. In a production deployment, it is recommended to restrict access to this storage account using a [storage firewall, service endpoint, or private endpoint](https://learn.microsoft.com/azure/storage/common/storage-network-security).
 * Azure storage accounts require a globally unique name. To learn more about troubleshooting storage account names, see [Resolve errors for storage account names](https://learn.microsoft.com/azure/azure-resource-manager/templates/error-storage-account-name).
 
-### Next step
+# Next Step
 This reference implementation requires two Azure Active Directory Groups: one for AKS Cluster Admins and one for AKS Cluster Users. 
 
 If you have two existing groups you would like to use:
