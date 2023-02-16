@@ -5,7 +5,8 @@ You will be creating or updating the following:
 * Azure Front Door
 
 ## Create Azure Application Proxy
-Azure Application Proxy helps route the incoming request from Front Door to the application on AKS. Currently, Azure Application Proxy can't be created through Terraform and has to be created manually. As a reminder, you will need Global Admin on your Azure AD tenant to complete this step. 
+
+Azure Application Proxy helps route the incoming request from Azure Front Door to the application on AKS. Currently, Azure Application Proxy can't be created through Terraform and has to be created manually. As a reminder, you will need Global Admin on your Azure AD tenant to complete this step.
 
 1. Follow the [Microsoft Learn docs](https://learn.microsoft.com/azure/active-directory/app-proxy/application-proxy-add-on-premises-application#install-and-register-a-connector) from "Install and Register a connector" until you get to "Test the sign-on". Please see notes below before proceeding.
    - The connector you will be installing should be downloaded to your domain controller that you created in the previous steps.
