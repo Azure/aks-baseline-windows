@@ -15,8 +15,4 @@ variable "aks_admin_group" {}
 variable "la_id" {}
 
 variable "private_dns_zone_id" {}
-
-variable "wnp_count" {
-  type = bool
-}
  

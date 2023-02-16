@@ -5,33 +5,25 @@ resource "azurerm_resource_group" "spoke-rg" {
   location = data.terraform_remote_state.existing-hub.outputs.hub_rg_location
 }
 
-output "lz_rg_location" {
-  value = azurerm_resource_group.spoke-rg.location
-}
-
-output "lz_rg_name" {
-  value = azurerm_resource_group.spoke-rg.name
-}
-
-
 # Virtual Network
 
 resource "azurerm_virtual_network" "vnet" {
   name                = "${var.lz_prefix}-vnet"
   resource_group_name = azurerm_resource_group.spoke-rg.name
   location            = azurerm_resource_group.spoke-rg.location
-  address_space       = ["10.1.0.0/16"]
-  dns_servers         = null
+  address_space       = ["10.240.0.0/16"]
+  dns_servers         = ["10.200.0.100"]
   tags                = var.tags
 
 }
 
-output "lz_vnet_name" {
-  value = azurerm_virtual_network.vnet.name
-}
+resource "azurerm_subnet" "priv-link" {
+  name                                           = "priv-subnet"
+  resource_group_name                            = azurerm_resource_group.spoke-rg.name
+  virtual_network_name                           = azurerm_virtual_network.vnet.name
+  address_prefixes                               = ["10.240.4.32/28"]
+  private_endpoint_network_policies_enabled      = true
 
-output "lz_vnet_id" {
-  value = azurerm_virtual_network.vnet.id
 }
 
 # # Create Route Table for Landing Zone
@@ -46,10 +38,43 @@ resource "azurerm_route_table" "route_table" {
     name                   = "route_to_firewall"
     address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "10.0.1.4"
+    next_hop_in_ip_address = "10.200.0.4"
   }
 }
 
+#############################
+## Build Azure front door CDN ##
+#############################
+module "cdn" {
+    source      = "./modules/cdn"
+    name        = "${var.lz_prefix}-cdn"
+    rg          = azurerm_resource_group.spoke-rg.name
+    prefix      = var.lz_prefix
+}
+
+#############
+## OUTPUTS ##
+#############
+# These outputs are used by later deployments
+output "lz_rg_location" {
+  value = azurerm_resource_group.spoke-rg.location
+}
+
+output "lz_rg_name" {
+  value = azurerm_resource_group.spoke-rg.name
+}
+
+output "lz_vnet_name" {
+  value = azurerm_virtual_network.vnet.name
+}
+
+output "lz_vnet_id" {
+  value = azurerm_virtual_network.vnet.id
+}
+
+output "priv_subnet_id" {
+  value = azurerm_subnet.priv-link.id
+}
 output "lz_rt_id" {
   value = azurerm_route_table.route_table.id
 }

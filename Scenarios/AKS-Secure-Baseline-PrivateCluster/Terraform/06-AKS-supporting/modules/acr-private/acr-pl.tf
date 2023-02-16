@@ -4,14 +4,13 @@ resource "azurerm_container_registry" "acr" {
   location                      = var.location
   sku                           = "Premium"
   public_network_access_enabled = false
-  admin_enabled                 = true
 }
 
 resource "azurerm_private_endpoint" "acr-endpoint" {
   name                = "${var.acrname}-to_aks"
   location            = var.location
   resource_group_name = var.resource_group_name
-  subnet_id           = var.aks_sub_id
+  subnet_id           = var.priv_sub_id
 
   private_service_connection {
     name                           = "${var.acrname}-privateserviceconnection"
@@ -25,7 +24,10 @@ resource "azurerm_private_endpoint" "acr-endpoint" {
     private_dns_zone_ids = [var.private_zone_id]
   }
 }
-
+#############
+## OUTPUTS ##
+#############
+# These outputs are used by later deployments
 output "acr_id" {
   value = azurerm_container_registry.acr.id
 }
