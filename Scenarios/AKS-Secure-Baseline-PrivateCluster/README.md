@@ -1,7 +1,7 @@
 # Windows Secure Baseline Private Cluster
 This folder contains Windows AKS secure baseline private cluster creation process. The architecture of the final deployment will look like the diagram below:
 
-![architecture diagram](../../media/AKS%20Windows%20Diagram.png)
+![architecture diagram](../../media/aks-windows-baseline-architecture.png)
 
 For more information about private clusters and why they are recommended, check out the [Private cluster scenario](https://github.com/Azure/AKS-Landing-Zone-Accelerator/tree/main/Scenarios/AKS-Secure-Baseline-PrivateCluster) in AKS Landing Zone Accelerator.
 
