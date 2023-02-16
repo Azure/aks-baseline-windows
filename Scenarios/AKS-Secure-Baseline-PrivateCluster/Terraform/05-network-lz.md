@@ -5,7 +5,7 @@ The following will be created:
 * [Route Table](./05-Network-LZ/lz-networking.tf)
 * [Peering of Hub and Spoke Networks](./05-Network-LZ/hub-spoke-peering.tf)
 * [Private DNS Zones](./05-Network-LZ/dns-zones.tf)
-* [Application Gateway](./05-Network-LZ/app-gateway.tf)
+* [Azure Front Door](./05-Network-LZ/modules/cdn/cdn.tf)
 * [Subnet for AKS](./05-Network-LZ/aks-networking.tf)
 
 Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/05-Network-LZ" folder
