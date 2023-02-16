@@ -49,6 +49,6 @@ If you get an error about changes to the configuration, go with the `-reconfigur
 7. Enter your name in the search bar and select your user(s)
 8. Click **Select**
 
-### Next step
+# Next step
 
 :arrow_forward: [Creation of Hub Network & its respective Components](./04-network-hub.md)

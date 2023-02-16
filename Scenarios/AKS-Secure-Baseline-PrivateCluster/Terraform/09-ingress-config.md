@@ -23,5 +23,5 @@ Azure Application Proxy helps route the incoming request from Front Door to the 
    ![WAF](../../../media/FrontDoor_WAF.png)
 
 
-# Next Steps
-- [Cleanup](../../Terraform/../AKS-Secure-Baseline-PrivateCluster/Terraform/10-cleanup.md)
+# Next Step
+:arrow_forward:[Cleanup](../../Terraform/../AKS-Secure-Baseline-PrivateCluster/Terraform/10-cleanup.md)

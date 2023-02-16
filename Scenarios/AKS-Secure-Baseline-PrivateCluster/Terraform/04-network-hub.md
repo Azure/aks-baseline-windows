@@ -52,6 +52,6 @@ terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SU
 terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
 ```
 
-## Next Step
+# Next Step
 
 :arrow_forward: [Creation of Spoke Network & its respective Components](./05-network-lz.md)
