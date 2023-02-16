@@ -1,4 +1,4 @@
-# Create the Ingress Configuration for GMSA
+# Create the ingress configuration for GMSA
 
 You will be creating or updating the following:
 * Azure Application Proxy
