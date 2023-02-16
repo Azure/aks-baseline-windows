@@ -214,5 +214,5 @@ Now you can access the website using using your FQDN. When you navigate to the w
 
 
 # Next Steps
-- [Ingress Configuration for GMSA](../../Terraform/09-ingress-config.md)
+:arrow_forward: [Create the ingress configuration for GMSA](../../Terraform/09-ingress-config.md)
   
