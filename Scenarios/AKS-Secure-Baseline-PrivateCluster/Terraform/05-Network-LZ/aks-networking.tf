@@ -19,6 +19,16 @@ resource "azurerm_subnet" "lb" {
 
 }
 
+# Subnet for AKS Windows Nodepool 
+resource "azurerm_subnet" "windowsnp" {
+  name                                           = "windowsNpSubnet"
+  resource_group_name                            = azurerm_resource_group.spoke-rg.name
+  virtual_network_name                           = azurerm_virtual_network.vnet.name
+  address_prefixes                               = ["10.240.5.0/28"]
+  private_endpoint_network_policies_enabled      = true
+
+}
+
 resource "azurerm_network_security_group" "aks-nsg" {
   name                = "${azurerm_virtual_network.vnet.name}-${azurerm_subnet.aks.name}-nsg"
   resource_group_name = azurerm_resource_group.spoke-rg.name
@@ -42,4 +52,7 @@ resource "azurerm_subnet_route_table_association" "rt_association" {
 # These outputs are used by later deployments
 output "aks_subnet_id" {
   value = azurerm_subnet.aks.id
+}
+output "aks_windowsnp_subnet_id" {
+  value = azurerm_subnet.windowsnp.id
 }
