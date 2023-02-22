@@ -24,7 +24,7 @@ resource "azurerm_subnet" "windowsnp" {
   name                                           = "windowsNpSubnet"
   resource_group_name                            = azurerm_resource_group.spoke-rg.name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = ["10.240.5.0/28"]
+  address_prefixes                               = ["10.240.5.0/24"]
   private_endpoint_network_policies_enabled      = true
 
 }
