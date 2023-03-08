@@ -82,7 +82,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
 
 resource "azurerm_kubernetes_cluster_node_pool" "linux_user_pool" {
     name                  = "userpool"
-    kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster
+    kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
     vm_size               = "Standard_DS2_v2"
     os_disk_size_gb       = 30
     os_disk_type          = "Ephemeral"
@@ -94,7 +94,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "linux_user_pool" {
 
 #Diagnostic Settings
 data "azurerm_log_analytics_workspace" "spoke" {
-  name                = "spoke-log"
+  name                = "spoke-la"
   resource_group_name = var.resource_group_name
 }
 
