@@ -41,8 +41,13 @@ resource "azurerm_subnet_network_security_group_association" "subnet" {
 }
 
 # Associate Route Table to AKS Subnet
-resource "azurerm_subnet_route_table_association" "rt_association" {
+resource "azurerm_subnet_route_table_association" "rt_association_aks" {
   subnet_id      = azurerm_subnet.aks.id
+  route_table_id = azurerm_route_table.route_table.id
+}
+
+resource "azurerm_subnet_route_table_association" "rt_association_wnp" {
+  subnet_id      = azurerm_subnet.windowsnp.id
   route_table_id = azurerm_route_table.route_table.id
 }
 
