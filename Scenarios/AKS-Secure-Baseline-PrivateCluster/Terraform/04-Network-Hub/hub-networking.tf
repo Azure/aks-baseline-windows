@@ -45,7 +45,42 @@ module "bastion" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   resource_group_name  = azurerm_resource_group.rg.name
   location             = azurerm_resource_group.rg.location
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.hub.id
 
+}
+
+# Log Analytics Workspace for regional hub network, its spokes, and bastion.
+resource "azurerm_log_analytics_workspace" "hub" {
+  name                = "hub-la-01"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+}
+
+# Diagnostic setting for Hub vnet
+resource "azurerm_monitor_diagnostic_setting" "hub-vnet" {
+  name               = "hubvnetdiagnostics"
+  target_resource_id = azurerm_virtual_network.vnet.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.hub.id
+
+  enabled_log {
+    category_group = "allLogs"
+
+    retention_policy {
+      enabled = true
+      days = "30"
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days = "30"
+    }
+  }
 }
 
 #############
