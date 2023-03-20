@@ -46,3 +46,55 @@ module "firewall_rules_aks" {
   location            = azurerm_resource_group.rg.location
   firewallName        = azurerm_firewall.firewall.name
 }
+
+
+# Diagnostic setting for Firewall
+resource "azurerm_monitor_diagnostic_setting" "firewall" {
+  name               = "fwdiagnostics"
+  target_resource_id = azurerm_firewall.firewall.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.hub.id
+
+  enabled_log {
+    category_group = "allLogs"
+
+    retention_policy {
+      enabled = true
+      days = "30"
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days = "30"
+    }
+  }
+}
+
+# Diagnostic setting for Firewall public ip addresses
+resource "azurerm_monitor_diagnostic_setting" "fwpip" {
+  count =  "3"
+  name               = "pipdiag-${count.index}"
+  target_resource_id = azurerm_public_ip.firewall[count.index].id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.hub.id
+
+  enabled_log {
+    category_group = "audit"
+
+    retention_policy {
+      enabled = true
+      days = "30"
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days = "30"
+    }
+  }
+}
