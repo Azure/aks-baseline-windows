@@ -50,8 +50,33 @@ module "cdn" {
     name        = "${var.lz_prefix}-cdn"
     rg          = azurerm_resource_group.spoke-rg.name
     prefix      = var.lz_prefix
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.spokeLA.id
 }
 
+# Diagnostic setting for Spoke vnet
+resource "azurerm_monitor_diagnostic_setting" "spoke-vnet" {
+  name               = "spokevnetdiagnostics"
+  target_resource_id = azurerm_virtual_network.vnet.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.spokeLA.id
+
+  enabled_log {
+    category_group = "allLogs"
+
+    retention_policy {
+      enabled = true
+      days = "30"
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days = "30"
+    }
+  }
+}
 #############
 ## OUTPUTS ##
 #############
