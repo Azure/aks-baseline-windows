@@ -45,6 +45,17 @@ terraform apply -var="resource_group_name=$backendResourceGroupName" -var="stora
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
 
+### Exercise the User Nodepool
+The reference implementation creates 3 nodepools: a Linux system nodepool, a Linux user nodepool and a Windows nodepool. The Linux user nodepool is not actively used in this implementation, but the intended uses for this nodepool include hosting ingress controllers, 
+
+Try out the following command to exercise this nodepool
+```
+az aks command invoke \
+  --resource-group $AKS_RESOURCE_GROUP \
+  --name $AKS_CLUSTER_NAME \
+  --command "kubectl get pods -n kube-system"
+```
+
 ### Grant access from the hub network to the private link created for Key Vault
 
 For the jumpbox you created in the hub network to have access to Key Vault's private link you need to add the network to the access.
