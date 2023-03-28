@@ -45,11 +45,13 @@ terraform apply -var="resource_group_name=$backendResourceGroupName" -var="stora
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
 
-### Exercise the User Nodepool
-The reference implementation creates 3 nodepools: a Linux system nodepool, a Linux user nodepool and a Windows nodepool. The Linux user nodepool is not actively used in this implementation, but the intended uses for this nodepool include hosting ingress controllers, 
+### Try the user nodepool
 
-Try out the following command to exercise this nodepool
-```
+The reference implementation creates three nodepools: a Linux system nodepool, a Windows nodepool, and a Linux user nodepool. The Linux user nodepool is not actively used in this implementation, but the intended uses for this nodepool include hosting ingress controllers, or any other workload in the cluster that requires a Linux host -- which is common when running Windows clusters.
+
+This example uses AKS command invoke, which creates a temporary pod to invoke a command on the cluster.  This common management command creates a transient pod in the cluster, and that pod requires a Linux node pool to be available.
+
+```PowerShell
 az aks command invoke \
   --resource-group $AKS_RESOURCE_GROUP \
   --name $AKS_CLUSTER_NAME \
