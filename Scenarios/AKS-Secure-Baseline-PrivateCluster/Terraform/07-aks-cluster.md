@@ -15,7 +15,6 @@ This deployment will need to reference data objects from the Hub deployment and 
 
 ### Following values will require inputs in the terraform.tfvars file:
 ```
-# wnp_count = true # if set to true windows node pools will be deployed.
 # private_dns_zone_name = "privatelink.centralus.azmk8s.io" # default value is set to centralus region, change the dns region to your desired location, must match to the earlier resource regions. 
 ```
 
@@ -27,6 +26,8 @@ Using the same PowerShell session from the previous step, update the state file 
 ```PowerShell
   $layerNametfstate="aks" # same as state file name provided in provider.tf 
   $access_key = "" # TF state file Azure storage account access key, it will be used to access exisiitng state files.
+  $AKS_RESOURCE_GROUP=""
+  $AKS_CLUSTER_NAME=""
 ```
 
 Once the files are updated, deploy using Terraform Init, Plan and Apply.
