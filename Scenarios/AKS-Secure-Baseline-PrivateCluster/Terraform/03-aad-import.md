@@ -30,23 +30,23 @@ $backendResourceGroupName=""
 $backendStorageAccountName=""
 $backendContainername=""
 $layerNametfstate="aad-import"
-$ARM_SUBSCRIPTION_ID=""
-$tenantId=""
-$servicePrincipalId=""
-$servicePrincipalKey=""
+$env:ARM_CLIENT_ID = "00000000-0000-0000-0000-000000000000"
+$env:ARM_CLIENT_SECRET = "12345678-0000-0000-0000-000000000000"
+$env:ARM_TENANT_ID = "10000000-0000-0000-0000-000000000000"
+$env:ARM_SUBSCRIPTION_ID = "20000000-0000-0000-0000-000000000000"
 ```
 Deploy using Terraform Init, Plan and Apply. 
 
 ```PowerShell 
-terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate" -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID" -backend-config="tenant_id=$tenantId" -backend-config="client_id=$servicePrincipalId" -backend-config="client_secret=$servicePrincipalKey"
+terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate"
 ```
 
 ``` PowerShell 
-terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
+terraform plan -out $layerNametfstate -input=false -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$access_key" -var="state_sa_name=$backendStorageAccountName"
 ```
 
 ```PowerShell 
-terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$layerNametfstate"
+terraform apply -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$access_key"
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.

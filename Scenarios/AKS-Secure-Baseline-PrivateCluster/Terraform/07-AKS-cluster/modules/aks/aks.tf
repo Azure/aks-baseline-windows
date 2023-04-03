@@ -71,7 +71,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
   os_disk_type          = "Ephemeral"
   os_type               = "Windows"
   os_sku                = "Windows2019"
-  vnet_subnet_id        = var.vnet_subnet_id
+  vnet_subnet_id        = var.winnp_subnet_id
   zones                 = ["1","2","3"]
   tags = {
     "nodepool-type" = "user"
@@ -80,7 +80,66 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
   }
 }
 
+resource "azurerm_kubernetes_cluster_node_pool" "linux_user_pool" {
+    name                  = "userpool"
+    kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
+    vm_size               = "Standard_DS2_v2"
+    os_disk_size_gb       = 30
+    os_disk_type          = "Ephemeral"
+    node_count            = 1
+    os_type               = "Linux"
+    vnet_subnet_id        = var.vnet_subnet_id
+    zones           = ["1","2","3"]
+}
 
+#Diagnostic Settings
+data "azurerm_log_analytics_workspace" "spoke" {
+  name                = "spoke-la"
+  resource_group_name = var.resource_group_name
+}
+
+data "azurerm_monitor_diagnostic_categories" "aks" {
+  resource_id = azurerm_kubernetes_cluster.akscluster.id
+}
+
+resource "azurerm_monitor_diagnostic_setting" "aks" {
+  name                       = "akswindiagnostics"
+  target_resource_id         = azurerm_kubernetes_cluster.akscluster.id
+  log_analytics_workspace_id = data.azurerm_log_analytics_workspace.spoke.id
+
+  dynamic "log" {
+    iterator = entry
+    for_each = data.azurerm_monitor_diagnostic_categories.aks.log_category_types
+
+    content {
+      category = entry.value
+      enabled  = true
+
+      retention_policy {
+        enabled = true
+        days    = 30
+      }
+    }
+  }
+
+  dynamic "metric" {
+    iterator = entry
+    for_each = data.azurerm_monitor_diagnostic_categories.aks.metrics
+
+    content {
+      category = entry.value
+      enabled  = true
+
+      retention_policy {
+        enabled = true
+        days    = 30
+      }
+    }
+  }
+}
+
+
+# Outputs
 output "aks_id" {
   value = azurerm_kubernetes_cluster.akscluster.id
 }
