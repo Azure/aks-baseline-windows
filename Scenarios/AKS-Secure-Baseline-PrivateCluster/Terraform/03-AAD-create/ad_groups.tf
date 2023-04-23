@@ -3,13 +3,13 @@
 ###############
 
 resource "azuread_group" "appdevs" {
-  display_name     = var.aks_admin_group
+  display_name     = var.aks_user_group
   security_enabled = true
 }
 
 
 resource "azuread_group" "aksops" {
-  display_name     = var.aks_user_group
+  display_name     = var.aks_admin_group
   security_enabled = true
 }
 
