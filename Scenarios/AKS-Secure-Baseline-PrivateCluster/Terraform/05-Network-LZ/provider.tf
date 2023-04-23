@@ -12,12 +12,8 @@ terraform {
     container_name       = var.container_name       # Partial configuration, provided during "terraform init"
     key                  = "lz-net"
   }
-
 }
 
 provider "azurerm" {
   features {}
-}
-
-provider "azuread" {
 }
