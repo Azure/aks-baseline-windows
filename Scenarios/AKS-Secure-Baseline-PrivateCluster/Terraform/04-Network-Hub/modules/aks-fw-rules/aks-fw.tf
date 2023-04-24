@@ -1,19 +1,19 @@
 # Firewall Policy
 
 resource "azurerm_firewall_policy" "aks" {
-  name                = "AKSpolicy"
+  name                = var.caf_basename.azurerm_firewall_policy
   resource_group_name = var.resource_group_name
   location            = var.location
 }
 
 output "fw_policy_id" {
-    value = azurerm_firewall_policy.aks.id
+  value = azurerm_firewall_policy.aks.id
 }
 
 # Rules Collection Group
 
 resource "azurerm_firewall_policy_rule_collection_group" "AKS" {
-  name               = "aks-rcg"
+  name               = var.caf_basename.azurerm_firewall_policy_rule_collection_group
   firewall_policy_id = azurerm_firewall_policy.aks.id
   priority           = 200
   application_rule_collection {
@@ -45,25 +45,24 @@ resource "azurerm_firewall_policy_rule_collection_group" "AKS" {
         type = "Https"
         port = 443
       }
-      source_addresses  = ["10.240.0.0/16"]
+      source_addresses = ["10.240.0.0/16"]
       destination_fqdns = [
-      "*.cdn.mscr.io",
-      "mcr.microsoft.com",
-      "*.data.mcr.microsoft.com",
-      "management.azure.com",
-      "login.microsoftonline.com",
-      "acs-mirror.azureedge.net",
-      "dc.services.visualstudio.com",
-      "*.opinsights.azure.com",
-      "*.oms.opinsights.azure.com",
-      "*.microsoftonline.com",
-      "*.monitoring.azure.com",
+        "*.cdn.mscr.io",
+        "mcr.microsoft.com",
+        "*.data.mcr.microsoft.com",
+        "management.azure.com",
+        "login.microsoftonline.com",
+        "acs-mirror.azureedge.net",
+        "dc.services.visualstudio.com",
+        "*.opinsights.azure.com",
+        "*.oms.opinsights.azure.com",
+        "*.microsoftonline.com",
+        "*.monitoring.azure.com",
       ]
     }
   }
 
-
-application_rule_collection {
+  application_rule_collection {
     name     = "app_rule_collection3"
     priority = 207
     action   = "Allow"
@@ -77,13 +76,13 @@ application_rule_collection {
         type = "Https"
         port = 443
       }
-      source_addresses  = ["10.240.0.0/16"]
+      source_addresses = ["10.240.0.0/16"]
       destination_fqdns = [
-      "download.opensuse.org",
-      "security.ubuntu.com",
-      "ntp.ubuntu.com",
-      "packages.microsoft.com",
-      "snapcraft.io"
+        "download.opensuse.org",
+        "security.ubuntu.com",
+        "ntp.ubuntu.com",
+        "packages.microsoft.com",
+        "snapcraft.io"
       ]
     }
   }
@@ -131,8 +130,12 @@ application_rule_collection {
 
 }
 
+##########################################################
+## Common Naming Variable
+##########################################################
+
+variable "caf_basename" {}
+
 variable "resource_group_name" {}
 variable "location" {}
 variable "firewallName" {}
-
-
