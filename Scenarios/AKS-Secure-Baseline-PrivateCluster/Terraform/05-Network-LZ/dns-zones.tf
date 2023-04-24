@@ -7,14 +7,14 @@ resource "azurerm_private_dns_zone" "acr-dns" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "lz_acr" {
-  name                  = "lz_to_acrs"
+  name                  = replace(module.CAFResourceNames.names.azurerm_private_dns_zone_virtual_network_link, "pnetlk", "${var.lz_prefix}acrspnetlk")
   resource_group_name   = azurerm_resource_group.spoke-rg.name
   private_dns_zone_name = azurerm_private_dns_zone.acr-dns.name
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "hub_acr" {
-  name                  = "hub_to_acrs"
+  name                  = replace(module.CAFResourceNames.names.azurerm_private_dns_zone_virtual_network_link, "pnetlk", "hubacrspnetlk")
   resource_group_name   = azurerm_resource_group.spoke-rg.name
   private_dns_zone_name = azurerm_private_dns_zone.acr-dns.name
   virtual_network_id    = data.terraform_remote_state.existing-hub.outputs.hub_vnet_id
@@ -28,14 +28,14 @@ resource "azurerm_private_dns_zone" "kv-dns" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "lz_kv" {
-  name                  = "lz_to_kvs"
+  name                  = replace(module.CAFResourceNames.names.azurerm_private_dns_zone_virtual_network_link, "pnetlk", "${var.lz_prefix}kvspnetlk")
   resource_group_name   = azurerm_resource_group.spoke-rg.name
   private_dns_zone_name = azurerm_private_dns_zone.kv-dns.name
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "hub_kv" {
-  name                  = "hub_to_kvs"
+  name                  = replace(module.CAFResourceNames.names.azurerm_private_dns_zone_virtual_network_link, "pnetlk", "hubkvspnetlk")
   resource_group_name   = azurerm_resource_group.spoke-rg.name
   private_dns_zone_name = azurerm_private_dns_zone.kv-dns.name
   virtual_network_id    = data.terraform_remote_state.existing-hub.outputs.hub_vnet_id

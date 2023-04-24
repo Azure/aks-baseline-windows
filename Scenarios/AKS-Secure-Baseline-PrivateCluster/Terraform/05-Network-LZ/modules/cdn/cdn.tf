@@ -1,17 +1,17 @@
 resource "azurerm_cdn_frontdoor_profile" "cdn-fd" {
-  name                = var.name
+  name                = var.caf_basename.azurerm_cdn_frontdoor_profile
   resource_group_name = var.rg
   sku_name            = "Premium_AzureFrontDoor"
 }
 
 resource "azurerm_cdn_frontdoor_endpoint" "cdn-ep" {
-  name                     = "${var.prefix}-ep"
+  name                     = var.caf_basename.azurerm_cdn_frontdoor_endpoint
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.cdn-fd.id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "cdn" {
-  name               = "cdndiagnostics"
-  target_resource_id = azurerm_cdn_frontdoor_profile.cdn-fd.id
+  name                       = replace(var.caf_basename.azurerm_monitor_diagnostic_setting, "amds", "cdnamds")
+  target_resource_id         = azurerm_cdn_frontdoor_profile.cdn-fd.id
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
   enabled_log {
@@ -19,7 +19,7 @@ resource "azurerm_monitor_diagnostic_setting" "cdn" {
 
     retention_policy {
       enabled = true
-      days = "30"
+      days    = "30"
     }
   }
 
@@ -28,26 +28,25 @@ resource "azurerm_monitor_diagnostic_setting" "cdn" {
 
     retention_policy {
       enabled = true
-      days = "30"
+      days    = "30"
     }
   }
 }
-  ####
-  #### Input variables
-  ####
 
-variable "name" {
-  
-}
+##########################################################
+## Common Naming Variable
+##########################################################
+
+variable "caf_basename" {}
+
+####
+#### Input variables
+####
 
 variable "rg" {
-  
-}
 
-variable "prefix" {
-  
 }
 
 variable "log_analytics_workspace_id" {
-  
+
 }
