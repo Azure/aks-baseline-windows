@@ -1,3 +1,15 @@
+##############
+# CAF MODULE #
+##############
+
+module "CAFResourceNames" {
+  source      = "../00-Naming-module"
+  workload    = "gsma"
+  environment = "dev"
+  region      = "eus"
+  instance    = "001"
+}
+
 ########
 # DATA #
 ########
@@ -49,7 +61,3 @@ data "terraform_remote_state" "existing-hub" {
 }
 
 data "azurerm_client_config" "current" {}
-
-data "azuread_group" "aks_admin_group" {
-  display_name = var.aks_admin_group
-}
