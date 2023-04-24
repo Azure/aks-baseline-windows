@@ -6,7 +6,7 @@ The following will be created:
 * [Azure Firewall](./04-Network-Hub/firewall.tf)
 * [Azure Bastion Host](./04-Network-Hub/hub-networking.tf)
 * [Virtual Machine](./04-Network-Hub/dev-setup.tf)
-* [Domain Controller](./04-Network-Hub/dev-setup-dc.tf)
+* [Domain Controller](./04-Network-Hub/dev-setup.tf)
 
 
 
