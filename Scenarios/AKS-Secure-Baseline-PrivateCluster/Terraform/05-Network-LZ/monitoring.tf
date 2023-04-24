@@ -10,3 +10,11 @@ resource "azurerm_log_analytics_workspace" "spokeLA" {
 
   tags = var.tags
 }
+
+#############
+## OUTPUTS ##
+#############
+# These outputs are used by later deployments
+output "la_id" {
+  value = azurerm_log_analytics_workspace.spokeLA.id
+}
