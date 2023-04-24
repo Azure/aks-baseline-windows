@@ -18,6 +18,8 @@ variable "aks_admin_group" {}
 
 variable "la_id" {}
 
+variable "spoke_la_id" {}
+
 variable "private_dns_zone_id" {}
 
 variable "dns_prefix" {}

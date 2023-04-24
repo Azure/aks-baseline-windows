@@ -62,7 +62,7 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
-  name                  = "winpool"
+  name                  = "winpl"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
   vm_size               = "Standard_DS4_v2"
   node_count            = 3
@@ -92,11 +92,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "linux_user_pool" {
 }
 
 #Diagnostic Settings
-data "azurerm_log_analytics_workspace" "spoke" {
-  name                = "spoke-la"
-  resource_group_name = var.resource_group_name
-}
-
 data "azurerm_monitor_diagnostic_categories" "aks" {
   resource_id = azurerm_kubernetes_cluster.akscluster.id
 }
@@ -104,7 +99,7 @@ data "azurerm_monitor_diagnostic_categories" "aks" {
 resource "azurerm_monitor_diagnostic_setting" "aks" {
   name                       = replace(var.caf_basename.azurerm_monitor_diagnostic_setting, "amds", "aksamds")
   target_resource_id         = azurerm_kubernetes_cluster.akscluster.id
-  log_analytics_workspace_id = data.azurerm_log_analytics_workspace.spoke.id
+  log_analytics_workspace_id = var.spoke_la_id
 
   dynamic "log" {
     iterator = entry
