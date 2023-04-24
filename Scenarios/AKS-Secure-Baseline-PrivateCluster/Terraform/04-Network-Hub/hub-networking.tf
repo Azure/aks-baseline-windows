@@ -60,9 +60,10 @@ resource "azurerm_log_analytics_workspace" "hub" {
 
 # Diagnostic setting for Hub vnet
 resource "azurerm_monitor_diagnostic_setting" "hub-vnet" {
-  name                       = replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "vntamds")
-  target_resource_id         = azurerm_virtual_network.vnet.id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.hub.id
+  name                           = replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "vntamds")
+  target_resource_id             = azurerm_virtual_network.vnet.id
+  log_analytics_workspace_id     = azurerm_log_analytics_workspace.hub.id
+  log_analytics_destination_type = "AzureDiagnostics"
 
   enabled_log {
     category_group = "allLogs"

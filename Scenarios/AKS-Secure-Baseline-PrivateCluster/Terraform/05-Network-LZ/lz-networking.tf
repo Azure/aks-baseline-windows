@@ -55,9 +55,10 @@ module "cdn" {
 
 # Diagnostic setting for Spoke vnet
 resource "azurerm_monitor_diagnostic_setting" "spoke-vnet" {
-  name                       = replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "${var.lz_prefix}vntamds")
-  target_resource_id         = azurerm_virtual_network.vnet.id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.spokeLA.id
+  name                           = replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "${var.lz_prefix}vntamds")
+  target_resource_id             = azurerm_virtual_network.vnet.id
+  log_analytics_workspace_id     = azurerm_log_analytics_workspace.spokeLA.id
+  log_analytics_destination_type = "AzureDiagnostics"
 
   enabled_log {
     category_group = "allLogs"

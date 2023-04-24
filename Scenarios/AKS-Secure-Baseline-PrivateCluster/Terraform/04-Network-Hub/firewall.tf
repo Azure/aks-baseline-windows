@@ -51,9 +51,10 @@ module "firewall_rules_aks" {
 
 # Diagnostic setting for Firewall
 resource "azurerm_monitor_diagnostic_setting" "firewall" {
-  name                       = replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "fwamds")
-  target_resource_id         = azurerm_firewall.firewall.id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.hub.id
+  name                           = replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "fwamds")
+  target_resource_id             = azurerm_firewall.firewall.id
+  log_analytics_workspace_id     = azurerm_log_analytics_workspace.hub.id
+  log_analytics_destination_type = "AzureDiagnostics"
 
   enabled_log {
     category_group = "allLogs"
@@ -76,10 +77,11 @@ resource "azurerm_monitor_diagnostic_setting" "firewall" {
 
 # Diagnostic setting for Firewall public ip addresses
 resource "azurerm_monitor_diagnostic_setting" "fwpip" {
-  count                      = "3"
-  name                       = replace(replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "pipamds"), "001", "00${count.index + 1}")
-  target_resource_id         = azurerm_public_ip.firewall[count.index].id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.hub.id
+  count                          = "3"
+  name                           = replace(replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "pipamds"), "001", "00${count.index + 1}")
+  target_resource_id             = azurerm_public_ip.firewall[count.index].id
+  log_analytics_workspace_id     = azurerm_log_analytics_workspace.hub.id
+  log_analytics_destination_type = "AzureDiagnostics"
 
   enabled_log {
     category_group = "audit"

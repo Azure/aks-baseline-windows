@@ -27,9 +27,10 @@ resource "azurerm_bastion_host" "bastionhost" {
 
 # Diagnostic setting for Bastion host
 resource "azurerm_monitor_diagnostic_setting" "bastion" {
-  name                       = replace(var.caf_basename.azurerm_monitor_diagnostic_setting, "amds", "bastamds")
-  target_resource_id         = azurerm_bastion_host.bastionhost.id
-  log_analytics_workspace_id = var.log_analytics_workspace_id
+  name                           = replace(var.caf_basename.azurerm_monitor_diagnostic_setting, "amds", "bastamds")
+  target_resource_id             = azurerm_bastion_host.bastionhost.id
+  log_analytics_workspace_id     = var.log_analytics_workspace_id
+  log_analytics_destination_type = "AzureDiagnostics"
 
   enabled_log {
     category_group = "allLogs"
