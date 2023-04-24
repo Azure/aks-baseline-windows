@@ -97,17 +97,17 @@ data "azurerm_monitor_diagnostic_categories" "aks" {
 }
 
 resource "azurerm_monitor_diagnostic_setting" "aks" {
-  name                       = replace(var.caf_basename.azurerm_monitor_diagnostic_setting, "amds", "aksamds")
-  target_resource_id         = azurerm_kubernetes_cluster.akscluster.id
-  log_analytics_workspace_id = var.spoke_la_id
+  name                           = replace(var.caf_basename.azurerm_monitor_diagnostic_setting, "amds", "aksamds")
+  target_resource_id             = azurerm_kubernetes_cluster.akscluster.id
+  log_analytics_workspace_id     = var.spoke_la_id
+  log_analytics_destination_type = "AzureDiagnostics"
 
-  dynamic "log" {
+  dynamic "enabled_log" {
     iterator = entry
     for_each = data.azurerm_monitor_diagnostic_categories.aks.log_category_types
 
     content {
       category = entry.value
-      enabled  = true
 
       retention_policy {
         enabled = true
