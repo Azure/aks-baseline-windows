@@ -2,9 +2,6 @@
   "azurerm_example_how_to_exclude": {
     "exclude": true
   },
-  "azurerm_function_app": {
-    "slug": "func"
-  },
   "azurerm_route": {
     "slug": "route"
   },
