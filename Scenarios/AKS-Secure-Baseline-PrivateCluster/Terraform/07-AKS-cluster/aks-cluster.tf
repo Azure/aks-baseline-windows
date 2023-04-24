@@ -62,7 +62,7 @@ module "aks" {
   winnp_subnet_id     = data.terraform_remote_state.existing-lz.outputs.aks_windowsnp_subnet_id
   mi_aks_cp_id        = azurerm_user_assigned_identity.mi-aks-cp.id
   la_id               = azurerm_log_analytics_workspace.aks.id
-  spoke_la_id         = data.terraform_remote_state.existing-lz.outputs.lz_la_id
+  spoke_la_id         = data.terraform_remote_state.existing-lz.outputs.la_id
   private_dns_zone_id = azurerm_private_dns_zone.aks-dns.id
   aks_admin_group     = data.terraform_remote_state.aad.outputs.aksops_object_id
 }
