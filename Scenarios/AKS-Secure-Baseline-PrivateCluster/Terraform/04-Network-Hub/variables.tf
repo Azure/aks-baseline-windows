@@ -16,10 +16,6 @@ variable "tags" {
   }
 }
 
-variable "hub_prefix" {
-  default = "aks"
-}
-
 variable "sku_name" {
   default = "AZFW_VNet"
 }
