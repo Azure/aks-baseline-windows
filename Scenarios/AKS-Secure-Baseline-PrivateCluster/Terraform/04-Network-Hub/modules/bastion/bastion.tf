@@ -6,7 +6,7 @@ resource "azurerm_subnet" "bastionhost" {
 }
 
 resource "azurerm_public_ip" "bastionhost" {
-  name                = "${var.virtual_network_name}-bastion-pip"
+  name                = replace(var.caf_basename.azurerm_public_ip, "pip", "bastpip")
   resource_group_name = var.resource_group_name
   location            = var.location
   allocation_method   = "Static"
@@ -14,7 +14,7 @@ resource "azurerm_public_ip" "bastionhost" {
 }
 
 resource "azurerm_bastion_host" "bastionhost" {
-  name                = "${var.virtual_network_name}-bastion"
+  name                = var.caf_basename.azurerm_bastion_host
   resource_group_name = var.resource_group_name
   location            = var.location
 
@@ -27,16 +27,17 @@ resource "azurerm_bastion_host" "bastionhost" {
 
 # Diagnostic setting for Bastion host
 resource "azurerm_monitor_diagnostic_setting" "bastion" {
-  name               = "bastiondiagnostics"
-  target_resource_id = azurerm_bastion_host.bastionhost.id
-  log_analytics_workspace_id = var.log_analytics_workspace_id
+  name                           = replace(var.caf_basename.azurerm_monitor_diagnostic_setting, "amds", "bastamds")
+  target_resource_id             = azurerm_bastion_host.bastionhost.id
+  log_analytics_workspace_id     = var.log_analytics_workspace_id
+  log_analytics_destination_type = "AzureDiagnostics"
 
   enabled_log {
     category_group = "allLogs"
 
     retention_policy {
       enabled = true
-      days = "30"
+      days    = "30"
     }
   }
 
@@ -45,7 +46,7 @@ resource "azurerm_monitor_diagnostic_setting" "bastion" {
 
     retention_policy {
       enabled = true
-      days = "30"
+      days    = "30"
     }
   }
 }

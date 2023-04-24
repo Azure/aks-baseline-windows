@@ -70,6 +70,12 @@ resource "azurerm_application_gateway" "agw" {
   }
 }
 
+##########################################################
+## Common Naming Variable
+##########################################################
+
+variable "caf_basename" {}
+
 # Variables
 
 variable "appgw_name" {}

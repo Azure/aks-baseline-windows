@@ -1,13 +1,13 @@
 resource "azurerm_windows_virtual_machine" "computedc" {
 
-  name                            = var.server_name
-  location                        = var.location
-  resource_group_name             = var.resource_group_name
-  size                            = var.vm_size
-  admin_username                  = var.admin_username
-  admin_password                  = var.admin_password
+  name                = var.server_name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  size                = var.vm_size
+  admin_username      = var.admin_username
+  admin_password      = var.admin_password
   #disable_password_authentication = var.disable_password_authentication //Set to true if using SSH key
-  tags                            = var.tags
+  tags = var.tags
 
   network_interface_ids = [
     azurerm_network_interface.computedc.id
@@ -33,7 +33,7 @@ resource "azurerm_windows_virtual_machine" "computedc" {
 
 resource "azurerm_network_interface" "computedc" {
 
-  name                          = "${var.server_name}-nic"
+  name                          = replace(var.caf_basename.azurerm_network_interface, "nic", "dcnic")
   location                      = var.location
   resource_group_name           = var.resource_group_name
   enable_accelerated_networking = var.enable_accelerated_networking
@@ -53,7 +53,7 @@ resource "azurerm_network_interface" "computedc" {
 ## Promote VM to be a Domain Controller
 ##########################################################
 
-locals { 
+locals {
   import_command       = "Import-Module ADDSDeployment"
   password_command     = "$password = ConvertTo-SecureString ${var.admin_password} -AsPlainText -Force"
   install_ad_command   = "Add-WindowsFeature -name ad-domain-services -IncludeManagementTools"
@@ -65,8 +65,8 @@ locals {
 }
 
 resource "azurerm_virtual_machine_extension" "create-active-directory-forest" {
-  name                 = "create-active-directory-forest"
-  virtual_machine_id = azurerm_windows_virtual_machine.computedc.id
+  name                 = replace(var.server_name, "dc", "adfvmext")
+  virtual_machine_id   = azurerm_windows_virtual_machine.computedc.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"
@@ -78,6 +78,11 @@ resource "azurerm_virtual_machine_extension" "create-active-directory-forest" {
 SETTINGS
 }
 
+##########################################################
+## Common Naming Variable
+##########################################################
+
+variable "caf_basename" {}
 
 ##########################################################
 ## Variables for DC configrations
@@ -133,7 +138,7 @@ variable "tags" {
 
   default = {
     application = "compute",
-    tier = "DC"
+    tier        = "DC"
   }
 }
 

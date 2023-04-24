@@ -1,3 +1,15 @@
+##############
+# CAF MODULE #
+##############
+
+module "CAFResourceNames" {
+  source      = "../00-Naming-module"
+  workload    = "gsma"
+  environment = "dev"
+  region      = "eus"
+  instance    = "001"
+}
+
 ########
 # DATA #
 ########
@@ -11,7 +23,7 @@ data "terraform_remote_state" "existing-lz" {
     storage_account_name = var.storage_account_name
     container_name       = var.container_name
     key                  = "lz-net"
-    access_key = var.access_key
+    access_key           = var.access_key
   }
 }
 
@@ -22,7 +34,7 @@ data "terraform_remote_state" "aks-support" {
     storage_account_name = var.storage_account_name
     container_name       = var.container_name
     key                  = "aks-sup"
-    access_key = var.access_key
+    access_key           = var.access_key
   }
 }
 
@@ -33,7 +45,7 @@ data "terraform_remote_state" "aad" {
     storage_account_name = var.storage_account_name
     container_name       = var.container_name
     key                  = "aad"
-    access_key = var.access_key
+    access_key           = var.access_key
   }
 }
 
@@ -44,12 +56,8 @@ data "terraform_remote_state" "existing-hub" {
     storage_account_name = var.storage_account_name
     container_name       = var.container_name
     key                  = "hub-net"
-    access_key = var.access_key
+    access_key           = var.access_key
   }
 }
 
 data "azurerm_client_config" "current" {}
-
-data "azuread_group" "aks_admin_group" {
-  display_name     = var.aks_admin_group
-}

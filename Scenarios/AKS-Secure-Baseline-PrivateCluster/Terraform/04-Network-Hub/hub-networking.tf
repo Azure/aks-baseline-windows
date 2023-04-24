@@ -3,7 +3,7 @@
 # -----------------------
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet-${var.hub_prefix}"
+  name                = module.CAFResourceNames.names.azurerm_virtual_network
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   address_space       = ["10.200.0.0/24"]
@@ -18,22 +18,22 @@ resource "azurerm_virtual_network" "vnet" {
 # Firewall Subnet
 # (Additional subnet for Azure Firewall, without NSG as per Firewall requirements)
 resource "azurerm_subnet" "firewall" {
-  name                                           = "AzureFirewallSubnet"
-  resource_group_name                            = azurerm_resource_group.rg.name
-  virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = ["10.200.0.0/26"]
-  private_endpoint_network_policies_enabled      = false
+  name                                      = "AzureFirewallSubnet"
+  resource_group_name                       = azurerm_resource_group.rg.name
+  virtual_network_name                      = azurerm_virtual_network.vnet.name
+  address_prefixes                          = ["10.200.0.0/26"]
+  private_endpoint_network_policies_enabled = false
 
 }
 
 # Gateway Subnet 
 # (Additional subnet for Gateway, without NSG as per requirements)
 resource "azurerm_subnet" "gateway" {
-  name                                           = "GatewaySubnet"
-  resource_group_name                            = azurerm_resource_group.rg.name
-  virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = ["10.200.0.64/27"]
-  private_endpoint_network_policies_enabled      = false
+  name                                      = "GatewaySubnet"
+  resource_group_name                       = azurerm_resource_group.rg.name
+  virtual_network_name                      = azurerm_virtual_network.vnet.name
+  address_prefixes                          = ["10.200.0.64/27"]
+  private_endpoint_network_policies_enabled = false
 
 }
 
@@ -41,17 +41,17 @@ resource "azurerm_subnet" "gateway" {
 module "bastion" {
   source = "./modules/bastion"
 
-  subnet_cidr          = "10.200.0.128/26"
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  resource_group_name  = azurerm_resource_group.rg.name
-  location             = azurerm_resource_group.rg.location
+  caf_basename               = module.CAFResourceNames.names
+  subnet_cidr                = "10.200.0.128/26"
+  virtual_network_name       = azurerm_virtual_network.vnet.name
+  resource_group_name        = azurerm_resource_group.rg.name
+  location                   = azurerm_resource_group.rg.location
   log_analytics_workspace_id = azurerm_log_analytics_workspace.hub.id
-
 }
 
 # Log Analytics Workspace for regional hub network, its spokes, and bastion.
 resource "azurerm_log_analytics_workspace" "hub" {
-  name                = "hub-la-01"
+  name                = module.CAFResourceNames.names.azurerm_log_analytics_workspace
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "PerGB2018"
@@ -60,16 +60,17 @@ resource "azurerm_log_analytics_workspace" "hub" {
 
 # Diagnostic setting for Hub vnet
 resource "azurerm_monitor_diagnostic_setting" "hub-vnet" {
-  name               = "hubvnetdiagnostics"
-  target_resource_id = azurerm_virtual_network.vnet.id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.hub.id
+  name                           = replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "vntamds")
+  target_resource_id             = azurerm_virtual_network.vnet.id
+  log_analytics_workspace_id     = azurerm_log_analytics_workspace.hub.id
+  log_analytics_destination_type = "AzureDiagnostics"
 
   enabled_log {
     category_group = "allLogs"
 
     retention_policy {
       enabled = true
-      days = "30"
+      days    = "30"
     }
   }
 
@@ -78,7 +79,7 @@ resource "azurerm_monitor_diagnostic_setting" "hub-vnet" {
 
     retention_policy {
       enabled = true
-      days = "30"
+      days    = "30"
     }
   }
 }

@@ -6,20 +6,17 @@
 # Dev Subnet
 # (Additional subnet for Developer DC and Jumpbox)
 resource "azurerm_subnet" "devSubnetdc" {
-  name                                           = "devSubnetdc"
-  resource_group_name                            = azurerm_resource_group.rg.name
-  virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = ["10.200.0.96/27"]
-  private_endpoint_network_policies_enabled      = false
-
-
+  name                                      = module.CAFResourceNames.names.azurerm_subnet
+  resource_group_name                       = azurerm_resource_group.rg.name
+  virtual_network_name                      = azurerm_virtual_network.vnet.name
+  address_prefixes                          = ["10.200.0.96/27"]
+  private_endpoint_network_policies_enabled = false
 }
 
 resource "azurerm_network_security_group" "dev-nsg-dc" {
-  name                = "${azurerm_virtual_network.vnet.name}-${azurerm_subnet.devSubnetdc.name}-nsg"
+  name                = module.CAFResourceNames.names.azurerm_network_security_group
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-
 }
 
 resource "azurerm_subnet_network_security_group_association" "subnetdc" {
@@ -31,27 +28,28 @@ resource "azurerm_subnet_network_security_group_association" "subnetdc" {
 module "create_windows_DC" {
   source = "./modules/compute-win-DC"
 
+  caf_basename        = module.CAFResourceNames.names
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   vnet_subnet_id      = azurerm_subnet.devSubnetdc.id
 
-  server_name         = "svr-dev-dc"
-  admin_username      = var.admin_username
-  admin_password      = var.admin_password
+  server_name    = "dcgsmadevweu001"
+  admin_username = var.admin_username
+  admin_password = var.admin_password
 }
 
 # JumpBox Server VM
 module "create_windows_jump" {
   source = "./modules/compute-win-jump"
 
+  caf_basename        = module.CAFResourceNames.names
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   vnet_subnet_id      = azurerm_subnet.devSubnetdc.id
 
-  server_name         = "svr-dev-win"
-  admin_username      = var.admin_username
-  admin_password      = var.admin_password
-
+  server_name    = "vmgsmadevweu001"
+  admin_username = var.admin_username
+  admin_password = var.admin_password
 }
 
 #############

@@ -1,6 +1,8 @@
-variable "prefix" {
-  description = "A prefix used for all resources in this example"
-}
+##########################################################
+## Common Naming Variable
+##########################################################
+
+variable "caf_basename" {}
 
 variable "location" {}
 
@@ -16,5 +18,8 @@ variable "aks_admin_group" {}
 
 variable "la_id" {}
 
+variable "spoke_la_id" {}
+
 variable "private_dns_zone_id" {}
- 
+
+variable "dns_prefix" {}

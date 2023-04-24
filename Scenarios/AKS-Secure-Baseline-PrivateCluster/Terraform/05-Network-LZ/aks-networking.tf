@@ -1,36 +1,36 @@
 
 # This section create a subnet for AKS along with an associated NSG.
 resource "azurerm_subnet" "aks" {
-  name                                           = "aksSubnet"
-  resource_group_name                            = azurerm_resource_group.spoke-rg.name
-  virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = ["10.240.0.0/22"]
-  private_endpoint_network_policies_enabled      = true
+  name                                      = replace(module.CAFResourceNames.names.azurerm_subnet, "snet", "akssnet")
+  resource_group_name                       = azurerm_resource_group.spoke-rg.name
+  virtual_network_name                      = azurerm_virtual_network.vnet.name
+  address_prefixes                          = ["10.240.0.0/22"]
+  private_endpoint_network_policies_enabled = true
 
 }
 
 # Subnet for AKS Load Blancer 
 resource "azurerm_subnet" "lb" {
-  name                                           = "lbSubnet"
-  resource_group_name                            = azurerm_resource_group.spoke-rg.name
-  virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = ["10.240.4.0/28"]
-  private_endpoint_network_policies_enabled      = true
+  name                                      = replace(module.CAFResourceNames.names.azurerm_subnet, "snet", "lbsnet")
+  resource_group_name                       = azurerm_resource_group.spoke-rg.name
+  virtual_network_name                      = azurerm_virtual_network.vnet.name
+  address_prefixes                          = ["10.240.4.0/28"]
+  private_endpoint_network_policies_enabled = true
 
 }
 
 # Subnet for AKS Windows Nodepool 
 resource "azurerm_subnet" "windowsnp" {
-  name                                           = "windowsNpSubnet"
-  resource_group_name                            = azurerm_resource_group.spoke-rg.name
-  virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = ["10.240.5.0/24"]
-  private_endpoint_network_policies_enabled      = true
+  name                                      = replace(module.CAFResourceNames.names.azurerm_subnet, "snet", "winsnet")
+  resource_group_name                       = azurerm_resource_group.spoke-rg.name
+  virtual_network_name                      = azurerm_virtual_network.vnet.name
+  address_prefixes                          = ["10.240.5.0/24"]
+  private_endpoint_network_policies_enabled = true
 
 }
 
 resource "azurerm_network_security_group" "aks-nsg" {
-  name                = "${azurerm_virtual_network.vnet.name}-${azurerm_subnet.aks.name}-nsg"
+  name                = replace(module.CAFResourceNames.names.azurerm_network_security_group, "nsg", "${var.lz_prefix}nsg")
   resource_group_name = azurerm_resource_group.spoke-rg.name
   location            = azurerm_resource_group.spoke-rg.location
 }

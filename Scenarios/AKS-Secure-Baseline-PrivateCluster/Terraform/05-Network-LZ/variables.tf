@@ -23,7 +23,7 @@ variable "resource_group_name" {
 }
 
 variable "storage_account_name" {
-
+  default = "winaksdc"
 }
 
 variable "container_name" {
@@ -33,16 +33,4 @@ variable "container_name" {
 variable "access_key" {
   sensitive = true
   type      = string
-}
-
-## Sensitive Variables for the Jumpbox
-## Sample terraform.tfvars File
-
-variable "admin_password" {
-  default   = ""
-  sensitive = true
-}
-
-variable "admin_username" {
-  default = "sysadmin"
 }

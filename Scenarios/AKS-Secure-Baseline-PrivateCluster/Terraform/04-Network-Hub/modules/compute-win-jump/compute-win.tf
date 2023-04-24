@@ -1,13 +1,13 @@
 resource "azurerm_windows_virtual_machine" "computedc" {
 
-  name                            = var.server_name
-  location                        = var.location
-  resource_group_name             = var.resource_group_name
-  size                            = var.vm_size
-  admin_username                  = var.admin_username
-  admin_password                  = var.admin_password
+  name                = var.server_name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  size                = var.vm_size
+  admin_username      = var.admin_username
+  admin_password      = var.admin_password
   #disable_password_authentication = var.disable_password_authentication //Set to true if using SSH key
-  tags                            = var.tags
+  tags = var.tags
 
   network_interface_ids = [
     azurerm_network_interface.win.id
@@ -33,7 +33,7 @@ resource "azurerm_windows_virtual_machine" "computedc" {
 
 resource "azurerm_network_interface" "win" {
 
-  name                          = "${var.server_name}-nic"
+  name                          = var.caf_basename.azurerm_network_interface
   location                      = var.location
   resource_group_name           = var.resource_group_name
   enable_accelerated_networking = var.enable_accelerated_networking
@@ -48,7 +48,11 @@ resource "azurerm_network_interface" "win" {
   }
 }
 
+##########################################################
+## Common Naming Variable
+##########################################################
 
+variable "caf_basename" {}
 
 ##########################################################
 ## Variables
@@ -96,7 +100,7 @@ variable "tags" {
 
   default = {
     application = "compute",
-    tier = "jump"
+    tier        = "jump"
   }
 }
 

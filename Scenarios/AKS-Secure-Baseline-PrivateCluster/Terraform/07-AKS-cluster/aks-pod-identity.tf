@@ -6,12 +6,12 @@
 resource "azurerm_user_assigned_identity" "aks_pod_identity" {
   resource_group_name = data.terraform_remote_state.existing-lz.outputs.lz_rg_name
   location            = data.terraform_remote_state.existing-lz.outputs.lz_rg_location
-  name                = "pod-identity-example"
+  name                = replace(module.CAFResourceNames.names.azurerm_user_assigned_identity, "msi", "podmsi")
 }
 
 
 # Role assignments
-resource "azurerm_role_assignment" "aks_identity_operator" {  
+resource "azurerm_role_assignment" "aks_identity_operator" {
   scope                = azurerm_user_assigned_identity.aks_pod_identity.id
   role_definition_name = "Managed Identity Operator"
   principal_id         = module.aks.kubelet_id

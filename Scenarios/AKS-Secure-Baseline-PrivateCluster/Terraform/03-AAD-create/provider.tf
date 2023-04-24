@@ -3,11 +3,10 @@
 
 terraform {
   required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "= 3.9.0"
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 2.37.2"
     }
-
   }
 
   backend "azurerm" {
@@ -16,11 +15,6 @@ terraform {
     container_name       = var.container_name       #"akscs"   # Partial configuration, provided during "terraform init"
     key                  = "aad"                    # Value set here because multiple state files are used in this example.
   }
-
-}
-
-provider "azurerm" {
-  features {}
 }
 
 provider "azuread" {

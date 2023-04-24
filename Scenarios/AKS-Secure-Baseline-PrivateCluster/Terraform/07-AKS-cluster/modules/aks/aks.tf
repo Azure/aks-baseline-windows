@@ -6,8 +6,8 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
     ]
   }
 
-  name                    = var.prefix
-  dns_prefix              = var.prefix
+  name                    = var.caf_basename.azurerm_kubernetes_cluster
+  dns_prefix              = var.dns_prefix
   location                = var.location
   resource_group_name     = var.resource_group_name
   kubernetes_version      = "1.25.5"
@@ -22,34 +22,32 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   }
 
   default_node_pool {
-    name            = "defaultpool"
-    vm_size         = "Standard_DS2_v2"
-    os_disk_size_gb = 30
-    os_disk_type    = "Ephemeral"
-    type            = "VirtualMachineScaleSets"
-    node_count      = 3
-    vnet_subnet_id  = var.vnet_subnet_id
+    name                         = "defaultpool"
+    vm_size                      = "Standard_DS2_v2"
+    os_disk_size_gb              = 30
+    os_disk_type                 = "Ephemeral"
+    type                         = "VirtualMachineScaleSets"
+    node_count                   = 3
+    vnet_subnet_id               = var.vnet_subnet_id
     only_critical_addons_enabled = true
-    zones           = ["1","2","3"]
+    zones                        = ["1", "2", "3"]
   }
 
   network_profile {
-    network_plugin = "azure"
-    load_balancer_sku  = "standard"
-    outbound_type      = "userDefinedRouting"
-    dns_service_ip     = "192.168.100.10"
-    service_cidr       = "192.168.100.0/24"
-    docker_bridge_cidr = "172.17.0.1/16"
-    network_policy     = "azure"
-
+    network_plugin    = "azure"
+    load_balancer_sku = "standard"
+    outbound_type     = "userDefinedRouting"
+    dns_service_ip    = "192.168.100.10"
+    service_cidr      = "192.168.100.0/24"
+    network_policy    = "azure"
   }
 
   role_based_access_control_enabled = true
 
   azure_active_directory_role_based_access_control {
-    managed = true
+    managed                = true
     admin_group_object_ids = [var.aks_admin_group]
-    azure_rbac_enabled = true
+    azure_rbac_enabled     = true
   }
 
   identity {
@@ -63,7 +61,7 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
-  name                  = "wnp"
+  name                  = "winpl"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
   vm_size               = "Standard_DS4_v2"
   node_count            = 3
@@ -72,7 +70,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
   os_type               = "Windows"
   os_sku                = "Windows2019"
   vnet_subnet_id        = var.winnp_subnet_id
-  zones                 = ["1","2","3"]
+  zones                 = ["1", "2", "3"]
   tags = {
     "nodepool-type" = "user"
     "env_type"      = "Windows_np"
@@ -81,39 +79,34 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "linux_user_pool" {
-    name                  = "userpool"
-    kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
-    vm_size               = "Standard_DS2_v2"
-    os_disk_size_gb       = 30
-    os_disk_type          = "Ephemeral"
-    node_count            = 1
-    os_type               = "Linux"
-    vnet_subnet_id        = var.vnet_subnet_id
-    zones           = ["1","2","3"]
+  name                  = "linpool"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
+  vm_size               = "Standard_DS2_v2"
+  os_disk_size_gb       = 30
+  os_disk_type          = "Ephemeral"
+  node_count            = 1
+  os_type               = "Linux"
+  vnet_subnet_id        = var.vnet_subnet_id
+  zones                 = ["1", "2", "3"]
 }
 
 #Diagnostic Settings
-data "azurerm_log_analytics_workspace" "spoke" {
-  name                = "spoke-la"
-  resource_group_name = var.resource_group_name
-}
-
 data "azurerm_monitor_diagnostic_categories" "aks" {
   resource_id = azurerm_kubernetes_cluster.akscluster.id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "aks" {
-  name                       = "akswindiagnostics"
-  target_resource_id         = azurerm_kubernetes_cluster.akscluster.id
-  log_analytics_workspace_id = data.azurerm_log_analytics_workspace.spoke.id
+  name                           = replace(var.caf_basename.azurerm_monitor_diagnostic_setting, "amds", "aksamds")
+  target_resource_id             = azurerm_kubernetes_cluster.akscluster.id
+  log_analytics_workspace_id     = var.spoke_la_id
+  log_analytics_destination_type = "AzureDiagnostics"
 
-  dynamic "log" {
+  dynamic "enabled_log" {
     iterator = entry
     for_each = data.azurerm_monitor_diagnostic_categories.aks.log_category_types
 
     content {
       category = entry.value
-      enabled  = true
 
       retention_policy {
         enabled = true

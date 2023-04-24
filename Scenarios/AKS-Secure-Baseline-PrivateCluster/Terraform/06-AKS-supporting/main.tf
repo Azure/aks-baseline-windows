@@ -1,3 +1,15 @@
+##############
+# CAF MODULE #
+##############
+
+module "CAFResourceNames" {
+  source      = "../00-Naming-module"
+  workload    = "gsma"
+  environment = "dev"
+  region      = "eus"
+  instance    = "001"
+}
+
 ########
 # DATA #
 ########
@@ -21,7 +33,7 @@ data "terraform_remote_state" "existing-lz" {
     storage_account_name = var.storage_account_name
     container_name       = var.container_name
     key                  = "lz-net"
-    access_key = var.access_key
+    access_key           = var.access_key
   }
 }
 

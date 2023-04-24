@@ -6,7 +6,7 @@ The following will be created:
 * [Azure Firewall](./04-Network-Hub/firewall.tf)
 * [Azure Bastion Host](./04-Network-Hub/hub-networking.tf)
 * [Virtual Machine](./04-Network-Hub/dev-setup.tf)
-* [Domain Controller](./04-Network-Hub/dev-setup-dc.tf)
+* [Domain Controller](./04-Network-Hub/dev-setup.tf)
 
 
 
@@ -23,7 +23,6 @@ If using **terraform.tfvars**, then update the following in the file.
 admin_password = ""
 admin_username = ""
 location = ""
-hub_prefix = "" 
 ```
 
 ### Deploy the hub networking and Windows domain controller
@@ -45,11 +44,11 @@ terraform init -input=false -backend-config="resource_group_name=$backendResourc
  Enter terraform init -reconfigure if you get an error saying there was a change in the backend configuration which may require migrating existing state
 
 ```PowerShell
-terraform plan -out $layerNametfstate -input=false -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$access_key" -var="state_sa_name=$backendStorageAccountName"
+terraform plan -out $layerNametfstate
 ```
 
 ```PowerShell
-terraform apply -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$access_key"
+terraform apply --auto-approve $layerNametfstate
 ```
 
 # Next Step
