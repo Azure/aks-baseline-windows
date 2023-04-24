@@ -34,13 +34,12 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   }
 
   network_profile {
-    network_plugin     = "azure"
-    load_balancer_sku  = "standard"
-    outbound_type      = "userDefinedRouting"
-    dns_service_ip     = "192.168.100.10"
-    service_cidr       = "192.168.100.0/24"
-    docker_bridge_cidr = "172.17.0.1/16"
-    network_policy     = "azure"
+    network_plugin    = "azure"
+    load_balancer_sku = "standard"
+    outbound_type     = "userDefinedRouting"
+    dns_service_ip    = "192.168.100.10"
+    service_cidr      = "192.168.100.0/24"
+    network_policy    = "azure"
   }
 
   role_based_access_control_enabled = true
