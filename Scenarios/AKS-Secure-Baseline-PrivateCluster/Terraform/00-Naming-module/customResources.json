@@ -1,24 +1,13 @@
 [
   {
-    "name": "azurerm_example1",
+    "name": "azurerm_firewall_policy_rule_collection_group",
     "min_length": 1,
-    "max_length": 75,
-    "validation_regex": "\"^[a-zA-Z0-9][a-zA-Z0-9-]{0,73}[a-zA-Z0-9]$\"",
-    "scope": "global",
-    "slug": "ex1",
+    "max_length": 80,
+    "validation_regex": "\"^[a-zA-Z0-9][a-zA-Z0-9-._]{0,78}[a-zA-Z0-9_]$\"",
+    "scope": "resourceGroup",
+    "slug": "afwprcg",
     "dashes": true,
     "lowercase": false,
-    "regex": "\"[^0-9A-Za-z-]\""
-  },
-  {
-    "name": "azurerm_example2",
-    "min_length": 3,
-    "max_length": 63,
-    "validation_regex": "\"^[a-z][a-z0-9]{2,62}$\"",
-    "scope": "resourceGroup",
-    "slug": "ex2",
-    "dashes": false,
-    "lowercase": true,
-    "regex": "\"[^0-9a-z]\""
+    "regex": "\"[^0-9A-Za-z_.-]\""
   }
 ]

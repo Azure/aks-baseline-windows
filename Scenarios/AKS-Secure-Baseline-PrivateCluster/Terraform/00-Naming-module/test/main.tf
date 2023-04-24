@@ -11,12 +11,8 @@ output "azurerm_route_table" {
   value = module.CAFResourceNames.names.azurerm_route_table
 }
 
-output "azurerm_example1" {
-  value = module.CAFResourceNames.names.azurerm_example1
-}
-
-output "azurerm_example2" {
-  value = module.CAFResourceNames.names.azurerm_example2
+output "azurerm_firewall_policy_rule_collection_group" {
+  value = module.CAFResourceNames.names.azurerm_firewall_policy_rule_collection_group
 }
 
 output "all_resources" {
