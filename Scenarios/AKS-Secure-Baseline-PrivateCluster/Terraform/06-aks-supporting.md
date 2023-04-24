@@ -35,11 +35,11 @@ terraform init -input=false -backend-config="resource_group_name=$backendResourc
 ```
 
 ```PowerShell
-terraform plan -out $layerNametfstate -input=false -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$access_key" -var="state_sa_name=$backendStorageAccountName"
+terraform plan -var "storage_account_name=$backendStorageAccountName" -var "container_name=$backendContainername" -var "access_key=$access_key" -out $layerNametfstate
 ```
 
 ```PowerShell
-terraform apply -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$access_key"
+terraform apply --auto-approve $layerNametfstate
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
