@@ -98,3 +98,12 @@ resource "azurerm_role_assignment" "aks-to-acr" {
   role_definition_name = "AcrPull"
   principal_id         = module.aks.kubelet_id
 }
+
+# Azure Security Benchmark Policy. This is set a subscription level and should be customized per customer environment
+
+resource "azurerm_subscription_policy_assignment" "azsecurity-benchmark" {
+  name                 = "AzureSecurityBenchmark"
+  policy_definition_id = "/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8"
+  subscription_id      = data.azurerm_subscription.current.id
+  location             = data.terraform_remote_state.existing-lz.outputs.lz_rg_location
+}
