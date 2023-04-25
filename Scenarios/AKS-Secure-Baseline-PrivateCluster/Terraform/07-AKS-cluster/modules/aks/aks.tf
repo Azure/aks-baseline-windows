@@ -15,6 +15,8 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   private_dns_zone_id     = var.private_dns_zone_id
   azure_policy_enabled    = true
   local_account_disabled  = true
+  oidc_issuer_enabled     = true
+  workload_identity_enabled = true
 
   key_vault_secrets_provider {
     secret_rotation_enabled  = true
