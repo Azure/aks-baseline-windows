@@ -32,7 +32,7 @@ resource "azurerm_windows_virtual_machine" "computedc" {
 }
 
 resource "azurerm_managed_disk" "dc-disk" {
-  name                 = "dc-disk"
+  name                 = var.caf_basename.azurerm_managed_disk
   location             = var.location
   resource_group_name  = var.resource_group_name
   storage_account_type = "Standard_LRS"
