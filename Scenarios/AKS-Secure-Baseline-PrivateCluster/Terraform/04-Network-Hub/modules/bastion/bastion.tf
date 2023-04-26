@@ -5,7 +5,7 @@ resource "azurerm_subnet" "bastionhost" {
   address_prefixes     = [var.subnet_cidr]
 }
 resource "azurerm_network_security_group" "bastion-nsg" {
-  name                = "bastion-nsg"
+  name                = replace(var.caf_basename.azurerm_network_security_group, "nsg", "bastnsg")
   location            = var.location
   resource_group_name = var.resource_group_name
 
