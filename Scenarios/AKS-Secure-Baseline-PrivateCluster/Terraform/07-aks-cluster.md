@@ -4,11 +4,10 @@ The following will be created:
 * [AKS Private Cluster](./07-AKS-cluster/aks-cluster.tf)
 * [Log Analytics Workspace](./07-AKS-cluster/aks-cluster.tf)
 * [Managed Identity for AKS Control Plane](./07-AKS-cluster/aks-cluster.tf)
-* [AKS Pod Identity Assignments - OPTIONAL](./07-AKS-cluster/aks-pod-identity.tf)
 
-Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/07-AKS-cluster" folder
+Navigate to "\Scenarios\AKS-Secure-Baseline-PrivateCluster\Terraform\07-AKS-cluster" folder
 ```PowerShell
-cd ../07-AKS-cluster
+cd ..\07-AKS-cluster
 ```
 
 This deployment will need to reference data objects from the Hub deployment and will need access to the pre-existing state file, update the variables as needed.  This deployment will also need to use a storage access key (from Azure) to read the storage account data.  This is a sensitive variable and should not be committed to the code repo.

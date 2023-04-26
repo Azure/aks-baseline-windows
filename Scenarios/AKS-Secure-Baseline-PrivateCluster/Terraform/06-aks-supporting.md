@@ -5,9 +5,9 @@ The following will be created:
 * [Azure Key Vault](./06-AKS-supporting/supporting-infra.tf)
 * Private Link Endpoints for ACR and Key Vault
 
-Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/06-AKS-supporting" folder
+Navigate to "\Scenarios\AKS-Secure-Baseline-PrivateCluster\Terraform\06-AKS-supporting" folder
 ```PowerShell
-cd ../06-AKS-supporting
+cd ..\06-AKS-supporting
 ```
 
 This deployment will need to reference data objects from the Hub deployment and will need access to the pre-existing state file, update the variables as needed in the .tfvars sample file.  This deployment will also need to use a storage access key (from Azure) to read the storage account data.  This is a sensitive variable and should not be committed to the code repo. 
