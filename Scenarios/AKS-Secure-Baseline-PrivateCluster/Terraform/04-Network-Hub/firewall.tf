@@ -38,6 +38,21 @@ resource "azurerm_firewall" "firewall" {
     public_ip_address_id = azurerm_public_ip.firewall[2].id
   }
 }
+resource "azurerm_ip_group" "ipg-lxnp" {
+  name                = replace(module.CAFResourceNames.names.azurerm_subnet, "snet", "ipglx")
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  cidrs = ["10.240.0.0/22"]
+}
+
+resource "azurerm_ip_group" "ipg-winnp" {
+  name                = replace(module.CAFResourceNames.names.azurerm_subnet, "snet", "ipgwin")
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  cidrs = ["10.240.5.0/24"]
+}
 
 module "firewall_rules_aks" {
   source = "./modules/aks-fw-rules"
@@ -46,6 +61,8 @@ module "firewall_rules_aks" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   firewallName        = azurerm_firewall.firewall.name
+  lx_ip_group         = azurerm_ip_group.ipg-lxnp.id
+  win_ip_group        = azurerm_ip_group.ipg-winnp.id
 }
 
 
