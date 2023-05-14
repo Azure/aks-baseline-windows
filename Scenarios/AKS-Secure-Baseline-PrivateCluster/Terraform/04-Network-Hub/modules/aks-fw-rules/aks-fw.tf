@@ -29,12 +29,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "AKS" {
       }
       source_ip_groups      = [var.lx_ip_group, var.win_ip_group]
       destination_fqdn_tags = [
-        "mcr.microsoft.com",
-        "*.data.mcr.microsoft.com",
-        "management.azure.com",
-        "login.microsoftonline.com",
-        "packages.microsoft.com",
-        "acs-mirror.azureedge.net"
+        "AzureKubernetesService"
         ]
     }
   }
@@ -124,14 +119,14 @@ resource "azurerm_firewall_policy_rule_collection_group" "AKS" {
   }
 
   network_rule_collection {
-      name     = "net_monitor_containers_rule"
-      priority = 205
+      name     = "network_rules"
+      priority = 100
       action   = "Allow"
       rule {
        name                  = "net_monitor_containers"
        protocols             = ["TCP"]
        source_ip_groups      = [var.lx_ip_group, var.win_ip_group]
-       destination_addresses = ["AzureMonitor:443"]
+       destination_addresses = ["AzureMonitor"]
        destination_ports     = ["443"]
     }
   }
