@@ -39,17 +39,17 @@ resource "azurerm_firewall" "firewall" {
   }
 }
 resource "azurerm_ip_group" "ipg-lxnp" {
-  name                = replace(module.CAFResourceNames.names.azurerm_subnet, "snet", "ipglx")
+  name                = replace(module.CAFResourceNames.names.azurerm_subnet, "snet", "ipg-linux")
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = azurerm_resource_group.rg.name
 
   cidrs = ["10.240.0.0/22"]
 }
 
 resource "azurerm_ip_group" "ipg-winnp" {
-  name                = replace(module.CAFResourceNames.names.azurerm_subnet, "snet", "ipgwin")
+  name                = replace(module.CAFResourceNames.names.azurerm_subnet, "snet", "ipg-win")
   location            = var.location
-  resource_group_name = var.resource_group_name
+  resource_group_name = azurerm_resource_group.rg.name
 
   cidrs = ["10.240.5.0/24"]
 }
