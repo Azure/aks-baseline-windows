@@ -1,9 +1,9 @@
 # Create Azure Active Directory Groups for AKS
-Before creating the Azure Active Directory integrated cluster, groups must exist that can be later mapped to the Built-In Roles of "Azure Kubernetes Service Cluster User Role" and "Azure Kubernetes Service RBAC Cluster Admin".
+Before creating the Azure Active Directory integrated cluster, two groups must exist that can be later mapped to the Built-In Roles of "Azure Kubernetes Service Cluster User Role" and "Azure Kubernetes Service RBAC Cluster Admin". You will add yourself to the AKS Admin group, but the other group for users will not be used in this demo. It is included to demonstration a best practice for creating two distinct groups of users who can access the cluster. 
 
-Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-create" folder.
+Navigate to "\Scenarios\AKS-Secure-Baseline-PrivateCluster\Terraform\03-AAD-create" folder.
 ```
-cd ./Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/03-AAD-create
+cd .\Scenarios\AKS-Secure-Baseline-PrivateCluster\Terraform\03-AAD-create
 ```
 
 In the "variables.tf" file, update the security group and defaults to reflect the display names as needed to match existing groups. Also, update Terraform State variables to match storage account used for state file backend config. Key value is set in provider.tf.

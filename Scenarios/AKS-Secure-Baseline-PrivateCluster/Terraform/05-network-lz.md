@@ -8,10 +8,10 @@ The following will be created:
 * [Azure Front Door](./05-Network-LZ/modules/cdn/cdn.tf)
 * [Subnet for AKS](./05-Network-LZ/aks-networking.tf)
 
-Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/05-Network-LZ" folder
+Navigate to "\Scenarios\AKS-Secure-Baseline-PrivateCluster\Terraform\05-Network-LZ" folder
 
 ```PowerShell
-cd ../05-Network-LZ
+cd ..\05-Network-LZ
 ```
 
 In the "variables.tf" file, update the defaults to reflect the tags you'd like to use.  
