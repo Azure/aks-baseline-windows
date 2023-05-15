@@ -86,7 +86,7 @@ spec:
               - key: agentpool
                 operator: In
                 values:
-                - < Windows Node Pool >
+                - winpl
 ---
 apiVersion: v1
 kind: Service
