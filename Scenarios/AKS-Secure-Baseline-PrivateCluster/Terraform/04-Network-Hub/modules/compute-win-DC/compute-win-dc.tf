@@ -31,6 +31,22 @@ resource "azurerm_windows_virtual_machine" "computedc" {
   }
 }
 
+resource "azurerm_managed_disk" "dc-disk" {
+  name                 = var.caf_basename.azurerm_managed_disk
+  location             = var.location
+  resource_group_name  = var.resource_group_name
+  storage_account_type = "Standard_LRS"
+  disk_size_gb         = 128
+  create_option        = "Empty"
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "dc-disk-attachment" {
+  managed_disk_id    = azurerm_managed_disk.dc-disk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.computedc.id
+  lun                = 2
+  caching            = "None"
+}
+
 resource "azurerm_network_interface" "computedc" {
 
   name                          = replace(var.caf_basename.azurerm_network_interface, "nic", "dcnic")
@@ -53,15 +69,18 @@ resource "azurerm_network_interface" "computedc" {
 ## Promote VM to be a Domain Controller
 ##########################################################
 
-locals {
+locals { 
   import_command       = "Import-Module ADDSDeployment"
   password_command     = "$password = ConvertTo-SecureString ${var.admin_password} -AsPlainText -Force"
+  init_disk            = "Initialize-Disk -Number 2 -PartitionStyle MBR"
+  new_partition        = "New-Partition -DiskNumber 2 -UseMaximumSize -AssignDriveLetter"
+  format_drive         = "Format-Volume -DriveLetter F -FileSystem NTFS"
   install_ad_command   = "Add-WindowsFeature -name ad-domain-services -IncludeManagementTools"
-  configure_ad_command = "Install-ADDSForest -CreateDnsDelegation:$false -DomainMode Win2012R2 -DomainName ${var.active_directory_domain} -DomainNetbiosName ${var.active_directory_netbios_name} -ForestMode Win2012R2 -InstallDns:$true -SafeModeAdministratorPassword $password -Force:$true"
+  configure_ad_command = "Install-ADDSForest -CreateDnsDelegation:$false -DomainMode Win2012R2 -DomainName ${var.active_directory_domain} -DatabasePath ${var.datapath} -LogPath ${var.logpath} -SYSVOLPath ${var.sysvol} -DomainNetbiosName ${var.active_directory_netbios_name} -ForestMode Win2012R2 -InstallDns:$true -SafeModeAdministratorPassword $password -Force:$true"
   shutdown_command     = "shutdown -r -t 10"
   dns_forwarder        = "Set-DnsServerForwarder -IPAddress 168.63.129.16"
   exit_code_hack       = "exit 0"
-  powershell_command   = "${local.import_command}; ${local.password_command}; ${local.install_ad_command}; ${local.configure_ad_command}; ${local.shutdown_command}; ${local.dns_forwarder}; ${local.exit_code_hack}"
+  powershell_command   = "${local.import_command}; ${local.password_command}; ${local.init_disk}; ${local.new_partition}; ${local.format_drive}; ${local.install_ad_command}; ${local.configure_ad_command}; ${local.shutdown_command}; ${local.dns_forwarder}; ${local.exit_code_hack}"
 }
 
 resource "azurerm_virtual_machine_extension" "create-active-directory-forest" {
@@ -152,4 +171,19 @@ variable "active_directory_domain" {
 
 variable "active_directory_netbios_name" {
   default = "lzacc"
+}
+
+variable "datapath" {
+  type = string
+  default = "F:\\\\NTDS"
+}
+
+variable "logpath" {
+  type = string
+   default = "F:\\\\NTDS"
+}
+
+variable "sysvol" {
+  type = string
+   default = "F:\\\\SYSVOL"
 }

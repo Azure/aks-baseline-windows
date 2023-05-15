@@ -15,6 +15,8 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
   private_dns_zone_id     = var.private_dns_zone_id
   azure_policy_enabled    = true
   local_account_disabled  = true
+  oidc_issuer_enabled     = true
+  workload_identity_enabled = true
 
   key_vault_secrets_provider {
     secret_rotation_enabled  = true
@@ -27,11 +29,16 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
     os_disk_size_gb              = 30
     os_disk_type                 = "Ephemeral"
     type                         = "VirtualMachineScaleSets"
-    node_count                   = 3
+    enable_auto_scaling          = true
+    min_count                    = 3
+    max_count                    = 4
     vnet_subnet_id               = var.vnet_subnet_id
     only_critical_addons_enabled = true
     zones                        = ["1", "2", "3"]
+    upgrade_settings {
+      max_surge = "33%"
   }
+}
 
   network_profile {
     network_plugin    = "azure"
@@ -64,13 +71,18 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
   name                  = "winpl"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
   vm_size               = "Standard_DS4_v2"
-  node_count            = 3
+  enable_auto_scaling   = true
+  min_count             = 2
+  max_count             = 5
   mode                  = "User"
   os_disk_type          = "Ephemeral"
   os_type               = "Windows"
   os_sku                = "Windows2019"
   vnet_subnet_id        = var.winnp_subnet_id
   zones                 = ["1", "2", "3"]
+  upgrade_settings {
+      max_surge = "33%"
+  }
   tags = {
     "nodepool-type" = "user"
     "env_type"      = "Windows_np"
@@ -84,10 +96,15 @@ resource "azurerm_kubernetes_cluster_node_pool" "linux_user_pool" {
   vm_size               = "Standard_DS2_v2"
   os_disk_size_gb       = 30
   os_disk_type          = "Ephemeral"
-  node_count            = 1
+  enable_auto_scaling   = true
+  min_count             = 1
+  max_count             = 3
   os_type               = "Linux"
   vnet_subnet_id        = var.vnet_subnet_id
   zones                 = ["1", "2", "3"]
+  upgrade_settings {
+      max_surge = "33%"
+   }
 }
 
 #Diagnostic Settings

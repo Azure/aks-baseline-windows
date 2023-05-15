@@ -53,6 +53,7 @@ spec:
       securityContext:
         windowsOptions:
            gmsaCredentialSpecName: < GMSA Credential Spec Name >
+        runAsNonRoot: true
       containers:
       - name: iis
         image: < Registry Name >.azurecr.io/windows/servercore/iis:windowsservercore-ltsc2019
@@ -85,7 +86,7 @@ spec:
               - key: agentpool
                 operator: In
                 values:
-                - wnp
+                - winpl
 ---
 apiVersion: v1
 kind: Service
@@ -94,7 +95,7 @@ metadata:
   namespace: simpleapp
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "<Subnet Name>"
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "< Subnet Name >"
 spec:
   type: LoadBalancer
   selector:

@@ -98,3 +98,4 @@ resource "azurerm_role_assignment" "aks-to-acr" {
   role_definition_name = "AcrPull"
   principal_id         = module.aks.kubelet_id
 }
+
