@@ -48,6 +48,7 @@ spec:
       labels:
         app: "gmsa-win-demo"
     spec:
+      serviceAccountName: gmsa
       nodeSelector:
         "kubernetes.io/os": windows
       securityContext:
