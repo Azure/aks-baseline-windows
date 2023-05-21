@@ -33,6 +33,17 @@ module "create_kv" {
   zone_resource_group_name = data.terraform_remote_state.existing-lz.outputs.lz_rg_name
 }
 
+module "create_policy" {
+  source = "./modules/aks-policies"
+
+  resource_group_id        = data.terraform_remote_state.existing-lz.outputs.lz_rg_id
+  acr_name                 = module.create_acr.acr_name
+  depends_on = [
+    module.create_acr 
+    ]
+  
+}
+
 # Deploy Public DNS to register application domains hosted in AKS. If you are not planning to use the blue green deployment, then you don't need to deploy the public DNS Zone and you can skip this leaving empty the variable public_domain.
 resource "azurerm_dns_zone" "public-dns-apps" {
   count               = var.public_domain != "" ? 1 : 0
