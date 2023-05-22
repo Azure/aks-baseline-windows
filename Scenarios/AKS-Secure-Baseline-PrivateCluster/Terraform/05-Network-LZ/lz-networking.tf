@@ -91,6 +91,9 @@ output "lz_rg_name" {
   value = azurerm_resource_group.spoke-rg.name
 }
 
+output "lz_rg_id" {
+  value = azurerm_resource_group.spoke-rg.id
+}
 output "lz_vnet_name" {
   value = azurerm_virtual_network.vnet.name
 }
