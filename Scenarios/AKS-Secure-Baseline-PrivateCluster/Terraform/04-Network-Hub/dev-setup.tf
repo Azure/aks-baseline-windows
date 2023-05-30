@@ -33,7 +33,7 @@ module "create_windows_DC" {
   location            = azurerm_resource_group.rg.location
   vnet_subnet_id      = azurerm_subnet.devSubnetdc.id
 
-  server_name    = "dcgsmadevweu001"
+  server_name    = "dc${module.CAFResourceNames.workload}${module.CAFResourceNames.environment}${module.CAFResourceNames.region}${module.CAFResourceNames.instance}"
   admin_username = var.admin_username
   admin_password = var.admin_password
 }
@@ -47,7 +47,7 @@ module "create_windows_jump" {
   location            = azurerm_resource_group.rg.location
   vnet_subnet_id      = azurerm_subnet.devSubnetdc.id
 
-  server_name    = "vmgsmadevweu001"
+  server_name    = "vm${module.CAFResourceNames.workload}${module.CAFResourceNames.environment}${module.CAFResourceNames.region}${module.CAFResourceNames.instance}"
   admin_username = var.admin_username
   admin_password = var.admin_password
 }

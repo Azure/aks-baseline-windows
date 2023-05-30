@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "key-vault" {
-  name                        = replace(var.caf_basename.azurerm_key_vault, "001", "${var.random_instance}")
+  name                        = replace(var.caf_basename.azurerm_key_vault, var.caf_instance, "${var.random_instance}")
   location                    = var.location
   resource_group_name         = var.resource_group_name
   enabled_for_disk_encryption = true

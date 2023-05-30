@@ -1,5 +1,5 @@
 resource "azurerm_container_registry" "acr" {
-  name                          = replace(var.caf_basename.azurerm_container_registry, "001", "${var.random_instance}")
+  name                          = replace(var.caf_basename.azurerm_container_registry, var.caf_instance, "${var.random_instance}")
   resource_group_name           = var.resource_group_name
   location                      = var.location
   sku                           = "Premium"
@@ -33,7 +33,7 @@ output "acr_id" {
 }
 
 output "acr_name" {
-  value = azurerm_container_registry.acr.name  
+  value = azurerm_container_registry.acr.name
 }
 output "custom_dns_configs" {
   value = azurerm_private_endpoint.acr-endpoint.custom_dns_configs
