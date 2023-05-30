@@ -37,6 +37,7 @@ terraform apply --auto-approve $layerNametfstate
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
+If you get an error about list of available provider versions, go with the `-upgrade` flag option to allow selection of new versions.
 
 ## Ensure you are part of the AAD Admin group you just created
 

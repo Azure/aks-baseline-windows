@@ -41,7 +41,8 @@ Deploy using Terraform Init, Plan and Apply.
 terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate"
 ```
 
- Enter terraform init -reconfigure if you get an error saying there was a change in the backend configuration which may require migrating existing state
+ Enter terraform init -reconfigure if you get an error saying there was a change in the backend configuration which may require migrating existing state.
+ If you get an error about list of available provider versions, go with the `-upgrade` flag option to allow selection of new versions.
 
 ```PowerShell
 terraform plan -out $layerNametfstate
