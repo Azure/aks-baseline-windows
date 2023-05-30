@@ -16,3 +16,23 @@ output "resources" {
   value       = local.resources
   description = "full resource object containing name, toolong, max_length, slug and others"
 }
+
+output "workload" {
+  value       = var.workload
+  description = "workload name"
+}
+
+output "region" {
+  value       = var.region
+  description = "region name"
+}
+
+output "environment" {
+  value       = var.environment
+  description = "environment name"
+}
+
+output "instance" {
+  value       = var.instance
+  description = "instance number"
+}
