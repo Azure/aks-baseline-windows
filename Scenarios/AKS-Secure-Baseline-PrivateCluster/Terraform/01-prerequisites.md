@@ -11,7 +11,7 @@
     Please follow [these instructions](https://learn.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal) to create a service principal in Azure. 
 2. PowerShell terminal. This reference reference implementation uses PowerShell for deployment.
 3. Latest [Azure CLI installed](https://learn.microsoft.com/cli/azure/install-azure-cli-windows?tabs=powershell#powershell)
-4. [Terraform version 3.9.0 or greater](https://learn.microsoft.com/azure/developer/terraform/get-started-windows-bash?tabs=bash#4-install-terraform-for-windows)
+4. [Terraform version 1.4.0 or greater](https://learn.microsoft.com/azure/developer/terraform/get-started-windows-bash?tabs=bash#4-install-terraform-for-windows)
 5. Clone/download this repo locally using a Git Bash terminal, GitHub Desktop app or VSCode.
     ``` Git Bash
     git clone https://github.com/Azure/aks-baseline-windows.git

@@ -5,7 +5,7 @@
 
 resource "azurerm_public_ip" "firewall" {
   count               = "3"
-  name                = replace(module.CAFResourceNames.names.azurerm_public_ip, "001", "00${count.index + 1}")
+  name                = replace(module.CAFResourceNames.names.azurerm_public_ip, module.CAFResourceNames.instance, "00${count.index + 1}")
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Static"
@@ -95,7 +95,7 @@ resource "azurerm_monitor_diagnostic_setting" "firewall" {
 # Diagnostic setting for Firewall public ip addresses
 resource "azurerm_monitor_diagnostic_setting" "fwpip" {
   count                          = "3"
-  name                           = replace(replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "pipamds"), "001", "00${count.index + 1}")
+  name                           = replace(replace(module.CAFResourceNames.names.azurerm_monitor_diagnostic_setting, "amds", "pipamds"), module.CAFResourceNames.instance, "00${count.index + 1}")
   target_resource_id             = azurerm_public_ip.firewall[count.index].id
   log_analytics_workspace_id     = azurerm_log_analytics_workspace.hub.id
   log_analytics_destination_type = "AzureDiagnostics"

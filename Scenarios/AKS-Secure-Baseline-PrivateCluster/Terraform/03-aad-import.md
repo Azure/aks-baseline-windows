@@ -29,7 +29,7 @@ Create the following variables for ease of use during deployment.
 $backendResourceGroupName=""
 $backendStorageAccountName=""
 $backendContainername=""
-$layerNametfstate="aad-import"
+$layerNametfstate="aad"
 $env:ARM_CLIENT_ID = "00000000-0000-0000-0000-000000000000"
 $env:ARM_CLIENT_SECRET = "12345678-0000-0000-0000-000000000000"
 $env:ARM_TENANT_ID = "10000000-0000-0000-0000-000000000000"
@@ -50,6 +50,7 @@ terraform apply -var="resource_group_name=$backendResourceGroupName" -var="stora
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
+If you get an error about list of available provider versions, go with the `-upgrade` flag option to allow selection of new versions.
 
 ## Ensure you are part of the AAD admin group you just imported
 

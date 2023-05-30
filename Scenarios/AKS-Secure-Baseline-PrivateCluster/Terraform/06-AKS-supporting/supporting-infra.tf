@@ -9,6 +9,7 @@ module "create_acr" {
   source = "./modules/acr-private"
 
   caf_basename        = module.CAFResourceNames.names
+  caf_instance        = module.CAFResourceNames.instance
   random_instance     = random_integer.deployment.result
   resource_group_name = data.terraform_remote_state.existing-lz.outputs.lz_rg_name
   location            = data.terraform_remote_state.existing-lz.outputs.lz_rg_location
@@ -22,6 +23,7 @@ module "create_kv" {
   source = "./modules/kv-private"
 
   caf_basename             = module.CAFResourceNames.names
+  caf_instance             = module.CAFResourceNames.instance
   random_instance          = random_integer.deployment.result
   resource_group_name      = data.terraform_remote_state.existing-lz.outputs.lz_rg_name
   location                 = data.terraform_remote_state.existing-lz.outputs.lz_rg_location
@@ -36,12 +38,12 @@ module "create_kv" {
 module "create_policy" {
   source = "./modules/aks-policies"
 
-  resource_group_id        = data.terraform_remote_state.existing-lz.outputs.lz_rg_id
-  acr_name                 = module.create_acr.acr_name
+  resource_group_id = data.terraform_remote_state.existing-lz.outputs.lz_rg_id
+  acr_name          = module.create_acr.acr_name
   depends_on = [
-    module.create_acr 
-    ]
-  
+    module.create_acr
+  ]
+
 }
 
 # Deploy Public DNS to register application domains hosted in AKS. If you are not planning to use the blue green deployment, then you don't need to deploy the public DNS Zone and you can skip this leaving empty the variable public_domain.

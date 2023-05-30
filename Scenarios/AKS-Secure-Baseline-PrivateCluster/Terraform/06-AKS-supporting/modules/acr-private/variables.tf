@@ -4,6 +4,8 @@
 
 variable "caf_basename" {}
 
+variable "caf_instance" {}
+
 # Variables
 
 variable "resource_group_name" {}

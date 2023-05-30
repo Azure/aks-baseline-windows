@@ -2,10 +2,11 @@
 # storage account created out of band for TF statemanagement.
 
 terraform {
+  required_version = "~> 1.4.0"
   required_providers {
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 2.37.2"
+      version = "~> 2.39.0"
     }
   }
 

@@ -6,16 +6,16 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
     ]
   }
 
-  name                    = var.caf_basename.azurerm_kubernetes_cluster
-  dns_prefix              = var.dns_prefix
-  location                = var.location
-  resource_group_name     = var.resource_group_name
-  kubernetes_version      = "1.25.5"
-  private_cluster_enabled = true
-  private_dns_zone_id     = var.private_dns_zone_id
-  azure_policy_enabled    = true
-  local_account_disabled  = true
-  oidc_issuer_enabled     = true
+  name                      = var.caf_basename.azurerm_kubernetes_cluster
+  dns_prefix                = var.dns_prefix
+  location                  = var.location
+  resource_group_name       = var.resource_group_name
+  kubernetes_version        = "1.25.5"
+  private_cluster_enabled   = true
+  private_dns_zone_id       = var.private_dns_zone_id
+  azure_policy_enabled      = true
+  local_account_disabled    = true
+  oidc_issuer_enabled       = true
   workload_identity_enabled = true
 
   key_vault_secrets_provider {
@@ -37,8 +37,8 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
     zones                        = ["1", "2", "3"]
     upgrade_settings {
       max_surge = "33%"
+    }
   }
-}
 
   network_profile {
     network_plugin    = "azure"
@@ -68,7 +68,7 @@ resource "azurerm_kubernetes_cluster" "akscluster" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
-  name                  = "winpl"
+  name                  = var.caf_basename.aks_node_pool_windows
   kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
   vm_size               = "Standard_DS4_v2"
   enable_auto_scaling   = true
@@ -81,7 +81,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
   vnet_subnet_id        = var.winnp_subnet_id
   zones                 = ["1", "2", "3"]
   upgrade_settings {
-      max_surge = "33%"
+    max_surge = "33%"
   }
   tags = {
     "nodepool-type" = "user"
@@ -91,7 +91,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "windows_node_pool" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "linux_user_pool" {
-  name                  = "linpool"
+  name                  = var.caf_basename.aks_node_pool_linux
   kubernetes_cluster_id = azurerm_kubernetes_cluster.akscluster.id
   vm_size               = "Standard_DS2_v2"
   os_disk_size_gb       = 30
@@ -103,8 +103,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "linux_user_pool" {
   vnet_subnet_id        = var.vnet_subnet_id
   zones                 = ["1", "2", "3"]
   upgrade_settings {
-      max_surge = "33%"
-   }
+    max_surge = "33%"
+  }
 }
 
 #Diagnostic Settings

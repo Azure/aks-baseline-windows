@@ -40,7 +40,7 @@ locals {
     for resourcetype, resource in local.resources_with_customizations : resourcetype => merge(
       resource,
       {
-        name = join(
+        name = resource.max_length <= 9 ? join(resource.separator, compact([resource.slug, var.instance])) : (resource.max_length > 9 && resource.max_length <= 16 ? join(resource.separator, compact([resource.slug, var.environment, var.instance])) : join(
           resource.separator,
           compact([
             resource.slug,
@@ -49,7 +49,7 @@ locals {
             var.region,
             var.instance
           ])
-        )
+        ))
       }
     )
   }
