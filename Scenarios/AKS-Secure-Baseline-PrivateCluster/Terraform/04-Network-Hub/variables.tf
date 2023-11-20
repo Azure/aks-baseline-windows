@@ -16,10 +16,6 @@ variable "tags" {
   }
 }
 
-variable "hub_prefix" {
-  default = "aks"
-}
-
 variable "sku_name" {
   default = "AZFW_VNet"
 }
@@ -47,6 +43,7 @@ variable "resource_group_name" {
 }
 
 variable "storage_account_name" {
+  default = "winaksdc"
 }
 
 variable "container_name" {

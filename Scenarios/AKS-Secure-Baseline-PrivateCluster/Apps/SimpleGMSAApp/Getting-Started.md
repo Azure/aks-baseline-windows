@@ -4,6 +4,10 @@ This application is provided by Microsoft through the [GMSA on AKS PowerShell Mo
 
 Because the infrastructure has been deployed in a private AKS cluster setup with private endpoints for the container registry and other components, you will need to perform the application container build and the publishing to the Container Registry from the Domain Controller in the Hub VNET, connecting via the Bastion Host service. If your computer is connected to the hub network, you may be able to just use that as well. The rest of the steps can be performed on your local machine by using AKS Run commands which allow access into private clusters using RBAC. This will help with improving security and will provide a more user-friendly way of editing YAML files.
 
+## Note on the resource constraints in the workload manifest
+
+The values used for CPU and memory represent the minimums to run a Windows application with GMSA. Windows applications require higher memory thresholds than Linux applications. You should adjust these values when running your own application in this cluster.
+
 ## Connecting to the Bastion Host
 
 Follow the instructions [here](https://learn.microsoft.com/azure/bastion/bastion-connect-vm-rdp-windows) to connect to your Domain Controller deployed through the reference architecture via Bastion using RDP or instructions [here](https://learn.microsoft.com/azure/bastion/bastion-connect-vm-ssh-windows) to connect via SSH. 
@@ -12,13 +16,6 @@ Follow the instructions [here](https://learn.microsoft.com/azure/bastion/bastion
 
 * Install az cli for windows. You can find latest version [here](https://learn.microsoft.com/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 * After installing az cli you will need to install aks add-on. Run az aks install-cli to add support for kubelogin and kubectl.
-* Please add "C:\Users\sysadmin\.azure-kubelogin" and "C:\Users\sysadmin\.azure-kubectl to your search PATH so the `kubelogin.exe` can be found. 3 options:
-
-    1. Run set PATH=%PATH%;C:\Users\sysadmin\.azure-kubelogin or $env:path += 'C:\Users\sysadmin\.azure-kubelogin' for PowerShell. This is good for the current command session.
-
-    2. Run set PATH=%PATH%;C:\Users\sysadmin\.azure-kubectl or $env:path += 'C:\Users\sysadmin\.azure-kubectl' for PowerShell. This is good for the current command session.
-
-    3. Set variables across reboots  [Environment]::SetEnvironmentVariable("PATH", $Env:PATH + ";C:\Users\sysadmin\.azure-kubelogin" + ";C:\Users\sysadmin\.azure-kubectl", [EnvironmentVariableTarget]::Machine)
 
 * Login to Azure
 
@@ -106,7 +103,7 @@ Navigate to "aks-baseline-windows/Scenarios/AKS-Secure-Baseline-PrivateCluster/A
 ```Powershell
 kubectl get deployment -n simpleapp
 kubectl get pods -n simpleapp
-kubectl describe ingress -n simpleapp
+kubectl describe service -n simpleapp
 ```
 2. Copy the ip address displayed by running ``` kubectl describe ingress -n simpleapp ``` on your jumpbox, open a browser, navigate to the IP address obtained above from the ingress controller and explore your website.
 
@@ -217,5 +214,5 @@ Now you can access the website using using your FQDN. When you navigate to the w
 
 
 # Next Steps
-- [Cleanup](../../Terraform/09-cleanup.md)
+:arrow_forward: [Create the ingress configuration for GMSA](../../Terraform/09-ingress-config.md)
   

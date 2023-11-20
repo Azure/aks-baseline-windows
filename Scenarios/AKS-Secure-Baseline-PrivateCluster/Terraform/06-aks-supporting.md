@@ -5,9 +5,9 @@ The following will be created:
 * [Azure Key Vault](./06-AKS-supporting/supporting-infra.tf)
 * Private Link Endpoints for ACR and Key Vault
 
-Navigate to "/Scenarios/AKS-Secure-Baseline-PrivateCluster/Terraform/06-AKS-supporting" folder
+Navigate to "\Scenarios\AKS-Secure-Baseline-PrivateCluster\Terraform\06-AKS-supporting" folder
 ```PowerShell
-cd ../06-AKS-supporting
+cd ..\06-AKS-supporting
 ```
 
 This deployment will need to reference data objects from the Hub deployment and will need access to the pre-existing state file, update the variables as needed in the .tfvars sample file.  This deployment will also need to use a storage access key (from Azure) to read the storage account data.  This is a sensitive variable and should not be committed to the code repo. 
@@ -31,18 +31,19 @@ $access_key = "" # TF state file Azure storage account access key
 Once the files are updated, deploy using Terraform Init, Plan and Apply. 
 
 ```PowerShell
-terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate" -backend-config="subscription_id=$ARM_SUBSCRIPTION_ID" -backend-config="tenant_id=$tenantId" -backend-config="client_id=$servicePrincipalId" -backend-config="client_secret=$servicePrincipalKey"
+terraform init -input=false -backend-config="resource_group_name=$backendResourceGroupName" -backend-config="storage_account_name=$backendStorageAccountName" -backend-config="container_name=$backendContainername" -backend-config="key=$layerNametfstate"
 ```
 
 ```PowerShell
-terraform plan -out $layerNametfstate -input=false -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$access_key" -var="state_sa_name=$backendStorageAccountName" 
+terraform plan -var "storage_account_name=$backendStorageAccountName" -var "container_name=$backendContainername" -var "access_key=$access_key" -out $layerNametfstate
 ```
 
 ```PowerShell
-terraform apply -var="subscription_id=$ARM_SUBSCRIPTION_ID" -var="tenant_id=$tenantId" -var="client_id=$servicePrincipalId" -var="client_secret=$servicePrincipalKey" -var="resource_group_name=$backendResourceGroupName" -var="storage_account_name=$backendStorageAccountName" -var="container_name=$backendContainername" -var="access_key=$access_key" 
+terraform apply --auto-approve $layerNametfstate
 ```
 
 If you get an error about changes to the configuration, go with the `-reconfigure` flag option.
+If you get an error about list of available provider versions, go with the `-upgrade` flag option to allow selection of new versions.
 
-## Next Step
+# Next Step
 :arrow_forward: [Creation of AKS & enabling Addons](./07-aks-cluster.md)

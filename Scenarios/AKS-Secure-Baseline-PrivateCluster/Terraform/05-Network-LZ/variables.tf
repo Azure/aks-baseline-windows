@@ -1,6 +1,10 @@
 #############
 # VARIABLES #
 #############
+variable "location" {
+
+  default = "eastus"
+}
 
 variable "tags" {
   type = map(string)
@@ -19,7 +23,7 @@ variable "resource_group_name" {
 }
 
 variable "storage_account_name" {
-
+  default = "winaksdc"
 }
 
 variable "container_name" {

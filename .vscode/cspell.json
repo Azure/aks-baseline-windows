@@ -34,7 +34,11 @@
         "LTSC",
         "TFSTATE",
         "STORAGEACCOUNTNAME",
-        "GMSAAPP"
+        "GMSAAPP",
+        "sampleappgroup",
+        "gmsagroup",
+        "apporigin",
+        "gmsaapppolicy"
     ],
     "ignoreWords": [],
     "import": [],

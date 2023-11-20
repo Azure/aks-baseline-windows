@@ -2,12 +2,12 @@
 # storage account created out of band for TF statemanagement.
 
 terraform {
+  required_version = "~> 1.4.0"
   required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "= 3.9.0"
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 2.39.0"
     }
-
   }
 
   backend "azurerm" {
@@ -16,11 +16,6 @@ terraform {
     container_name       = var.container_name       #   Partial configuration, provided during "terraform init"
     key                  = "aad"                    # Value set here because multiple state files are used in this example.
   }
-
-}
-
-provider "azurerm" {
-  features {}
 }
 
 provider "azuread" {

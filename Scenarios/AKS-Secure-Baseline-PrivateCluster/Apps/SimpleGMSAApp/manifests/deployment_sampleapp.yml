@@ -48,11 +48,13 @@ spec:
       labels:
         app: "gmsa-win-demo"
     spec:
+      serviceAccountName: gmsa
       nodeSelector:
         "kubernetes.io/os": windows
       securityContext:
         windowsOptions:
            gmsaCredentialSpecName: < GMSA Credential Spec Name >
+        runAsNonRoot: true
       containers:
       - name: iis
         image: < Registry Name >.azurecr.io/windows/servercore/iis:windowsservercore-ltsc2019
@@ -67,11 +69,11 @@ spec:
              mountPath: /gmsa-demo
         resources:
           requests:
-            cpu: 50m
-            memory: 128Mi
+            cpu: 500m
+            memory: 512Mi
           limits:
-            cpu: 100m
-            memory: 256Mi
+            cpu: 500m
+            memory: 1024Mi
       volumes:
         - name: gmsa-win-demo 
           configMap:
@@ -85,7 +87,7 @@ spec:
               - key: agentpool
                 operator: In
                 values:
-                - wnp
+                - winpl
 ---
 apiVersion: v1
 kind: Service
@@ -94,6 +96,7 @@ metadata:
   namespace: simpleapp
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "< Subnet Name >"
 spec:
   type: LoadBalancer
   selector:

@@ -1,14 +1,18 @@
 terraform {
+  required_version = "~> 1.4.0"
   required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = ">=3.11.0"
-    }
     azuread = {
       source  = "hashicorp/azuread"
-      version = ">=2.25.0"
+      version = "~> 2.39.0"
     }
-
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.58.0"
+    }
+    http = {
+      source  = "hashicorp/http"
+      version = ">= 3.3.0"
+    }
   }
 
   backend "azurerm" {
@@ -17,7 +21,6 @@ terraform {
     container_name       = var.container_name       # Partial configuration, provided during "terraform init"
     key                  = "aks"
   }
-
 }
 
 provider "azurerm" {

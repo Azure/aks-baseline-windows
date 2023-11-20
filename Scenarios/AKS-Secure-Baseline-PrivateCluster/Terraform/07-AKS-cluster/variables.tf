@@ -1,25 +1,21 @@
 #############
 # VARIABLES #
 #############
-
-variable "prefix" {
-  default = "aks-cluster"
-}
-
 variable "private_dns_zone_name" {
   # update this in the .tfvars file
 }
 
-variable "wnp_count" {
-  type    = bool
-  default = true
+variable "dns_prefix" {
+  # update this in the .tfvars file
 }
 
 variable "resource_group_name" {
   default = "tfstate"
 }
 
-variable "storage_account_name" {}
+variable "storage_account_name" {
+  default = "winaksdc"
+}
 
 variable "container_name" {
   default = "akscs"
@@ -28,10 +24,4 @@ variable "container_name" {
 variable "access_key" {
   type      = string
   sensitive = true
-}
-
-variable "aks_admin_group" {
-}
-
-variable "aks_user_group" {
 }

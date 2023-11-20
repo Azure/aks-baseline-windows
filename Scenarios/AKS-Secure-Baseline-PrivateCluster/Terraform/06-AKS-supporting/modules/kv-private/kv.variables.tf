@@ -1,4 +1,10 @@
-variable "name" {}
+##########################################################
+## Common Naming Variable
+##########################################################
+
+variable "caf_basename" {}
+
+variable "caf_instance" {}
 
 variable "resource_group_name" {}
 
@@ -6,6 +12,6 @@ variable "location" {}
 
 variable "tenant_id" {}
 
-variable "aks_sub_id" {}
+variable "priv_sub_id" {}
 
-variable "devSubnetdc_id" {}
+variable "random_instance" {}
